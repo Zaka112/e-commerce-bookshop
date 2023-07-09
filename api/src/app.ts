@@ -10,7 +10,7 @@ const app = Express();
 app.use(Express.json());
 app.use(cors());
 
-app.use("/products", booksRouter);
+app.use("/books", booksRouter);
 app.use("/users", usersRouter);
 
 app.use(apiErrorHandler)

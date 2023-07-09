@@ -6,7 +6,7 @@ export type BookDocument = Document & {
   title: string;
   price: number;
   images: string, //[];
-  category: string;
+  category: string[];
   quantity: number;
   author: string;
   loanDate:string, //Date,

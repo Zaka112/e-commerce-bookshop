@@ -4,7 +4,7 @@ export const createUserService = async (user: UserDocument): Promise<UserDocumen
   return await user.save();
 };
 
-export const getAllUserService = async (): Promise<UserDocument [] | undefined> => {
+export const getAllUserService = async (): Promise<UserDocument [] > => {
   return await User.find();
 };
 

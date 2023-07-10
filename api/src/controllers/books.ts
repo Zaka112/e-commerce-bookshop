@@ -75,9 +75,9 @@ export const getBookById = async (
 ) => {
   try {
     const bookId = request.params.id;
-    const book = await getBookByIdService(bookId);
+    const bookById= await getBookByIdService(bookId);
 
-    response.status(200).json(book);
+    response.status(200).json(bookById);
   } catch (error) {
     next(error);
   }

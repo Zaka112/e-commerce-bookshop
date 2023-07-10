@@ -3,6 +3,7 @@ import cors from "cors";
 
 import booksRouter from "./routes/books";
 import usersRouter from "./routes/users";
+import ordersRouter from "./routes/orders";
 import apiErrorHandler from "./middlewares/apiErrorHandler"
 
 const app = Express();
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use("/books", booksRouter);
 app.use("/users", usersRouter);
+app.use("/orders", ordersRouter)
 
 app.use(apiErrorHandler)
 

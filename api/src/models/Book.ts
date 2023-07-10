@@ -5,14 +5,14 @@ export type BookDocument = Document & {
   publisher:string,
   title: string;
   price: number;
-  images: string, //[];
+  images: string [];
   category: string[];
   quantity: number;
-  author: string;
-  loanDate:string, //Date,
-  returnDate:string, //Date,
-  lender:string,
-  publishedDate: string, //Date,
+  author: string[];
+  // loanDate:Date,
+  // returnDate:Date,
+ // lender:string,
+  publishedDate: Date,
   
 };
 export enum Status {
@@ -20,10 +20,11 @@ export enum Status {
   notAvailable = "not available",
 }
 
-const BookSchema = new mongoose.Schema({
+export const BookSchema = new mongoose.Schema({
   publishingNumber: {
     type: String,
     required: true,
+    unique:true
   },
   title: {
     type: String,
@@ -34,7 +35,7 @@ const BookSchema = new mongoose.Schema({
     required: true,
   },
   images: {
-    type: String, // Array,
+    type: Array,
     required: true,
   },
   category: { type: Array, required: true },
@@ -43,18 +44,22 @@ const BookSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: String,
+    type: Array,
     required: true,
   },
-  loanDate: {
-    type: String, // Date,
-  },
-  returnDate: {
-    type: String, // Date,
-  },
-  lender: {
-    type: String,
-  },
+  // loanDate: {
+  //   type: Date,
+  //   required:true,
+  //   default:Date.now
+  // }, only when lending
+  // returnDate: {
+  //   type: String, 
+  //   required:true,
+  //   default:Date.now
+  // }, only when return
+  // lender: {
+  //   type: String,
+  // },
   status: {
     type: String,
     enum: Status,
@@ -62,7 +67,7 @@ const BookSchema = new mongoose.Schema({
     required: true,
   },
   publishedDate: {
-    type:String,// Date,
+    type:Date,
     required: true,
   },
   

@@ -56,6 +56,7 @@ const UserSchema = new mongoose.Schema({
     enum: Gender,
     default: Gender.none,
   },
+  
   country: {
     type: String,
   },

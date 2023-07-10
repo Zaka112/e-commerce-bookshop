@@ -73,9 +73,9 @@ export const getUserById = async (
 ) => {
   try {
     const userId = request.params.id;
-    const userList = await getUserByIdService(userId);
+    const userById = await getUserByIdService(userId);
 
-    response.status(200).json(userList);
+    response.status(200).json(userById);
   } catch (error) {
     next(error);
   }

@@ -5,13 +5,13 @@ import { BookDocument, BookSchema } from "./Book";
 export type OrderDocument = Document & {
   userId: string;
   bookList: BookDocument[];
-  lendedAt: Date;
+  orderedAt: Date;
 };
 
 const OrderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   bookList: [BookSchema],
-  lendedAt: {
+  orderedAt: {
     type: Date,
     required: true,
     default: Date.now,

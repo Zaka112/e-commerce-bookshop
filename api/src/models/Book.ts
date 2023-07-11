@@ -1,32 +1,29 @@
 import mongoose, { Document } from "mongoose";
 
 export type BookDocument = Document & {
-  publishingNumber: string;
-  publisher:string,
+  isbn: string;
   title: string;
+  description:string;
   price: number;
-  images: string [];
+  images: string[];
   category: string[];
   quantity: number;
   author: string[];
-  // loanDate:Date,
-  // returnDate:Date,
- // lender:string,
-  publishedDate: Date,
-  
+  publisher: string;
+  publishedDate: Date;
 };
-export enum Status {
-  available = "available",
-  notAvailable = "not available",
-}
 
 export const BookSchema = new mongoose.Schema({
-  publishingNumber: {
+  isbn: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
   title: {
+    type: String,
+    required: true,
+  },
+  description: {
     type: String,
     required: true,
   },
@@ -38,7 +35,10 @@ export const BookSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
-  category: { type: Array, required: true },
+  category: {
+    type: Array,
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,
@@ -47,30 +47,16 @@ export const BookSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
-  // loanDate: {
-  //   type: Date,
-  //   required:true,
-  //   default:Date.now
-  // }, only when lending
-  // returnDate: {
-  //   type: String, 
-  //   required:true,
-  //   default:Date.now
-  // }, only when return
-  // lender: {
-  //   type: String,
-  // },
-  status: {
+ 
+  publisher: {
     type: String,
-    enum: Status,
-    default: Status.available,
     required: true,
   },
   publishedDate: {
-    type:Date,
+    type: Date,
     required: true,
+    default:Date.now
   },
-  
 });
 
 export default mongoose.model<BookDocument>("Book", BookSchema);

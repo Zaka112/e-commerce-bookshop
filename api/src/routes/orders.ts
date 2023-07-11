@@ -4,6 +4,6 @@ import { addNewOrder } from "../controllers/orders";
 
 const router = Router()
 
-router.post("/", addNewOrder)
+router.post("/:id", addNewOrder)
 
 export default router

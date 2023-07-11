@@ -9,7 +9,7 @@ export const addNewOrder = async (
   next: NextFunction
 ) => {
   try {
-    const userId = request.params.userId;
+    const userId = request.params.id;
     const newOrder = new Order({
       userId: userId,
       bookList: request.body.bookList,

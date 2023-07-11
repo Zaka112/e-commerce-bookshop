@@ -15,36 +15,31 @@ export const addNewBook = async (
   response: Response,
   next: NextFunction
 ) => {
-  try { const {
-    title,
-    price,
-    publisher,
-    publishingNumber,
-    images,
-    category,
-    quantity,
-    author,
-    loanDate,
-    returnDate,
-    lender,
-    publishedDate,
-    status,
-  } = request.body;
-  const bookInformation = new Book({
-    title: title,
-    price: price,
-    publisher: publisher,
-    publishingNumber: publishingNumber,
-    images: images,
-    category: category,
-    quantity: quantity,
-    author: author,
-    loanDate: loanDate,
-    returnDate: returnDate,
-    lender: lender,
-    publishedDate: publishedDate,
-    status: status,
-  });
+  try {
+    const {
+      title,
+      isbn,
+      price,
+      publisher,
+      images,
+      category,
+      quantity,
+      author,
+      description,
+      publishedDate,
+    } = request.body;
+    const bookInformation = new Book({
+      title: title,
+      isbn: isbn,
+      price: price,
+      publisher: publisher,
+      images: images,
+      category: category,
+      quantity: quantity,
+      author: author,
+      description:description,
+      publishedDate: publishedDate,
+    });
 
     const addedBook = await addNewBookService(bookInformation);
 
@@ -75,7 +70,7 @@ export const getBookById = async (
 ) => {
   try {
     const bookId = request.params.id;
-    const bookById= await getBookByIdService(bookId);
+    const bookById = await getBookByIdService(bookId);
 
     response.status(200).json(bookById);
   } catch (error) {

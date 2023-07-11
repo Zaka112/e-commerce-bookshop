@@ -7,13 +7,7 @@ export const createUserService = async (
   return await user.save();
 };
 
-export const getAllUserService = async (): Promise<UserDocument[]> => {
-  return (await User.find());
-};
-// idea to get a specific item by name
-// export const getAllUserService = async (userId:string): Promise<UserDocument[]> => {
-//   return await User.find({firstName:userId});
-// };
+
 
 export const getUserByIdService = async (
   userId: string

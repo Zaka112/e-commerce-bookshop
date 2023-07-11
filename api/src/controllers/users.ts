@@ -4,7 +4,6 @@ import User from "../models/User";
 import {
   createUserService,
   deleteUserByIdService,
-  getAllUserService,
   getUserByIdService,
   updateUserByIdService,
 } from "../services/users";
@@ -50,21 +49,6 @@ export const createUser = async (
   }
 };
 
-//get: get userlist
-export const getAllUsers = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  try {
-    const userList = await getAllUserService();
-
-    response.status(200).json(userList);
-  } catch (error) {
-    next(error);
-  }
-};
-
 //get: get single user
 export const getUserById = async (
   request: Request,
@@ -89,7 +73,7 @@ export const updateUserById = async (
 ) => {
   try {
     const userId = request.params.id;
-    const updatedInformation = request.body
+    const updatedInformation = request.body;
     const updatedUser = await updateUserByIdService(userId, updatedInformation);
 
     response.status(201).json(updatedUser);
@@ -107,9 +91,8 @@ export const deleteUserById = async (
     const userById = request.params.id;
     const userList = await deleteUserByIdService(userById);
 
-    response.status(403).send();
+    response.status(201).send();
   } catch (error) {
     next(error);
   }
 };
-

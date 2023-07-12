@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 import User from "../models/User";
 import {
   createUserService,
-  deleteUserByIdService,
+  findUserByEmailService,
   getUserByIdService,
   updateUserByIdService,
 } from "../services/users";
@@ -49,6 +51,40 @@ export const createUser = async (
   }
 };
 
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET as string;
+//post: login user
+export const logInController = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const userdata = await findUserByEmailService(request.body.email);
+    if (!userdata) {
+      return response
+        .status(403)
+        .json({ message: "user do not have account yet" });
+    }
+
+    //1. pay load
+    //2. jwt Secerts
+    //3 expiry time
+    const token = jwt.sign(
+      {
+        email: userdata.email,
+        _id: userdata._id,
+        firstName: userdata.firstName,
+      },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    response.json({ userdata, token });
+  } catch (error) {
+    next(error);
+  }
+};
+
 //get: get single user
 export const getUserById = async (
   request: Request,
@@ -66,7 +102,7 @@ export const getUserById = async (
 };
 
 //put: update a user
-export const updateUserById = async (
+export const updateUserInfoController = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -76,22 +112,7 @@ export const updateUserById = async (
     const updatedInformation = request.body;
     const updatedUser = await updateUserByIdService(userId, updatedInformation);
 
-    response.status(201).json(updatedUser);
-  } catch (error) {
-    next(error);
-  }
-};
-//delete: delete a user
-export const deleteUserById = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  try {
-    const userById = request.params.id;
-    const userList = await deleteUserByIdService(userById);
-
-    response.status(201).send();
+    response.json(updatedUser);
   } catch (error) {
     next(error);
   }

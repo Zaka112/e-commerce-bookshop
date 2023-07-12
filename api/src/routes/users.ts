@@ -1,13 +1,25 @@
 import { Router } from "express";
+import passport from "passport";
 
-import { createUser, deleteUserById,  getUserById, updateUserById } from "../controllers/users";
+import {
+  createUser,
+  logInController,
+  getUserById,
+  updateUserInfoController,
+} from "../controllers/users";
 
 const router = Router();
+//register
+router.post("/regiser", createUser);
+//login
+router.post("/login", logInController);
 
-router.post("/", createUser);
-
-router.get("/:id", getUserById )
-router.put("/:id", updateUserById)
-router.delete("/:id", deleteUserById)
+//update user info
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  updateUserInfoController
+);
+router.get("/:id", getUserById);
 
 export default router;

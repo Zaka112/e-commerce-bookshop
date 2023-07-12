@@ -4,11 +4,9 @@ import Book from "../models/Book";
 
 import {
   addNewBookService,
-  deleteBookByIdService,
   getBookByIdService,
   getBookListService,
-  updateBookInformationService,
-} from "../services/books";
+ } from "../services/books";
 
 export const addNewBook = async (
   request: Request,
@@ -78,36 +76,3 @@ export const getBookById = async (
   }
 };
 
-export const deleteBookById = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  try {
-    const bookId = request.params.id;
-    await deleteBookByIdService(bookId);
-
-    response.status(204).send();
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const updateBookInformation = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  try {
-    const bookId = request.params.id;
-    const updatedInformation = request.body;
-
-    const updatedBook = await updateBookInformationService(
-      bookId,
-      updatedInformation
-    );
-    response.status(201).json(updatedBook);
-  } catch (error) {
-    next(error);
-  }
-};

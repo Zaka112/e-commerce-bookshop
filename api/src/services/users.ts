@@ -7,8 +7,6 @@ export const createUserService = async (
   return await user.save();
 };
 
-
-
 export const getUserByIdService = async (
   userId: string
 ): Promise<UserDocument> => {
@@ -19,14 +17,14 @@ export const getUserByIdService = async (
   return userById;
 };
 
-export const deleteUserByIdService = async (
-  userId: string
+export const findUserByEmailService = async (
+  email: string
 ): Promise<UserDocument> => {
-  const userById = await User.findByIdAndDelete(userId);
-  if (!userById) {
-    throw new NotFoundError(`No user found having ${userId}`);
+  const foundUser = await User.findOne({ email: email });
+  if (!foundUser) {
+    throw new NotFoundError(`User with ${email} not found`);
   }
-  return userById;
+  return foundUser;
 };
 
 export const updateUserByIdService = async (

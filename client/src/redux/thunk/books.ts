@@ -8,8 +8,7 @@ export function getBooksData() {
   return async (dispatch: AppDispatch) => {
     const response = await fetch(booksURL);
     const fetchedBooks = await response.json();
-   
-    dispatch(bookActions.getBooksData(fetchedBooks));
+      dispatch(bookActions.getBooksData(fetchedBooks));
   };
 }
 

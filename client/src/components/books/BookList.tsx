@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress, Paper, Typography } from "@mui/material";
+import { CircularProgress, Grid, Paper, Typography } from "@mui/material";
 
 import { AppDispatch, RootState } from "../../redux/store";
 import { getBooksData } from "../../redux/thunk/books";
+import BookItems from "./BookItems";
 
 
 export default function BookList() {
@@ -32,16 +33,21 @@ export default function BookList() {
           }}
         >
           <Typography variant="h3" component="h3">
-            List of books
+            Available Books
           </Typography>
-  
-          {bookList.map((book) => (
-            <div key={book._id}>
-              <a href={`/books/${book._id}`}>
-                {book.title}
-              </a>
-            </div>
-          ))}
+          <Grid
+          container
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "1rem",
+          }}
+        >
+          {bookList.map((bookItem) => {
+           return <BookItems key={bookItem._id} bookItem={bookItem}/>
+          }
+          )}
+          </Grid>
         </Paper>
       );
 }

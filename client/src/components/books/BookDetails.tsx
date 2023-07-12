@@ -15,10 +15,10 @@ export default function BookDetails() {
 
    const { id } = useParams<{ id: string }>();
 
-  const bookDetail = useSelector(
+  const bookDetails = useSelector(
     (state: RootState) => state.bookDetail.book
   );
-  console.log(bookDetail)
+  console.log(bookDetails, "BookDetails")
   const isLoading = useSelector(
     (state: RootState) => state.bookDetail.isLoading
   );
@@ -26,11 +26,12 @@ export default function BookDetails() {
   const dispatchApp = useDispatch<AppDispatch>();
 
   const bookDetailURL = `http://localhost:5001/books/${id}`;
+  console.log(bookDetailURL)
 
   useEffect(() => {
     dispatchApp(getBookDetailData(bookDetailURL));
   }, [dispatchApp, bookDetailURL]);
-
+  console.log(bookDetails, "after")
   if (isLoading) {
     return (
       <div>
@@ -45,43 +46,43 @@ export default function BookDetails() {
           marginTop: 5,
           justifyContent: "center",
         }}
-      >
-        {bookDetail?.map((bookDetail) => (
-          <Box
-            key={bookDetail?._id}
-            sx={{
-              margin: 5,
-            }}
-          >
-            <Card sx={{ maxWidth: 300, minHeight: 320 }}>
-              <CardMedia
-                component="img"
-                alt="Product Card"
-                height="140"
-                image={bookDetail?.images[1]}
-              />
+      > {bookDetails?.length>0? bookDetails?.map((details) => (
+        <Box
+          key={details?._id}
+          sx={{
+            margin: 5,
+          }}
+        >
+          <Card sx={{ maxWidth: 300, minHeight: 320 }}>
+            <CardMedia
+              component="img"
+              alt="Book Card"
+              height="140"
+              image={details?.images[1]}
+            />
 
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {bookDetail?.title}
-                </Typography>
-                <Typography gutterBottom variant="body2" component="div">
-                  Price: {bookDetail?.price} $
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {bookDetail?.title} belongs to {bookDetail?.title}{" "}
-                  category.
-                </Typography>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {details?.title}
+              </Typography>
+              <Typography gutterBottom variant="body2" component="div">
+                Price: {details?.price} $
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {details?.category}
+              </Typography>
 
-                <Link to="/products" style={{ color: "inherit" }}>
-                  <Button size="small" style={{ color: "inherit" }}>
-                    Back to shop
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </Box>
-        ))}
+              <Link to="/books" style={{ color: "inherit" }}>
+                <Button size="small" style={{ color: "inherit" }}>
+                  Back to shop
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </Box>
+      )):null } 
+      
+        
       </Paper>
     );
 }

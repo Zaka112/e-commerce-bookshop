@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Book } from "../../types/types";
 
-export type bookDetail = { book: null | Book[]; isLoading: boolean };
+export type bookDetail = { book:  Book[]; isLoading: boolean };
 
 export const initialState: bookDetail = {
-  book: null,
+  book: [],
   isLoading: true,
 };
 

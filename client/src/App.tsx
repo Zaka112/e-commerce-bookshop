@@ -7,8 +7,10 @@ import BookDetail from "./pages/BookDetail";
 import Books from "./pages/Books";
 
 function App() {
-  return <div className="App"><HomePage/>
+  return <div className="App">
+    
      <Routes>
+     <Route path="/" element={<HomePage />} />
      <Route path="/books" element={<Books />} />
         <Route path="/books/:id" element={<BookDetail />} />
       </Routes>

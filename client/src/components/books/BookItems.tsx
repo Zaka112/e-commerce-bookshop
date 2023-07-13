@@ -31,6 +31,7 @@ export default function BookItems({ bookItem }: Prop) {
             alt={bookItem.title}
             height="140"
             image={bookItem.images[0]}
+            about="this"
           />
         </Link>
         <CardContent>

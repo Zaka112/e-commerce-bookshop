@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Book } from "../../types/types";
 
-export type bookDetail = { book:  Book[]; isLoading: boolean };
+export type bookDetail = { book: null | Book; isLoading: boolean };
 
 export const initialState: bookDetail = {
-  book: [],
+  book: null,
   isLoading: true,
 };
 
@@ -13,7 +13,7 @@ const bookDetailSlice = createSlice({
   name: "bookDetail",
   initialState,
   reducers: {
-    getBookDetail: (state, action: PayloadAction<Book[]>) => {
+    getBookDetail: (state, action: PayloadAction<Book>) => {
       state.book = action.payload;
       state.isLoading = false;
     },

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -9,6 +10,7 @@ import {
   getUserByIdService,
   updateUserByIdService,
 } from "../services/users";
+import { UnauthorizedError } from "../helpers/apiError";
 
 //post: Create a new user
 export const createUser = async (
@@ -16,36 +18,42 @@ export const createUser = async (
   response: Response,
   next: NextFunction
 ) => {
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    userName,
+    age,
+
+    country,
+    phone,
+    interests,
+  } = request.body;
+  // can add validation logic to check fields are not empty
   try {
-    const {
+
+    //hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+   
+    const userInformation = new User({
+      email,
+      password: hashedPassword,
       firstName,
       lastName,
-      email,
-      password,
       userName,
       age,
-      gender,
+
       country,
       phone,
       interests,
-      role,
-    } = request.body;
-    const userInformation = new User({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      userName: userName,
-      age: age,
-      gender: gender,
-      country: country,
-      phone: phone,
-      interests: interests,
-      role: role,
     });
+    //  const newUser = {};
     const newUser = await createUserService(userInformation);
+    response.json(newUser);
 
-    response.status(201).json(newUser);
+    //  response.status(201).json(newUser);
   } catch (error) {
     next(error);
   }
@@ -59,27 +67,34 @@ export const logInController = async (
   response: Response,
   next: NextFunction
 ) => {
+  const {email, password} = request.body
   try {
-    const userdata = await findUserByEmailService(request.body.email);
-    if (!userdata) {
+    const userData = await findUserByEmailService(email);
+
+    if (!userData) {
       return response
         .status(403)
-        .json({ message: "user do not have account yet" });
+        .json({ message: "Invalid credentials" });
     }
-
+//check for password before generating the token
+const hashedPassword = userData.password
+const isPasswordCorrect= await bcrypt.compare(password, hashedPassword)
+if (!isPasswordCorrect) {
+ throw new UnauthorizedError()
+}
     //1. pay load
     //2. jwt Secerts
     //3 expiry time
     const token = jwt.sign(
       {
-        email: userdata.email,
-        _id: userdata._id,
-        firstName: userdata.firstName,
+        email: userData.email,
+        _id: userData._id,
+        firstName: userData.firstName,
       },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
-    response.json({ userdata, token });
+    response.json({ userData, token});
   } catch (error) {
     next(error);
   }

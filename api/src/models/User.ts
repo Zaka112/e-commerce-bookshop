@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
 
+ 
   userName: {
     type: String,
     required: true,
@@ -75,5 +76,9 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
 });
-
+// for later
+UserSchema.pre('save', function(next) {
+  // do stuff
+  next();
+})
 export default mongoose.model<UserDocument>("User", UserSchema);

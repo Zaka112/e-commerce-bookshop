@@ -10,7 +10,7 @@ import {
 
 const router = Router();
 //register
-router.post("/regiser", createUser);
+router.post("/register", createUser);
 //login
 router.post("/login", logInController);
 

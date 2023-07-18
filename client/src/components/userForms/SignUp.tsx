@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FormLabel, Radio, RadioGroup } from "@mui/material";
+import axios from "axios";
 
 function Copyright(props: any) {
   return (
@@ -40,7 +41,21 @@ export default function SignUp() {
 
     const data = new FormData(event.currentTarget);
 
-   
+    const userInformation = {
+      email: data.get("email".toLocaleLowerCase()),
+      password: data.get("password"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      userName: data.get("userName"),
+      phone: data.get("phone"),
+      interests: data.get("interests"),
+    };
+
+    const endpoint = "http://localhost:5001/users/register";
+    axios
+      .post(endpoint, userInformation)
+      .then((result) => console.log(result))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -117,7 +132,7 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
-                  //     autoComplete="new-password"
+                 
                 />
               </Grid>
               <Grid item xs={12}>
@@ -128,7 +143,7 @@ export default function SignUp() {
                   label="Confirm Password"
                   type="password"
                   id="confirmPassword"
-                  //    autoComplete="new-password"
+                
                 />
               </Grid>
 
@@ -205,7 +220,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="users/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

@@ -24,36 +24,30 @@ export const createUser = async (
     firstName,
     lastName,
     userName,
-    age,
-
     country,
-    phone,
     interests,
+    role,
   } = request.body;
   // can add validation logic to check fields are not empty
   try {
-
     //hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-   
+
     const userInformation = new User({
-      email,
+      email: email.toLowerCase(),
       password: hashedPassword,
       firstName,
       lastName,
       userName,
-      age,
-
       country,
-      phone,
       interests,
+      role,
     });
-    //  const newUser = {};
-    const newUser = await createUserService(userInformation);
-    response.json(newUser);
 
-    //  response.status(201).json(newUser);
+    const newUser = await createUserService(userInformation);
+
+    response.status(201).json(newUser);
   } catch (error) {
     next(error);
   }
@@ -67,21 +61,19 @@ export const logInController = async (
   response: Response,
   next: NextFunction
 ) => {
-  const {email, password} = request.body
+  const { email, password } = request.body;
   try {
-    const userData = await findUserByEmailService(email);
+    const userData = await findUserByEmailService(email.toLowerCase());
 
     if (!userData) {
-      return response
-        .status(403)
-        .json({ message: "Invalid credentials" });
+      return response.status(403).json({ message: "Invalid credentials" });
     }
-//check for password before generating the token
-const hashedPassword = userData.password
-const isPasswordCorrect= await bcrypt.compare(password, hashedPassword)
-if (!isPasswordCorrect) {
- throw new UnauthorizedError()
-}
+    //check for password before generating the token
+    const hashedPassword = userData.password;
+    const isPasswordCorrect = await bcrypt.compare(password, hashedPassword);
+    if (!isPasswordCorrect) {
+      throw new UnauthorizedError();
+    }
     //1. pay load
     //2. jwt Secerts
     //3 expiry time
@@ -94,7 +86,7 @@ if (!isPasswordCorrect) {
       JWT_SECRET,
       { expiresIn: "1h" }
     );
-    response.json({ userData, token});
+    response.json({ userData, token });
   } catch (error) {
     next(error);
   }

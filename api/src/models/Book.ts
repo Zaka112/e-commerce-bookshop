@@ -6,9 +6,9 @@ export type BookDocument = Document & {
   description:string;
   price: number;
   images: string[];
-  category: string[];
+  categories: string[];
   quantity: number;
-  author: string[];
+  authors: string[];
   publisher: string;
   publishedDate: Date;
 };
@@ -35,7 +35,7 @@ export const BookSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
-  category: {
+  categories: {
     type: Array,
     required: true,
   },
@@ -43,7 +43,7 @@ export const BookSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  author: {
+  authors: {
     type: Array,
     required: true,
   },

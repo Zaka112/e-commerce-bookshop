@@ -6,11 +6,10 @@ export type UserDocument = Document & {
   email: string;
   password: string;
   userName: string;
-  age: number;
   gender: string;
   country: string;
-  phone: number;
   interests: string;
+  role:string
 };
 export enum Gender {
   male = "male",
@@ -27,48 +26,49 @@ const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
+    maxLength: 50,
   },
   lastName: {
     type: String,
     required: true,
+    maxLength: 50,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
+    maxLength: 100,
   },
 
   password: {
     type: String,
     required: true,
+    maxLength: 200,
   },
 
- 
   userName: {
     type: String,
     required: true,
-   
+    unique: true,
+    maxLength: 50,
   },
-  age: {
-    type: Number,
-    required: true,
-  },
+
   gender: {
     type: String,
     enum: Gender,
     default: Gender.none,
   },
-  
+
   country: {
     type: String,
+    maxLength: 300,
   },
-  phone: {
-    type: Number,
-    required: true,
-  },
+
   interests: {
     type: String,
+    maxLength: 200,
   },
- 
+
   role: {
     type: String,
     enum: Role,
@@ -77,8 +77,8 @@ const UserSchema = new mongoose.Schema({
   },
 });
 // for later
-UserSchema.pre('save', function(next) {
+UserSchema.pre("save", function (next) {
   // do stuff
   next();
-})
+});
 export default mongoose.model<UserDocument>("User", UserSchema);

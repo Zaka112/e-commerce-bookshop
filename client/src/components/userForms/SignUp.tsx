@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FormLabel, Radio, RadioGroup } from "@mui/material";
 import axios from "axios";
+import {  useNavigate } from "react-router-dom";
 
 function Copyright(props: any) {
   return (
@@ -36,26 +37,35 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const navigate=useNavigate()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+   event.preventDefault();
 
     const data = new FormData(event.currentTarget);
 
     const userInformation = {
-      email: data.get("email".toLocaleLowerCase()),
-      password: data.get("password"),
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
+      email: data.get("email".toLowerCase()),
       userName: data.get("userName"),
-      phone: data.get("phone"),
+      password: data.get("password"),
+      gender:data.get("gender"),
       interests: data.get("interests"),
     };
+    //console.log(data.get("gender"))
 
     const endpoint = "http://localhost:5001/users/register";
     axios
       .post(endpoint, userInformation)
-      .then((result) => console.log(result))
+      //.then((result) => console.log(result))
+      .then((result) => {
+        if (result.status===201) {
+          navigate("/users/signin")
+       // console.log(result)
+        }
+      })
       .catch((error) => console.log(error));
+     
   };
 
   return (
@@ -154,7 +164,7 @@ export default function SignUp() {
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
+                  name="gender"
                 >
                   <FormControlLabel
                     value="female"
@@ -182,11 +192,11 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="phone"
-                  label="Phone Number"
-                  type="number"
-                  name="phone"
-                  autoComplete="phone"
+                  id="country"
+                  label="Country"
+                  type="text"
+                  name="Country"
+                  autoComplete="country"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -203,9 +213,9 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+                    <Checkbox value="allowExtraEmails" color="primary" required />
                   }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I agree with the terms and conditions."
                 />
               </Grid>
             </Grid>
@@ -220,7 +230,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="users/signin" variant="body2">
+                <Link href="signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

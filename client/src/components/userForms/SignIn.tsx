@@ -14,6 +14,11 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import axios from "axios";
+import { redirect, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Paper } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/slices/user";
 
 function Copyright(props: any) {
   return (
@@ -36,6 +41,9 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [invalidCredential, setInvalidCredential] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -43,11 +51,27 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     };
-    const endpoint = "http://localhost:5001/users/login";
+    const endpoint = "http://localhost:5001/users/signin";
     axios
       .post(endpoint, userLogin)
-      .then((result) => console.log(result))
-      .catch((error) => console.log(error));
+      // .then((result)=> console.log(result))
+      .then((response) => {
+        if (response.status === 200) {
+
+          dispatch(userActions.setUserData(response.data.userData)); // store userinformation to the redux
+          const userToken = response.data.token; // from data object. get and assign the token
+          localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
+          
+          navigate(`/users`);
+          //navigate(`/users${response.data.useData._id}`);
+          ///${response.data.useData._id}
+        }
+        console.log(response.data); // console for quiuck checkup
+      })
+      .catch((error) => {
+        console.log(error);
+        setInvalidCredential("Wrong Credential - try again");
+      });
   };
 
   return (
@@ -71,9 +95,18 @@ export default function SignIn() {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
+            noValidate={false}
             sx={{ mt: 1 }}
           >
+            {invalidCredential !== "" ? (
+              <Paper className="error">
+                {invalidCredential} <br />
+                <Link href="register" variant="body2">
+                  {"Don't have an account yet? Sign Up"}
+                </Link>
+              </Paper>
+            ) : null}
+
             <TextField
               margin="normal"
               required
@@ -108,7 +141,7 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="users/register" variant="body2">
+                <Link href="register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

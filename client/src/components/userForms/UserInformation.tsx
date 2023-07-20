@@ -1,0 +1,245 @@
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Link,
+  Paper,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
+
+import { RootState } from "../../redux/store";
+import { userActions } from "../../redux/slices/user";
+import { Copyright } from "@mui/icons-material";
+
+export default function UserInformation() {
+  const dispatch = useDispatch();
+  // get user information from redux
+  const userInformation = useSelector(
+    (state: RootState) => state.users.userInformation
+  );
+
+  const [updateData, setUpdateData] = useState({
+    firstName: userInformation?.firstName,
+    lastName: userInformation?.lastName,
+    country: userInformation?.country,
+    interests: userInformation?.interests,
+    gender: userInformation?.gender,
+  });
+
+  const [readOnly, setReadOnly] = useState(true);
+
+  function updateFirstName(event: React.ChangeEvent<HTMLInputElement>) {
+    setUpdateData({ ...updateData, firstName: event.target.value });
+  }
+  function updateLastName(event: React.ChangeEvent<HTMLInputElement>) {
+    setUpdateData({ ...updateData, lastName: event.target.value });
+  }
+  function updateCountry(event: React.ChangeEvent<HTMLInputElement>) {
+    setUpdateData({ ...updateData, country: event.target.value });
+  }
+  function updateInterests(event: React.ChangeEvent<HTMLInputElement>) {
+    setUpdateData({ ...updateData, interests: event.target.value });
+  }
+  function updategender(event: React.ChangeEvent<HTMLInputElement>) {
+    setUpdateData({ ...updateData, gender: event.target.value });
+  }
+
+  function onEditHandler() {
+    setReadOnly(false);
+  }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const token = localStorage.getItem("userToken"); // token from local storage
+
+    const url = `http://localhost:5001/users/${userInformation?._id}`;
+    axios
+      .put(url, updateData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response, "new data"); //TODO:: remove later display new information
+
+        // update information in redux
+        dispatch(userActions.setUserData(response.data));
+        // //TODO:: try fetch user by id - useParams
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          // //TODO:: alert user nicely
+          // alert("please log in to change your information");
+          return;
+        }
+      });
+    setReadOnly(true);
+  }
+  if (!userInformation) {
+    return (
+      <Paper sx={{ marginTop: 5 }} className="error">
+        Something wrong happened. Please{" "}
+        <Link href="/users/signin"> Sign in </Link>
+      </Paper>
+    );
+  }
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Welcome {userInformation?.userName}
+        </Typography>
+        <Box
+          component="form"
+          noValidate={false}
+          onSubmit={handleSubmit}
+          sx={{ mt: 3 }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="given-name"
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                value={updateData.firstName}
+                inputProps={{ readOnly: readOnly }}
+                onChange={updateFirstName}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                value={updateData.lastName}
+                inputProps={{ readOnly: readOnly }}
+                onChange={updateLastName}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="userName"
+                label="User Name"
+                name="userName"
+                value={userInformation?.userName}
+                disabled
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                value={userInformation?.email}
+                disabled
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormLabel id="demo-row-radio-buttons-group-label">
+                Gender
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="gender"
+                value={updateData.gender}
+                aria-readonly
+                // inputProps={{ readOnly: readOnly }}
+                onChange={updategender}
+              >
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+                <FormControlLabel
+                  value="none"
+                  control={<Radio />}
+                  label="None"
+                />
+              </RadioGroup>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="country"
+                label="Country"
+                type="text"
+                name="Country"
+                value={updateData.country}
+                inputProps={{ readOnly: readOnly }}
+                onChange={updateCountry}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="interests"
+                label="Interests"
+                name="interests"
+                value={updateData.interests}
+                multiline
+                inputProps={{ readOnly: readOnly }}
+                onChange={updateInterests}
+              />
+            </Grid>
+          </Grid>
+
+          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+            Submit
+          </Button>
+          <Button
+            onClick={onEditHandler}
+            variant="contained"
+            sx={{ mt: 3, mb: 2, marginLeft: 2 }}
+          >
+            Edit
+          </Button>
+        </Box>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
+  );
+}

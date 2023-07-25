@@ -1,23 +1,56 @@
 import { NextFunction, Request, Response } from "express";
 
 import Order from "../models/Order";
-import { addNewOrderService } from "../services/orders";
 
-export const addNewOrder = async (
+import {
+  createNewOrderService,
+  findOrderByOrderIdService,
+  findOrderByUserIdService,
+} from "../services/orders";
+
+export const createNewOrderController = async (
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
   try {
-    const userId = request.params.id;
-    const newOrder = new Order({
-      userId: userId,
-      bookList: request.body.bookList,
+    const { bookList, totalOrderPrice } = request.body;
+    console.log(bookList);
+    const order = new Order({
+      userId: request.params.userId,
+      bookList,
+      totalOrderPrice,
     });
 
-    const addedOrder = await addNewOrderService(newOrder);
+    const newOrder = await createNewOrderService(order);
+    response.status(201).json(newOrder);
+  } catch (error) {
+    next(error);
+  }
+};
+export const findOrderByUserIdController = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = request.params.userId;
+    const orderList = await findOrderByUserIdService(userId);
+    response.status(200).json(orderList);
+  } catch (error) {
+    next(error);
+  }
+};
 
-    response.status(201).json(addedOrder);
+export const findOrderByOrderIdController = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const orderId = request.params.orderId;
+    const orderById = await findOrderByOrderIdService(orderId);
+    response.status(200).json(orderById);
   } catch (error) {
     next(error);
   }

@@ -1,9 +1,31 @@
 import { Router } from "express";
+import passport from "passport";
 
-import { addNewOrder } from "../controllers/orders";
+import {
+  createNewOrderController,
+  findOrderByOrderIdController,
+  findOrderByUserIdController,
+} from "../controllers/orders";
 
-const router = Router()
+const router = Router();
 
-router.post("/", addNewOrder)
+router.post(
+  "/:userId",
+  passport.authenticate("jwt", { session: false }),
+  createNewOrderController
+);
 
-export default router
+router.get(
+  "/:userId",
+  passport.authenticate("jwt", { session: false }),
+
+  findOrderByUserIdController
+);
+
+router.get(
+  "/orderdetails/:orderId",
+  passport.authenticate("jwt", { session: false }),
+
+  findOrderByOrderIdController
+);
+export default router;

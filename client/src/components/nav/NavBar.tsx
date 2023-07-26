@@ -1,43 +1,63 @@
 import * as React from "react";
 
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Tooltip } from "@mui/material";
+import {
+  SwipeableDrawer,
+  Tooltip,
+  Box,
+  Toolbar,
+  IconButton,
+  Badge,
+  MenuItem,
+  Menu,
+  AppBar
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
+import { userActions } from "../../redux/slices/user";
+import FavoriteList from "../favorite/FavoriteList";
+import { RootState } from "../../redux/store";
+import logo from "../../assets/logo.jpg";
+import { toggleThemeActions } from "../../redux/slices/theme";
 
+type Anchor = "right"; // slider
 export default function NavBar() {
+ 
+  const dispatch = useDispatch();
+
+  // slider drawer for favorite
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setState({ ...state, [anchor]: open });
+    };
+  //-- end calling
+  const themeMode = useSelector((state: RootState) => state.theme.theme);
+
+  function toggleThemeHandler() {
+    dispatch(toggleThemeActions.toggleTheme());
+  }
   const userInformation = useSelector(
     (state: RootState) => state.users.userInformation
   );
@@ -121,37 +141,10 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+      <MenuItem onClick={() => showProfile()}>Profile</MenuItem>
+      <MenuItem onClick={() => shopHistory(userId)}>Shopping History</MenuItem>
+      <MenuItem onClick={isLogin ? signOut : signIn}>
+        {isLogin ? "SignOut" : "SignIn"}
       </MenuItem>
     </Menu>
   );
@@ -169,14 +162,23 @@ export default function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+          <Link
+            to="/books"
+            style={{ textDecoration: "none", color: "inherit" }}
           >
-            MUI
-          </Typography>
+            <IconButton sx={{ ml: 1 }} color="inherit">
+              <img src={logo} width={40} alt="" />
+            </IconButton>
+          </Link>
+          <Tooltip title="Change Theme" arrow placement="right-start">
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={() => toggleThemeHandler()}
+              color="inherit"
+            >
+              {themeMode === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
+            </IconButton>
+          </Tooltip>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -190,19 +192,36 @@ export default function NavBar() {
                 </Tooltip>
               </IconButton>
             </Link>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <IconButton
-                size="large"
-                aria-label={`show ${favoriteItemsCount} new notifications`}
-                color="inherit"
+
+            <IconButton
+              size="large"
+              aria-label={`show ${favoriteItemsCount} new notifications`}
+              color="inherit"
+              onClick={toggleDrawer("right", true)}
+            >
+              <Badge badgeContent={favoriteItemsCount} color="error">
+                <Tooltip title="Favorite" arrow>
+                  <FavoriteIcon />
+                </Tooltip>
+              </Badge>
+            </IconButton>
+            <SwipeableDrawer
+              anchor={"right"}
+              open={state["right"]}
+              onClose={toggleDrawer("right", false)}
+              onOpen={toggleDrawer("right", true)}
+            >
+              <Box
+                sx={{ width: 550, minHeight: 600, textAlign: "center" }}
+                role="presentation"
+                onClick={toggleDrawer("right", false)}
+                onKeyDown={toggleDrawer("right", false)}
               >
-                <Badge badgeContent={favoriteItemsCount} color="error">
-                  <Tooltip title="Favorite" arrow>
-                    <FavoriteIcon />
-                  </Tooltip>
-                </Badge>
-              </IconButton>
-            </Link>
+                {" "}
+                <FavoriteList />
+              </Box>
+            </SwipeableDrawer>
+
             <Link
               to="/cart"
               style={{ textDecoration: "none", color: "inherit" }}
@@ -250,7 +269,7 @@ export default function NavBar() {
     </Box>
   );
   function showProfile(): void {
-    navigate("/users/userinformation");
+    navigate(`/users/${userId}`);
     setAnchorEl(null);
     handleMobileMenuClose();
   }
@@ -270,7 +289,7 @@ export default function NavBar() {
     localStorage.removeItem("userId");
     setAnchorEl(null);
     handleMobileMenuClose();
-    isLogin = false;
+    dispatch(userActions.removeUserData());
     navigate("/users/signin");
   }
 }

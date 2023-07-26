@@ -11,6 +11,9 @@ export type BookDocument = Document & {
   authors: string[];
   publisher: string;
   publishedDate: Date;
+  onSalse:boolean;
+  mostSold:boolean;
+  newAddition:boolean
 };
 
 export const BookSchema = new mongoose.Schema({
@@ -56,6 +59,18 @@ export const BookSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default:Date.now
+  },
+  onSale: {
+    type: Boolean,
+    default: false,
+  },
+  mostSold: {
+    type: Boolean,
+    default: false,
+  },
+  newAddition: {
+    type: Boolean,
+    default: false,
   },
 });
 

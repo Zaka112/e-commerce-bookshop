@@ -12,7 +12,7 @@ const router = Router();
 //register
 router.post("/register", createUser);
 //login
-router.post("/login", logInController);
+router.post("/signin", logInController);
 
 //update user info
 router.put(
@@ -20,6 +20,6 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   updateUserInfoController
 );
-router.get("/:id", getUserById);
+router.get("/:id",passport.authenticate("jwt", { session: false }), getUserById);
 
 export default router;

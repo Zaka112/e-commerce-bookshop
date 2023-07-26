@@ -1,12 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 
 import Book from "../models/Book";
-
 import {
   addNewBookService,
   getBookByIdService,
   getBookListService,
- } from "../services/books";
+} from "../services/books";
 
 export const addNewBook = async (
   request: Request,
@@ -25,6 +24,9 @@ export const addNewBook = async (
       authors,
       description,
       publishedDate,
+      onSale,
+      mostSold,
+      newAddition,
     } = request.body;
     const bookInformation = new Book({
       title,
@@ -37,6 +39,9 @@ export const addNewBook = async (
       authors,
       description,
       publishedDate,
+      onSale,
+      mostSold,
+      newAddition,
     });
 
     const addedBook = await addNewBookService(bookInformation);
@@ -75,4 +80,3 @@ export const getBookById = async (
     next(error);
   }
 };
-

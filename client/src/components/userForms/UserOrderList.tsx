@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -17,7 +18,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { getUserOrderList } from "../../redux/thunk/orders";
 import UserOrderItems from "./UserOrderItems";
 import { useNavigate, useParams } from "react-router-dom";
-import NotFound from "../NotFound";
+import NotFound from "../Error";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 export default function UserOrdersList() {
@@ -39,6 +40,7 @@ export default function UserOrdersList() {
   const userDetails = useSelector(
     (state: RootState) => state.users.userInformation
   );
+
   const { userId } = useParams<{ userId: string }>();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -49,8 +51,14 @@ export default function UserOrdersList() {
   if (userDetails) {
     return (
       <Paper>
-        <h1>OrderList </h1>
-        <Paper> {userDetails?.userName+` - your order history`} </Paper>
+        <Typography variant="h2" component="div">
+          OrderList{" "}
+        </Typography>
+        <Paper>
+          {" "}
+          <Button onClick={() => navigate(-1)}>Back</Button>{" "}
+          {userDetails?.userName + ` - your order history`}{" "}
+        </Paper>
         <TableContainer>
           <Table>
             <TableHead>
@@ -87,16 +95,7 @@ export default function UserOrdersList() {
 
             {orderList.map((order) => (
               <TableBody key={order._id}>
-                <UserOrderItems
-                  order={order}
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                />
-                {/* <div>
-              {item.bookList.map((book) => (
-                <UserOrderItems book={book} orderList={orderList}  />
-              ))}
-            </div> */}
+                <UserOrderItems order={order} />
               </TableBody>
             ))}
           </Table>

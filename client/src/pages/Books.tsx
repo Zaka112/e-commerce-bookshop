@@ -4,6 +4,7 @@ import BookList from '../components/books/BookList'
 
 export default function books() {
   return (
-    <div><BookList/></div>
+    <div>
+      <BookList/></div>
   )
 }

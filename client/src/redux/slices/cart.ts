@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { CartBook, Book } from "../../types/types";
+import { BookOrder, Book } from "../../types/types";
 
 type CartList = {
-  cartItems: CartBook[];
+  cartItems: BookOrder[];
 };
 
 export const initialState: CartList = {
@@ -20,9 +20,9 @@ const cartSlice = createSlice({
       );
       if (!isIncluded) {
         state.cartItems.push({ ...action.payload, counter: 1 });
-      }
-      else
-     {alert("already in") } // Currently this logic would not be executed as have check in component. Will look for some alert thing later.
+      } else {
+        alert("already in");
+      } // Currently this logic would not be executed as have check in component. Will look for some alert thing later.
     },
     removeFromCart: (state, action: PayloadAction<Book>) => {
       const arrayAfterRemoving = state.cartItems.filter(
@@ -31,7 +31,7 @@ const cartSlice = createSlice({
       state.cartItems = arrayAfterRemoving;
     },
 
-    increaseQuantity: (state, action: PayloadAction<CartBook>) => {
+    increaseQuantity: (state, action: PayloadAction<BookOrder>) => {
       const itemIndex = state.cartItems.findIndex(
         (cartItem) => cartItem._id === action.payload._id
       );
@@ -40,8 +40,8 @@ const cartSlice = createSlice({
         state.cartItems[itemIndex].counter++;
       }
     },
-    decreaseQuantity: (state, action: PayloadAction<CartBook>) => {
-      const itemIndex= state.cartItems.findIndex(
+    decreaseQuantity: (state, action: PayloadAction<BookOrder>) => {
+      const itemIndex = state.cartItems.findIndex(
         (cartItem) => cartItem._id === action.payload._id
       );
       if (itemIndex !== -1) {
@@ -52,7 +52,7 @@ const cartSlice = createSlice({
         }
       }
     },
-    checkOut: (state) => {
+    emptyCart: (state) => {
       state.cartItems = initialState.cartItems;
     },
   },

@@ -2,8 +2,9 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Paper, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { confirmAlert } from 'react-confirm-alert';
 
 import CartItems from "./CartItems";
 import { RootState } from "../../redux/store";
@@ -11,43 +12,72 @@ import { cartListActions } from "../../redux/slices/cart";
 import axios from "axios";
 
 export default function CartList() {
-  const bookList = useSelector((state: RootState) => state.cartList.cartItems);
-  console.log(bookList);
+  const cartList = useSelector((state: RootState) => state.cartList.cartItems);
+  const userInformation = useSelector(
+    (state: RootState) => state.users.userInformation
+  );
+  const userId = userInformation?._id;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = localStorage.getItem("userToken");
 
   function checkOut() {
-    const userId = "64b5c3246d4e91396ae70178"; // for testing
-    const order = { userId: userId, bookList: bookList };
-    const endpoint = "http://localhost:5001/orders";
+    const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
+    const endPoint = `http://localhost:5001/orders/${userId}`;
 
     axios
-      .post(endpoint, order)
+      .post(endPoint, newOrder, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response); // test
-        dispatch(cartListActions.checkOut());
+        if (response.status === 201) {
+          dispatch(cartListActions.emptyCart()); // empty cart
+        }
       })
-      .then((error) => console.log(error));
+      .catch((error) => {
+        if (error.response.status === 401) {
+          toast.error(
+            `Error retrieving resource. Please make sure:
+          • the resource server is accessible
+          • you're logged in`,
+            {
+              position: "top-left",
+              progress: undefined,
+              theme: "light",
+            }
+          );
+        }
+      });
   }
-  const total = bookList.reduce((previousValue, currentValue) => {
+  const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;
   }, 0);
 
+  function removeCart(): void {
+    //alert message beofer removing
+    dispatch(cartListActions.emptyCart());
+  }
+
   return (
-    <Paper sx={{ marginTop: 10, minHeight: 700 }}>
-      <Typography variant="h1" component="div">
-        Your Cart
+    <Paper sx={{ minHeight: 700 }}>
+      <Typography variant="h3" component="div">
+        Cart
       </Typography>
 
-      {bookList.length === 0 ? (
+      {cartList.length === 0 ? (
         <Typography variant="h2" component="div">
           No item in the cart!
         </Typography>
       ) : (
-        bookList.map((cartItem) => {
+        cartList.map((cartItem) => {
           return <CartItems cartItem={cartItem} key={cartItem._id} />;
         })
       )}
-      {bookList.length === 0 ? (
+      {cartList.length === 0 ? (
         <Link to="/books" style={{ color: "inherit" }}>
           <Button size="large" sx={{ color: "inherit" }}>
             Back to Shoping
@@ -66,34 +96,40 @@ export default function CartList() {
       <br />
       <Typography variant="h3" component="div">
         {" "}
-        Total Amount: $ {total.toLocaleString()}
+        Total Amount: $ {totalOrderPrice.toLocaleString()}
       </Typography>
 
-      {bookList.length > 0 ? (
+      {cartList.length > 0 ? (
         <Button
           sx={{ color: "inherit" }}
           onClick={() => {
             checkOut();
-            toast.success(` Thanks for Shoping here. Come back soon`, {
-              position: "top-left",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
           }}
         >
           Check Out
         </Button>
       ) : null}
-      {bookList.length > 0 ? (
-        <Button onClick={() => checkOut()} sx={{ color: "inherit" }}>
+      {cartList.length > 0 ? (
+        <Button onClick={() => submit()} sx={{ color: "inherit" }}>
           Remove Cart
         </Button>
       ) : null}
     </Paper>
   );
+ function submit () {
+    confirmAlert({
+      title: 'Confirm to Proceed',
+      message: 'Are you sure to remove cart?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => removeCart()
+        },
+        {
+          label: 'No',
+          onClick: () => navigate("/cart")
+        }
+      ]
+    });
+  };
 }

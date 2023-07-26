@@ -5,11 +5,13 @@ import { Book } from "../../types/types";
 type BookList = {
   books: Book[];
   isLoading: boolean;
+  favorite: Book[];
 };
 
 const initialState: BookList = {
   books: [],
   isLoading: true,
+  favorite:[]
 };
 
 const bookSlice = createSlice({
@@ -19,6 +21,23 @@ const bookSlice = createSlice({
     getBooksData: (state, action: PayloadAction<Book[]>) => {
       state.books = action.payload;
       state.isLoading = false;
+    },
+    addFavoriteBook: (state, action: PayloadAction<Book>): void => {
+      const isInFavorite = state.favorite.some(
+        (book) => book._id === action.payload._id
+      );
+
+      if (!isInFavorite) {
+        state.favorite = [...state.favorite, action.payload];
+      } else {
+        state.favorite = [...state.favorite];
+      }
+    },
+    removeFavoriteBook: (state, action: PayloadAction<Book>): void => {
+      const remainingAfterDelete = state.favorite.filter(
+        (book) => book._id  !== action.payload._id
+      );
+      state.favorite = remainingAfterDelete;
     },
   },
 });

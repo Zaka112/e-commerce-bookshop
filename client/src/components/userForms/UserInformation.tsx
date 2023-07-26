@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   Box,
   Button,
-  Checkbox,
+  CircularProgress,
   Container,
   CssBaseline,
   FormControlLabel,
@@ -20,7 +20,8 @@ import {
 
 import { RootState } from "../../redux/store";
 import { userActions } from "../../redux/slices/user";
-import { Copyright } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import NotFound from "../Error";
 
 export default function UserInformation() {
   const dispatch = useDispatch();
@@ -28,7 +29,8 @@ export default function UserInformation() {
   const userInformation = useSelector(
     (state: RootState) => state.users.userInformation
   );
-
+  console.log(userInformation, "user Information");
+  const isLoading = useSelector((state: RootState) => state.users.isLoading);
   const [updateData, setUpdateData] = useState({
     firstName: userInformation?.firstName,
     lastName: userInformation?.lastName,
@@ -57,6 +59,10 @@ export default function UserInformation() {
 
   function onEditHandler() {
     setReadOnly(false);
+  }
+  const navigate = useNavigate();
+  function onCloseHandler() {
+    navigate(-1);
   }
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -88,13 +94,13 @@ export default function UserInformation() {
     setReadOnly(true);
   }
   if (!userInformation) {
-    return (
-      <Paper sx={{ marginTop: 5 }} className="error">
-        Something wrong happened. Please{" "}
-        <Link href="/users/signin"> Sign in </Link>
-      </Paper>
-    );
+    return <NotFound />;
+  } else if (isLoading) {
+    <Paper>
+      <CircularProgress sx={{ fontsize: 100 }} />
+    </Paper>;
   }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -173,8 +179,6 @@ export default function UserInformation() {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="gender"
                 value={updateData.gender}
-                aria-readonly
-                // inputProps={{ readOnly: readOnly }}
                 onChange={updategender}
               >
                 <FormControlLabel
@@ -237,9 +241,15 @@ export default function UserInformation() {
           >
             Edit
           </Button>
+          <Button
+            onClick={onCloseHandler}
+            variant="contained"
+            sx={{ mt: 3, mb: 2, marginLeft: 2 }}
+          >
+            Close
+          </Button>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 }

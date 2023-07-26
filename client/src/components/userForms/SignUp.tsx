@@ -1,45 +1,30 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { FormLabel, Radio, RadioGroup } from "@mui/material";
+import {
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+  Box,
+  Grid,
+  Checkbox,
+  TextField,
+  Button,
+  Avatar,
+  Container,
+} from "@mui/material";
 import axios from "axios";
-import {  useNavigate } from "react-router-dom";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        BuY !T
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const defaultTheme = createTheme();
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-   event.preventDefault();
+    event.preventDefault();
 
     const data = new FormData(event.currentTarget);
 
@@ -49,196 +34,186 @@ export default function SignUp() {
       email: data.get("email".toLowerCase()),
       userName: data.get("userName"),
       password: data.get("password"),
-      gender:data.get("gender"),
+      gender: data.get("gender"),
       interests: data.get("interests"),
     };
-    //console.log(data.get("gender"))
 
     const endpoint = "http://localhost:5001/users/register";
     axios
       .post(endpoint, userInformation)
-      //.then((result) => console.log(result))
+
       .then((result) => {
-        if (result.status===201) {
-          navigate("/users/signin")
-       // console.log(result)
+        if (result.status === 201) {
+          navigate("/users/signin");
         }
       })
       .catch((error) => console.log(error));
-     
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
         <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+          component="form"
+          noValidate={false}
+          onSubmit={handleSubmit}
+          sx={{ mt: 3 }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            noValidate={false}
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="userName"
-                  label="User Name"
-                  name="userName"
-                  autoComplete=""
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                 
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                
-                />
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="given-name"
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="family-name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="userName"
+                label="User Name"
+                name="userName"
+                autoComplete=""
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+              />
+            </Grid>
 
-              <Grid item xs={12}>
-                <FormLabel id="demo-row-radio-buttons-group-label">
-                  Gender
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="gender"
-                >
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
-                  />
-                  <FormControlLabel
-                    value="other"
-                    control={<Radio />}
-                    label="Other"
-                  />
-                  <FormControlLabel
-                    value="none"
-                    control={<Radio />}
-                    label="None"
-                  />
-                </RadioGroup>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="country"
-                  label="Country"
-                  type="text"
-                  name="Country"
-                  autoComplete="country"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="interests"
-                  label="Interests"
-                  name="interests"
-                  autoComplete="interests"
-                  multiline
-                />
-              </Grid>
-              <Grid item xs={12}>
+            <Grid item xs={12}>
+              <FormLabel id="demo-row-radio-buttons-group-label">
+                Gender
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="gender"
+              >
                 <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" required />
-                  }
-                  label="I agree with the terms and conditions."
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
                 />
-              </Grid>
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+                <FormControlLabel
+                  value="none"
+                  control={<Radio />}
+                  label="None"
+                />
+              </RadioGroup>
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="country"
+                label="Country"
+                type="text"
+                name="Country"
+                autoComplete="country"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="interests"
+                label="Interests"
+                name="interests"
+                autoComplete="interests"
+                multiline
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox value="allowExtraEmails" color="primary" required />
+                }
+                label="I agree with the terms and conditions."
+              />
+            </Grid>
+          </Grid>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link to="/users/signin">Already have an account? Sign in</Link>
             </Grid>
-          </Box>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+      </Box>
+    </Container>
   );
 }

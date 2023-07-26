@@ -1,20 +1,37 @@
 import React from "react";
 import "./App.css";
 
-import HomePage from "./pages/HomePage";
-import { Route, Routes } from "react-router-dom";
-import BookDetail from "./pages/BookDetail";
-import Books from "./pages/Books";
+import { useSelector } from "react-redux";
+
+import AppRoutes from "./AppRoutes";
+import Navbar from "./pages/Navbar";
+import { RootState } from "./redux/store";
+import { Paper, ThemeProvider, createTheme } from "@mui/material";
+import Footer from "./components/footer/Footer";
+
 
 function App() {
-  return <div className="App">
-    
-     <Routes>
-     <Route path="/" element={<HomePage />} />
-     <Route path="/books" element={<Books />} />
-        <Route path="/books/:id" element={<BookDetail />} />
-      </Routes>
-    </div>;
+  const themeMode = useSelector((state: RootState) => state.theme.theme);
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Nunito", "sen-serif"].join(","),
+    },
+    palette: {
+      mode: themeMode === "dark" ? "light" : "dark",
+      
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+    <Paper className="App">
+      <Navbar />
+      <AppRoutes />
+     
+    </Paper>
+    <Footer/>
+    </ThemeProvider>
+  );
 }
 
 export default App;

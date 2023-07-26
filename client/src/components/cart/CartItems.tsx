@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { cartListActions } from "../../redux/slices/cart";
-import { CartBook } from "../../types/types";
+import { BookOrder } from "../../types/types";
 
-type Prop = { cartItem: CartBook };
+type Prop = { cartItem: BookOrder };
 
 export default function CartItems({ cartItem }: Prop) {
   const dispatch = useDispatch();

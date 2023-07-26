@@ -13,7 +13,7 @@ export default function UserOrderDetails() {
     (state: RootState) => state.orders.userOrderDetails
   );
   const dispatch = useDispatch<AppDispatch>();
-  console.log(orderDetails);
+ 
   useEffect(() => {
     if (orderId) {
       dispatch(getOrderDetails(orderId));

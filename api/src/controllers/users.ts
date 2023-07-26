@@ -121,7 +121,7 @@ export const updateUserInfoController = async (
     const updatedInformation = request.body;
     const updatedUser = await updateUserByIdService(userId, updatedInformation);
 
-    response.json(updatedUser);
+    response.status(201).json(updatedUser);
   } catch (error) {
     next(error);
   }

@@ -15,7 +15,6 @@ export const createNewOrderController = async (
 ) => {
   try {
     const { bookList, totalOrderPrice } = request.body;
-    console.log(bookList);
     const order = new Order({
       userId: request.params.userId,
       bookList,

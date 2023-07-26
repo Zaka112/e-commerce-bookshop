@@ -20,9 +20,7 @@ import { Book } from "../../types/types";
 import { cartListActions } from "../../redux/slices/cart";
 
 export default function BookDetails() {
-  const bookList = useSelector((state: RootState) => state.books.books);
-  const onSale = bookList.filter((bookItem) => bookItem.onSale === true);
-  console.log(onSale, "on sale");
+  
   const bookDetails = useSelector((state: RootState) => state.bookDetail.book);
 
   const [currentImage, setCurrentImage] = useState(`${bookDetails?.images[0]}`);

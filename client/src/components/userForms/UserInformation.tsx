@@ -10,7 +10,6 @@ import {
   FormControlLabel,
   FormLabel,
   Grid,
-  Link,
   Paper,
   Radio,
   RadioGroup,
@@ -29,7 +28,7 @@ export default function UserInformation() {
   const userInformation = useSelector(
     (state: RootState) => state.users.userInformation
   );
-  console.log(userInformation, "user Information");
+
   const isLoading = useSelector((state: RootState) => state.users.isLoading);
   const [updateData, setUpdateData] = useState({
     firstName: userInformation?.firstName,
@@ -78,11 +77,12 @@ export default function UserInformation() {
         },
       })
       .then((response) => {
-        console.log(response, "new data"); //TODO:: remove later display new information
-
-        // update information in redux
-        dispatch(userActions.setUserData(response.data));
-        // //TODO:: try fetch user by id - useParams
+       // console.log(response, "new data"); //TODO:: remove later display new information
+        if (response.status === 201) {
+          // update information in redux
+          dispatch(userActions.setUserData(response.data));
+          // //TODO:: try fetch user by id - useParams
+        }
       })
       .catch((error) => {
         if (error.response.status === 401) {

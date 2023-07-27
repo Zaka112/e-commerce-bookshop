@@ -40,7 +40,7 @@ export default function BookDetails() {
   const dispatch = useDispatch();
   const dispatchApp = useDispatch<AppDispatch>();
   const { bookId } = useParams<{ bookId: string }>();
-  const bookDetailURL = `http://localhost:5001/books/${bookId}`;
+  const bookDetailURL = `https://backend-dewo.onrender.com/books/${bookId}`;
 
   function addToCart(book: Book): void {
     if (!isInCart) {

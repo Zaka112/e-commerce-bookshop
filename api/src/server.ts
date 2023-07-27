@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import app from "./app";
 
 dotenv.config();
+
 const port = 5001;
+
 mongoose
   .connect(process.env.MONGODB_URI as string)
   .then(() => {

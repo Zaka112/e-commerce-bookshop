@@ -38,7 +38,7 @@ export default function SignUp() {
       interests: data.get("interests"),
     };
 
-    const endpoint = "http://localhost:5001/users/register";
+    const endpoint = "https://backend-dewo.onrender.com/users/register";
     axios
       .post(endpoint, userInformation)
 

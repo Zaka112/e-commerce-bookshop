@@ -6,7 +6,7 @@ import { Order } from "../../types/types";
 
 export function getUserOrderList(userId: string) {
   const token = localStorage.getItem("userToken");
-  const orderUrl = `http://localhost:5001/orders/${userId}`;
+  const orderUrl = `https://backend-dewo.onrender.com/orders/${userId}`;
 
   return async (dispatch: AppDispatch) => {
     const response = await fetch(orderUrl, {
@@ -22,7 +22,7 @@ export function getUserOrderList(userId: string) {
 
 export function getOrderDetails(orderId: string) {
   const token = localStorage.getItem("userToken");
-  const orderDetailsUrl = `http://localhost:5001/orders/orderdetails/${orderId}`;
+  const orderDetailsUrl = `https://backend-dewo.onrender.com/orders/orderdetails/${orderId}`;
   return async (dispatch: AppDispatch) => {
     const response = await fetch(orderDetailsUrl, {
       headers: {

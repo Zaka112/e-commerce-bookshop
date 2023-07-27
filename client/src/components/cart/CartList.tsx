@@ -23,7 +23,7 @@ export default function CartList() {
 
   function checkOut() {
     const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
-    const endPoint = `http://localhost:5001/orders/${userId}`;
+    const endPoint = `https://backend-dewo.onrender.com/orders/${userId}`;
 
     axios
       .post(endPoint, newOrder, {

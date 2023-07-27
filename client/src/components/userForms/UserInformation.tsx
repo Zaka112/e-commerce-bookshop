@@ -68,7 +68,7 @@ export default function UserInformation() {
 
     const token = localStorage.getItem("userToken"); // token from local storage
 
-    const url = `http://localhost:5001/users/${userInformation?._id}`;
+    const url = `https://backend-dewo.onrender.com/users/${userInformation?._id}`;
     axios
       .put(url, updateData, {
         headers: {

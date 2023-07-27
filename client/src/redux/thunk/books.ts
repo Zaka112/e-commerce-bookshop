@@ -3,7 +3,7 @@ import { AppDispatch } from "../store";
 import { bookDetailActions } from "../slices/bookDetails";
 import { Book } from "../../types/types";
 
-const booksURL = "http://localhost:5001/books";
+const booksURL = "https://backend-dewo.onrender.com/books";
 
 export function getBooksData() {
   return async (dispatch: AppDispatch) => {

@@ -26,8 +26,8 @@ export default function BookList() {
   );
   if (isLoading) {
     return (
-      <Paper>
-        <CircularProgress />
+      <Paper sx={{minHeight:600}}>
+        <CircularProgress size="10rem" color="inherit"  />
       </Paper>
     );
   } else

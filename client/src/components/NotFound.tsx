@@ -1,6 +1,6 @@
 import { Button, Paper, Typography } from "@mui/material";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 import notFound from "../assets/notFound.jpg"
 
@@ -11,9 +11,9 @@ export default function NotFound() {
       sx={{
         minHeight: 800,
        background: `url(${notFound})`,
+      
       // backgroundImage:`url(${notFound})`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

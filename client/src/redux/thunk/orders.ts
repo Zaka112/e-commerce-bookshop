@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { orderActions } from "../slices/orders";
 import { AppDispatch } from "../store";
 import { Order } from "../../types/types";

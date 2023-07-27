@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 type Theme = {
   theme: "light" | "dark";
@@ -7,7 +7,7 @@ type Theme = {
 
 export const initialState: Theme = {
   theme: "dark",
-  currentTheme:"light"
+  currentTheme: "light",
 };
 
 const themeSlice = createSlice({
@@ -17,20 +17,15 @@ const themeSlice = createSlice({
     toggleTheme: (state) => {
       state.theme === "light"
         ? (state.theme = "dark")
-        
         : (state.theme = "light");
 
       //TODO:: add more themes for web
     },
     currentTheme: (state) => {
-        state.theme === "light"
-          ? (state.currentTheme = "dark")
-          
-          : (state.currentTheme = "light");
-  
-        //TODO:: add more themes for web
-      },
-  
+      state.theme === "light"
+        ? (state.currentTheme = "dark")
+        : (state.currentTheme = "light");
+    },
   },
 });
 

@@ -12,7 +12,7 @@ import {
   TextField,
   CssBaseline,
   Button,
-  Avatar
+  Avatar,
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +43,6 @@ export default function SignIn() {
           dispatch(userActions.setUserData(response.data.userData)); // store userinformation to the redux
           const userToken = response.data.token; // from data object. get and assign the token
           localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
-
           navigate("/books");
         }
       })

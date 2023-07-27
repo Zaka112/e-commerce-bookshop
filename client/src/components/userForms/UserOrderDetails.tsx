@@ -5,6 +5,7 @@ import { getOrderDetails } from "../../redux/thunk/orders";
 import { Button, Paper } from "@mui/material";
 import NotFound from "../Error";
 import { useNavigate, useParams } from "react-router-dom";
+import BookList from "../books/BookList";
 
 export default function UserOrderDetails() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function UserOrderDetails() {
         {orderDetails.bookList.map((book) => {
           return (
             //TODO: Proper display
-            <Paper sx={{minHeight:600}}>
+            <Paper sx={{minHeight:600}} key={book._id}>
               {book.title} -- {book.counter}
             </Paper>
           );

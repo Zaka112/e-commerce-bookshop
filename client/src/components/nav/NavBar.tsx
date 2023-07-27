@@ -94,7 +94,7 @@ export default function NavBar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-
+  
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -119,7 +119,7 @@ export default function NavBar() {
       <MenuItem onClick={() => showProfile()}>Profile</MenuItem>
       <MenuItem onClick={() => shopHistory(userId)}>Shopping History</MenuItem>
       <MenuItem onClick={isLogin ? signOut : signIn}>
-        {isLogin ? "SignOut" : "SignIn"}
+        {isLogin ? "Sign Out" : "Sign In"}
       </MenuItem>
     </Menu>
   );
@@ -144,7 +144,7 @@ export default function NavBar() {
       <MenuItem onClick={() => showProfile()}>Profile</MenuItem>
       <MenuItem onClick={() => shopHistory(userId)}>Shopping History</MenuItem>
       <MenuItem onClick={isLogin ? signOut : signIn}>
-        {isLogin ? "SignOut" : "SignIn"}
+        {isLogin ? "Sign Out" : "Sign In"}
       </MenuItem>
     </Menu>
   );

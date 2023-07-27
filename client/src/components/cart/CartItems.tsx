@@ -31,11 +31,11 @@ export default function CartItems({ cartItem }: Prop) {
         sx={{
           display: "flex",
           gap: "2rem",
-          justifyContent: "center",
+         marginLeft:3,
           alignItems: "center",
         }}
       >
-        <Tooltip title="Cart Details" arrow placement="left-start">
+        <Tooltip title="Item Details" arrow placement="left-start">
           <Link to={`/books/${cartItem._id}`}>
             <img src={cartItem.images[0]} width={70} alt={cartItem.title} />
           </Link>
@@ -44,12 +44,21 @@ export default function CartItems({ cartItem }: Prop) {
           sx={{
             minWidth: 345,
             display: "flex",
+            flexDirection:"column"
           }}
         >
-          <Typography>
-            {" "}
-            {cartItem.title}: $ {cartItem.price}
+          <Typography fontSize={18} fontWeight="bold">
+           
+            {cartItem.title}
           </Typography>
+          <Typography>
+            Price: $ {cartItem.price}
+          </Typography>
+          <IconButton onClick={removeItem}>
+          <Tooltip title="remove Item" arrow placement="bottom">
+            <DeleteForeverIcon />
+          </Tooltip>
+        </IconButton>
         </Box>
         <Box
           sx={{
@@ -70,12 +79,10 @@ export default function CartItems({ cartItem }: Prop) {
             </Tooltip>
           </IconButton>
         </Box>
-        <IconButton onClick={removeItem}>
-          <Tooltip title="remove Item" arrow placement="bottom">
-            <DeleteForeverIcon />
-          </Tooltip>
-        </IconButton>
+       
+        
       </Box>
+      
     </Paper>
   );
 }

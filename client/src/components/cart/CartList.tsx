@@ -1,10 +1,10 @@
 import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { confirmAlert } from 'react-confirm-alert';
+import { confirmAlert } from "react-confirm-alert";
 
 import CartItems from "./CartItems";
 import { RootState } from "../../redux/store";
@@ -36,11 +36,15 @@ export default function CartList() {
       .then((response) => {
         console.log(response); // test
         if (response.status === 201) {
-          toast.info("Successfully completed. Thanks for shoping with us. Come back soon :)", {
-            position: "top-center",
-            progress: undefined,
-            theme: "light",
-          });
+          toast.info(
+            "Successfully completed. Thanks for shoping with us. Come back soon :)",
+            {
+              position: "top-center",
+              progress: undefined,
+              theme: "light",
+            }
+          );
+          setTimeout(() => navigate("/books"), 6000);
           dispatch(cartListActions.emptyCart()); // empty cart
         }
       })
@@ -69,45 +73,38 @@ export default function CartList() {
   }
 
   return (
-    <Paper sx={{ minHeight: 700 }}>
-      <Typography variant="h3" component="div">
-        Cart
-      </Typography>
-
+    <Paper sx={{minHeight:200}}>
       {cartList.length === 0 ? (
-        <Typography variant="h2" component="div">
-          No item in the cart!
+        <Typography variant="h5" component="div">
+          Your cart is empty, return to the{" "}
+          <Button size="large" onClick={() => navigate("/books")}>
+            books
+          </Button>{" "}
+          page.
         </Typography>
       ) : (
-        cartList.map((cartItem) => {
-          return <CartItems cartItem={cartItem} key={cartItem._id} />;
-        })
+        <Grid
+          container
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "1rem",
+          }}
+        >
+          {cartList.map((cartItem) => {
+            return <CartItems cartItem={cartItem} key={cartItem._id} />;
+          })}
+        </Grid>
       )}
-      {cartList.length === 0 ? (
-        <Link to="/books" style={{ color: "inherit" }}>
-          <Button size="large" sx={{ color: "inherit" }}>
-            Back to Shoping
-          </Button>{" "}
-        </Link>
-      ) : (
-        <Paper>
-          <Link to="/books" style={{ color: "inherit" }}>
-            {" "}
-            <Button size="large" sx={{ color: "inherit" }}>
-              Add more items to the cart
-            </Button>{" "}
-          </Link>
-        </Paper>
-      )}
-      <br />
-      <Typography variant="h3" component="div">
+
+      <Typography variant="h4" component="div">
         {" "}
         Total Amount: $ {totalOrderPrice.toLocaleString()}
       </Typography>
-
       {cartList.length > 0 ? (
         <Button
-          sx={{ color: "inherit" }}
+          size="small"
+          variant="contained"
           onClick={() => {
             checkOut();
           }}
@@ -115,28 +112,34 @@ export default function CartList() {
           Check Out
         </Button>
       ) : null}
+      <br />
       {cartList.length > 0 ? (
-        <Button onClick={() => onCheckOut()} sx={{ color: "inherit" }}>
-          Remove Cart
-        </Button>
+        <Button onClick={() => onRemove()}>Remove Cart</Button>
+      ) : null}
+      {cartList.length !== 0 ? (
+        <Paper>
+          <Link to="/books" style={{ color: "inherit" }}>
+            <Button>Add more items</Button>{" "}
+          </Link>
+        </Paper>
       ) : null}
     </Paper>
   );
- function onCheckOut () {
+  function onRemove() {
     confirmAlert({
-      title: 'Confirm to Proceed',
-      message: 'Are you sure to remove cart?.',
+      title: "Confirm to Proceed",
+      message: "Are you sure to remove cart?.",
       buttons: [
         {
-          label: 'Yes',
+          label: "Yes",
           onClick: () => removeCart(),
-          color:"#fffccc"
+          color: "#fffccc",
         },
         {
-          label: 'No',
-          onClick: () => navigate("/cart")
-        }
-      ]
+          label: "No",
+          onClick: () => navigate("/cart"),
+        },
+      ],
     });
-  };
+  }
 }

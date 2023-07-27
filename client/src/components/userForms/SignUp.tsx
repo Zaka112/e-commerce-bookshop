@@ -19,6 +19,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api";
+import { confirmAlert } from "react-confirm-alert";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -37,14 +39,26 @@ export default function SignUp() {
       gender: data.get("gender"),
       interests: data.get("interests"),
     };
+    function onSuccess() {
+      confirmAlert({
+        title: "Congratulation",
+        message: "User created successfully. Click OK to login",
+        buttons: [
+          {
+            label: "OK",
+            onClick: () => navigate("/users/signin"),
+          },
+        ],
+      });
+    }
 
-    const endpoint = "https://backend-dewo.onrender.com/users/register";
+    const endpoint = `${BASE_URL}/users/register`;
     axios
       .post(endpoint, userInformation)
 
       .then((result) => {
         if (result.status === 201) {
-          navigate("/users/signin");
+          onSuccess();
         }
       })
       .catch((error) => console.log(error));
@@ -102,7 +116,7 @@ export default function SignUp() {
                 id="userName"
                 label="User Name"
                 name="userName"
-                autoComplete=""
+                autoComplete="userName"
               />
             </Grid>
             <Grid item xs={12}>

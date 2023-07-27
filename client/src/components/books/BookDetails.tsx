@@ -18,6 +18,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { getBookDetailData } from "../../redux/thunk/books";
 import { Book } from "../../types/types";
 import { cartListActions } from "../../redux/slices/cart";
+import { BASE_URL } from "../../api";
 
 export default function BookDetails() {
   
@@ -40,7 +41,7 @@ export default function BookDetails() {
   const dispatch = useDispatch();
   const dispatchApp = useDispatch<AppDispatch>();
   const { bookId } = useParams<{ bookId: string }>();
-  const bookDetailURL = `https://backend-dewo.onrender.com/books/${bookId}`;
+  const bookDetailURL = `${BASE_URL}/books/${bookId}`;
 
   function addToCart(book: Book): void {
     if (!isInCart) {

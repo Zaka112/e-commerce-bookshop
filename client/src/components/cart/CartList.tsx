@@ -10,6 +10,7 @@ import CartItems from "./CartItems";
 import { RootState } from "../../redux/store";
 import { cartListActions } from "../../redux/slices/cart";
 import axios from "axios";
+import { BASE_URL } from "../../api";
 
 export default function CartList() {
   const cartList = useSelector((state: RootState) => state.cartList.cartItems);
@@ -23,7 +24,7 @@ export default function CartList() {
 
   function checkOut() {
     const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
-    const endPoint = `https://backend-dewo.onrender.com/orders/${userId}`;
+    const endPoint = `${BASE_URL}/orders/${userId}`;
 
     axios
       .post(endPoint, newOrder, {
@@ -35,6 +36,11 @@ export default function CartList() {
       .then((response) => {
         console.log(response); // test
         if (response.status === 201) {
+          toast.info("Successfully completed. Thanks for shoping with us. Come back soon :)", {
+            position: "top-center",
+            progress: undefined,
+            theme: "light",
+          });
           dispatch(cartListActions.emptyCart()); // empty cart
         }
       })
@@ -110,20 +116,21 @@ export default function CartList() {
         </Button>
       ) : null}
       {cartList.length > 0 ? (
-        <Button onClick={() => submit()} sx={{ color: "inherit" }}>
+        <Button onClick={() => onCheckOut()} sx={{ color: "inherit" }}>
           Remove Cart
         </Button>
       ) : null}
     </Paper>
   );
- function submit () {
+ function onCheckOut () {
     confirmAlert({
       title: 'Confirm to Proceed',
       message: 'Are you sure to remove cart?.',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => removeCart()
+          onClick: () => removeCart(),
+          color:"#fffccc"
         },
         {
           label: 'No',

@@ -21,6 +21,7 @@ import { RootState } from "../../redux/store";
 import { userActions } from "../../redux/slices/user";
 import { useNavigate } from "react-router-dom";
 import NotFound from "../Error";
+import { BASE_URL } from "../../api";
 
 export default function UserInformation() {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export default function UserInformation() {
 
     const token = localStorage.getItem("userToken"); // token from local storage
 
-    const url = `https://backend-dewo.onrender.com/users/${userInformation?._id}`;
+    const url = `${BASE_URL}/users/${userInformation?._id}`;
     axios
       .put(url, updateData, {
         headers: {

@@ -1,10 +1,11 @@
 import { orderActions } from "../slices/orders";
 import { AppDispatch } from "../store";
 import { Order } from "../../types/types";
+import { BASE_URL } from "../../api";
 
 export function getUserOrderList(userId: string) {
   const token = localStorage.getItem("userToken");
-  const orderUrl = `https://backend-dewo.onrender.com/orders/${userId}`;
+  const orderUrl = `${BASE_URL}/orders/${userId}`;
 
   return async (dispatch: AppDispatch) => {
     const response = await fetch(orderUrl, {
@@ -20,7 +21,7 @@ export function getUserOrderList(userId: string) {
 
 export function getOrderDetails(orderId: string) {
   const token = localStorage.getItem("userToken");
-  const orderDetailsUrl = `https://backend-dewo.onrender.com/orders/orderdetails/${orderId}`;
+  const orderDetailsUrl = `${BASE_URL}/orders/orderdetails/${orderId}`;
   return async (dispatch: AppDispatch) => {
     const response = await fetch(orderDetailsUrl, {
       headers: {

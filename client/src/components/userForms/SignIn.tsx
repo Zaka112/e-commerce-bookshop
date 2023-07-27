@@ -21,6 +21,7 @@ import { Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
 
 import { userActions } from "../../redux/slices/user";
+import { BASE_URL } from "../../api";
 
 export default function SignIn() {
   const [invalidCredential, setInvalidCredential] = useState("");
@@ -33,7 +34,7 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     };
-    const endpoint = "https://backend-dewo.onrender.com/users/signin";
+    const endpoint = `${BASE_URL}/users/signin`;
     axios
       .post(endpoint, userLogin)
 

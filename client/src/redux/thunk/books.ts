@@ -2,8 +2,9 @@ import { bookActions } from "../slices/books";
 import { AppDispatch } from "../store";
 import { bookDetailActions } from "../slices/bookDetails";
 import { Book } from "../../types/types";
+import { BASE_URL } from "../../api";
 
-const booksURL = "https://backend-dewo.onrender.com/books";
+const booksURL = `${BASE_URL}/books`;
 
 export function getBooksData() {
   return async (dispatch: AppDispatch) => {

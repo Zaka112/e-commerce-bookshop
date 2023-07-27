@@ -1,4 +1,4 @@
-import Express from "express";
+import express from "express";
 import cors from "cors";
 import passport from "passport";
 
@@ -8,9 +8,9 @@ import ordersRouter from "./routes/orders";
 import apiErrorHandler from "./middlewares/apiErrorHandler";
 import { jwtStrategy } from "./config/passport";
 
-const app = Express();
+const app = express();
 
-app.use(Express.json());
+app.use(express.json());
 app.use(cors());
 //initilize passport and mention the stretegy you gonna use
 app.use(passport.initialize());

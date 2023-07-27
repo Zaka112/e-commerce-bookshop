@@ -163,7 +163,7 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Link
-            to="/books"
+            to="/"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <IconButton sx={{ ml: 1 }} color="inherit">

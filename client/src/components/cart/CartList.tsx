@@ -83,7 +83,7 @@ export default function CartList() {
           page.
         </Typography>
       ) : (
-        <Grid
+        <Grid marginTop={5}
           container
           sx={{
             display: "grid",

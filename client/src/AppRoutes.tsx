@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 
-import SignUp from "./components/userForms/SignUp";
-import SignIn from "./components/userForms/SignIn";
+import SignUp from "./components/users/SignUp";
+import SignIn from "./components/users/SignIn";
 import Books from "./pages/Books";
 import BookDetail from "./pages/BookDetail";
-import UserInformation from "./components/userForms/UserInformation";
+import UserInformation from "./components/users/UserInformation";
 import Cart from "./pages/Cart";
 import UserOrders from "./pages/users/UserOrders";
-import UserOrderDetails from "./components/userForms/UserOrderDetails";
+import UserOrderDetails from "./components/orders/UserOrderDetails";
 import NotFound from "./components/NotFound";
 import HomePage from "./pages/HomePage";
 

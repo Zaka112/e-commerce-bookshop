@@ -28,22 +28,24 @@ export default function SignUp() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    //TODO : Form Validation
     const data = new FormData(event.currentTarget);
 
     const userInformation = {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       email: data.get("email".toLowerCase()),
-      userName: data.get("userName"),
+      userName: data.get("userName".toLowerCase()),
       password: data.get("password"),
+      confirmPassword: data.get("confirmPassword"),
       gender: data.get("gender"),
       interests: data.get("interests"),
     };
+
     function onSuccess() {
       confirmAlert({
-        title: "Congratulation",
-        message: "User created successfully. Click OK to login",
+        title: `Congratulation! ${userInformation.userName}`,
+        message: "You successfully created an account. Click OK to login",
         buttons: [
           {
             label: "OK",
@@ -52,19 +54,45 @@ export default function SignUp() {
         ],
       });
     }
+    if (
+      userInformation.password?.toString().toLowerCase() !==
+      userInformation.confirmPassword?.toString().toLowerCase()
+    ) {
+      confirmAlert({
+        title: "Careful!",
+        message: "Password and Confirm Password does not match.",
+        buttons: [
+          {
+            label: "OK",
+          },
+        ],
+      });
+    } else {
+      const endpoint = `${BASE_URL}/users/register`;
+      axios
+        .post(endpoint, userInformation)
 
-    const endpoint = `${BASE_URL}/users/register`;
-    axios
-      .post(endpoint, userInformation)
-
-      .then((result) => {
-        if (result.status === 201) {
-          onSuccess();
-        }
-      })
-      .catch((error) => console.log(error));
+        .then((response) => {
+          if (response.status === 201) {
+            onSuccess();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.status === 409) {
+            confirmAlert({
+              title: "Error!",
+              message: "User name or email already registered.",
+              buttons: [
+                {
+                  label: "OK",
+                },
+              ],
+            });
+          }
+        });
+    }
   };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

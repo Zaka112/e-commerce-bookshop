@@ -17,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 
 import { RootState } from "../../redux/store";
 import { userActions } from "../../redux/slices/user";
@@ -24,7 +25,6 @@ import NotFound from "../Error";
 import { BASE_URL } from "../../api";
 
 export default function UserInformation() {
-  
   const dispatch = useDispatch();
   // get user information from redux
   const userInformation = useSelector(
@@ -65,6 +65,7 @@ export default function UserInformation() {
   function onCloseHandler() {
     navigate(-1);
   }
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -79,8 +80,9 @@ export default function UserInformation() {
         },
       })
       .then((response) => {
-       // console.log(response, "new data"); //TODO:: remove later display new information
+        // console.log(response, "new data"); //TODO:: remove later display new information
         if (response.status === 201) {
+          onSuccess();
           // update information in redux
           dispatch(userActions.setUserData(response.data));
           // //TODO:: try fetch user by id - useParams
@@ -88,13 +90,37 @@ export default function UserInformation() {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          // //TODO:: alert user nicely
-          // alert("please log in to change your information");
+          onError(); // in case of expiry
           return;
         }
       });
     setReadOnly(true);
   }
+  function onSuccess() {
+    confirmAlert({
+      title: `Awesome! ${userInformation?.userName}`,
+      message: `Information updated`,
+      buttons: [
+        {
+          label: "OK",
+        },
+      ],
+    });
+  }
+
+  function onError() {
+    confirmAlert({
+      title: `Ooops! Something wrong`,
+      message: `Please make sure you are Sign In`,
+      buttons: [
+        {
+          label: "OK, Sign In",
+          onClick: () => navigate("/users/signin"),
+        },
+      ],
+    });
+  }
+
   if (!userInformation) {
     return <NotFound />;
   } else if (isLoading) {

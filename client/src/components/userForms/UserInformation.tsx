@@ -16,14 +16,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import { RootState } from "../../redux/store";
 import { userActions } from "../../redux/slices/user";
-import { useNavigate } from "react-router-dom";
 import NotFound from "../Error";
 import { BASE_URL } from "../../api";
 
 export default function UserInformation() {
+  
   const dispatch = useDispatch();
   // get user information from redux
   const userInformation = useSelector(

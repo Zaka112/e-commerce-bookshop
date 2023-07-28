@@ -12,9 +12,9 @@ export const store = configureStore({
   reducer: {
     books: bookReducer,
     bookDetail: bookDetailReducer,
-    cartList:cartReducer,
-    search:searchReducer,
-    users:userReducer,
+    cartList: cartReducer,
+    search: searchReducer,
+    users: userReducer,
     orders: orderReducer,
     theme: themeReducer,
   },

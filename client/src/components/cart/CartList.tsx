@@ -5,11 +5,11 @@ import { Button, Grid, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
+import axios from "axios";
 
 import CartItems from "./CartItems";
 import { RootState } from "../../redux/store";
 import { cartListActions } from "../../redux/slices/cart";
-import axios from "axios";
 import { BASE_URL } from "../../api";
 
 export default function CartList() {
@@ -73,7 +73,7 @@ export default function CartList() {
   }
 
   return (
-    <Paper sx={{minHeight:200}}>
+    <Paper sx={{ minHeight: 200 }}>
       {cartList.length === 0 ? (
         <Typography variant="h5" component="div">
           Your cart is empty, return to the{" "}
@@ -83,7 +83,8 @@ export default function CartList() {
           page.
         </Typography>
       ) : (
-        <Grid marginTop={5}
+        <Grid
+          marginTop={5}
           container
           sx={{
             display: "grid",
@@ -97,7 +98,7 @@ export default function CartList() {
         </Grid>
       )}
 
-      <Typography variant="h4" component="div">
+      <Typography variant="h5" component="div" fontWeight="bold">
         {" "}
         Total Amount: $ {totalOrderPrice.toLocaleString()}
       </Typography>

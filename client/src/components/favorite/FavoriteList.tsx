@@ -6,9 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Book } from "../../types/types";
 import { bookActions } from "../../redux/slices/books";
-import { IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import {
+  CardMedia,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
+import wishListImage from "../../assets/heartbook.png";
 
 export default function FavoriteList() {
   const favoriteBooks = useSelector((state: RootState) => state.books.favorite);
@@ -23,31 +31,44 @@ export default function FavoriteList() {
     <div>
       {(["right"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-         
-
           <Paper
             sx={{
               marginTop: 8,
               height: 600,
-              backgroundImage: `url(https://images.unsplash.com/photo-1542948338-ded3dbb75080?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80)`,
             }}
           >
-            <Typography variant="h4" component="h1">
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{ backgroundColor: "inherit" }}
+            >
               Wish List
             </Typography>
             {favoriteBooks.length === 0 ? (
-              <Typography variant="h4" component="div">
-                List of Favorite Choices is empty.
+              <Box component="div" sx={{ maxWidth: 380, margin: 1 }}>
+                <CardMedia
+                  component="img"
+                  height="500px"
+                  image={wishListImage}
+                  alt="favorite"
+                />
+
+                <Typography variant="h5" component="div">
+                  Empty?
+                </Typography>
                 <Tooltip title="Go To Shop" arrow placement="right">
                   <Link to="/books">
-                    <Button>Bring some in!</Button>{" "}
+                    <Button variant="contained" size="small">
+                      Bring some in!
+                    </Button>{" "}
                   </Link>
                 </Tooltip>
-              </Typography>
+              </Box>
             ) : (
               favoriteBooks.map((favItem) => {
                 return (
                   <Box
+                    margin={1}
                     key={favItem._id}
                     sx={{
                       display: "flex",
@@ -70,9 +91,8 @@ export default function FavoriteList() {
                         display: "flex",
                       }}
                     >
-                      <Typography>
-                        {favItem.title}: ${favItem.price}
-                      </Typography>
+                      <Typography>{favItem.title}</Typography>
+                      <Typography>Price: ${favItem.price}</Typography>
                     </Box>
                     <Box
                       sx={{

@@ -4,7 +4,7 @@ import { Order } from "../../types/types";
 
 type InitialState = {
   userOrders: Order[];
-  userOrderDetails: Order | null
+  userOrderDetails: Order | null;
 };
 
 const initialState: InitialState = {

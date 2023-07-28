@@ -26,15 +26,15 @@ export default function BookList() {
   );
   if (isLoading) {
     return (
-      <Paper sx={{minHeight:600}}>
-        <CircularProgress size="10rem" color="inherit"  />
+      <Paper sx={{ minHeight: 600 }}>
+        <CircularProgress size="10rem" color="inherit" />
       </Paper>
     );
   } else
     return (
       <Paper>
         <Typography variant="h3" component="h3">
-          Books
+          BuY !T
         </Typography>
         <SearchForm />
         <Grid

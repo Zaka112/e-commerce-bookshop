@@ -11,7 +11,7 @@ type BookList = {
 const initialState: BookList = {
   books: [],
   isLoading: true,
-  favorite:[]
+  favorite: [],
 };
 
 const bookSlice = createSlice({
@@ -35,7 +35,7 @@ const bookSlice = createSlice({
     },
     removeFavoriteBook: (state, action: PayloadAction<Book>): void => {
       const remainingAfterDelete = state.favorite.filter(
-        (book) => book._id  !== action.payload._id
+        (book) => book._id !== action.payload._id
       );
       state.favorite = remainingAfterDelete;
     },

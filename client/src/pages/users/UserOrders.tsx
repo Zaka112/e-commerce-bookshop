@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-import UserOrderList from '../../components/userForms/UserOrderList'
+import UserOrderList from "../../components/userForms/UserOrderList";
 
 export default function UserOrders() {
   return (
-    <div><UserOrderList/></div>
-  )
+    <div>
+      <UserOrderList />
+    </div>
+  );
 }

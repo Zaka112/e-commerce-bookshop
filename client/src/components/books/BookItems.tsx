@@ -22,7 +22,6 @@ type Prop = {
   bookItem: Book;
 };
 export default function BookItems({ bookItem }: Prop) {
-  
   const currentTheme = useSelector(
     (state: RootState) => state.theme.currentTheme
   );

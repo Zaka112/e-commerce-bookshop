@@ -31,7 +31,7 @@ export default function CartItems({ cartItem }: Prop) {
         sx={{
           display: "flex",
           gap: "2rem",
-         marginLeft:3,
+          marginLeft: 3,
           alignItems: "center",
         }}
       >
@@ -44,21 +44,18 @@ export default function CartItems({ cartItem }: Prop) {
           sx={{
             minWidth: 345,
             display: "flex",
-            flexDirection:"column"
+            flexDirection: "column",
           }}
         >
           <Typography fontSize={18} fontWeight="bold">
-           
             {cartItem.title}
           </Typography>
-          <Typography>
-            Price: $ {cartItem.price}
-          </Typography>
+          <Typography>Price: $ {cartItem.price}</Typography>
           <IconButton onClick={removeItem}>
-          <Tooltip title="remove Item" arrow placement="bottom">
-            <DeleteForeverIcon />
-          </Tooltip>
-        </IconButton>
+            <Tooltip title="remove Item" arrow placement="bottom">
+              <DeleteForeverIcon />
+            </Tooltip>
+          </IconButton>
         </Box>
         <Box
           sx={{
@@ -79,10 +76,7 @@ export default function CartItems({ cartItem }: Prop) {
             </Tooltip>
           </IconButton>
         </Box>
-       
-        
       </Box>
-      
     </Paper>
   );
 }

@@ -1,8 +1,10 @@
 import React from "react";
-import { Order } from "../../types/types";
+
 import { TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+
+import { Order } from "../../types/types";
 
 type Prop = {
   order: Order;

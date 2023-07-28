@@ -12,7 +12,7 @@ import {
   Badge,
   MenuItem,
   Menu,
-  AppBar
+  AppBar,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,6 @@ import { toggleThemeActions } from "../../redux/slices/theme";
 
 type Anchor = "right"; // slider
 export default function NavBar() {
- 
   const dispatch = useDispatch();
 
   // slider drawer for favorite
@@ -94,7 +93,7 @@ export default function NavBar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-  
+
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -162,10 +161,7 @@ export default function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Link
-            to="/"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <IconButton sx={{ ml: 1 }} color="inherit">
               <img src={logo} width={40} alt="" />
             </IconButton>
@@ -212,7 +208,7 @@ export default function NavBar() {
               onOpen={toggleDrawer("right", true)}
             >
               <Box
-                sx={{ width: 550, minHeight: 600, textAlign: "center" }}
+                sx={{ width: 400, minHeight: 600, textAlign: "center" }}
                 role="presentation"
                 onClick={toggleDrawer("right", false)}
                 onKeyDown={toggleDrawer("right", false)}

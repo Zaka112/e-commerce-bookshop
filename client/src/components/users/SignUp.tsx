@@ -35,7 +35,7 @@ export default function SignUp() {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       email: data.get("email".toLowerCase()),
-      userName: data.get("userName".toLowerCase()),
+      userName: data.get("userName"),
       password: data.get("password"),
       confirmPassword: data.get("confirmPassword"),
       gender: data.get("gender"),

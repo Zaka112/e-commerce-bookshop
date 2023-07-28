@@ -16,7 +16,7 @@ export default function Home() {
   }, [dispatch]);
 
   const bookList = useSelector((state: RootState) => state.books.books);
-  const mostSold = bookList.filter((bookItem) => bookItem.images.length === 3);
+
   return (
     <Paper>
       <Row>

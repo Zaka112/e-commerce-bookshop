@@ -31,15 +31,15 @@ export type OrderDocument = Document & {
 
 const OrderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  bookList: [ BookOrderSchema ],
+  bookList: [BookOrderSchema],
   orderedAt: {
     type: Date,
     required: true,
     default: Date.now,
   },
   totalOrderPrice: {
-    type:Number,
-  }
+    type: Number,
+  },
 });
 
 export default mongoose.model<OrderDocument>("Order", OrderSchema);

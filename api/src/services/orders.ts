@@ -14,6 +14,6 @@ export const findOrderByUserIdService = async (
 
 export const findOrderByOrderIdService = async (
   orderId: string
-): Promise<OrderDocument| null > => {
+): Promise<OrderDocument | null> => {
   return await Order.findById(orderId);
 };

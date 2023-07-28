@@ -3,7 +3,7 @@ import mongoose, { Document } from "mongoose";
 export type BookDocument = Document & {
   isbn: string;
   title: string;
-  description:string;
+  description: string;
   price: number;
   images: string[];
   categories: string[];
@@ -11,9 +11,9 @@ export type BookDocument = Document & {
   authors: string[];
   publisher: string;
   publishedDate: Date;
-  onSalse:boolean;
-  mostSold:boolean;
-  newAddition:boolean
+  onSalse: boolean;
+  mostSold: boolean;
+  newAddition: boolean;
 };
 
 export const BookSchema = new mongoose.Schema({
@@ -50,7 +50,7 @@ export const BookSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
- 
+
   publisher: {
     type: String,
     required: true,
@@ -58,7 +58,7 @@ export const BookSchema = new mongoose.Schema({
   publishedDate: {
     type: Date,
     required: true,
-    default:Date.now
+    default: Date.now,
   },
   onSale: {
     type: Boolean,

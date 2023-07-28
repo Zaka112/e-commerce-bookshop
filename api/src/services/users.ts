@@ -1,10 +1,13 @@
-import { NotFoundError } from "../helpers/apiError";
+import { AlreadyExist, NotFoundError } from "../helpers/apiError";
 import User, { UserDocument } from "./../models/User";
 
 export const createUserService = async (
   user: UserDocument
 ): Promise<UserDocument> => {
-  return await user.save();
+  const alreadyExist = await User.findOne({ email: user.email});
+  if (alreadyExist) {
+    throw new AlreadyExist(`User with ${user.email} Already Exist`);
+  } else return await user.save();
 };
 
 export const getUserByIdService = async (

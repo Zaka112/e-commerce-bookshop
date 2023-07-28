@@ -9,12 +9,12 @@ export type UserDocument = Document & {
   gender: string;
   country: string;
   interests: string;
-  role:string
+  role: string;
 };
 export enum Gender {
   male = "male",
   female = "female",
-  others = "others",
+  other = "other",
   none = "none",
 }
 

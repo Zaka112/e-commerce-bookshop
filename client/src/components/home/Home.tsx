@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Paper } from "@mui/material";
+import { CircularProgress, Paper } from "@mui/material";
 import { Col, Row } from "reactstrap";
 import { Carousel } from "react-responsive-carousel";
 
@@ -16,7 +16,15 @@ export default function Home() {
   }, [dispatch]);
 
   const bookList = useSelector((state: RootState) => state.books.books);
+  const isLoading = useSelector((state: RootState) => state.books.isLoading);
 
+  if (isLoading) {
+    return (
+      <Paper >
+        <CircularProgress size="15rem" color="inherit" />
+      </Paper>
+    );
+  } else
   return (
     <Paper>
       <Row>

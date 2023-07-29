@@ -1,18 +1,29 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress, Grid, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  CircularProgressProps,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 
 import { AppDispatch, RootState } from "../../redux/store";
-import { getBooksData } from "../../redux/thunk/books";
+import { getBookList } from "../../redux/thunk/books";
 import BookItems from "./BookItems";
 import SearchForm from "../search/SerachForm";
 
 export default function BookList() {
+  const [progress, setProgress] = React.useState(10);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getBooksData());
+    dispatch(getBookList());
+    setProgress((prevProgress) =>
+      prevProgress >= 100 ? 0 : prevProgress + 10
+    );
   }, [dispatch]);
 
   const bookList = useSelector((state: RootState) => state.books.books);
@@ -27,7 +38,7 @@ export default function BookList() {
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600 }}>
-        <CircularProgress size="10rem" color="inherit" />
+        <CircularProgressWithLabel size="10rem" value={progress} />
       </Paper>
     );
   } else
@@ -51,4 +62,31 @@ export default function BookList() {
         </Grid>
       </Paper>
     );
+  function CircularProgressWithLabel(
+    props: CircularProgressProps & { value: number }
+  ) {
+    return (
+      <Box sx={{ position: "relative", display: "inline-flex" }}>
+        <CircularProgress variant="determinate" {...props} />
+        <Box
+          sx={{
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            variant="caption"
+            component="div"
+            color="text.secondary"
+          >{`${Math.round(props.value)}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
 }

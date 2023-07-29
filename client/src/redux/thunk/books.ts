@@ -6,7 +6,7 @@ import { BASE_URL } from "../../api";
 
 const booksURL = `${BASE_URL}/books`;
 
-export function getBooksData() {
+export function getBookList() {
   return async (dispatch: AppDispatch) => {
     const response = await fetch(booksURL);
     const fetchedBooks = await response.json();

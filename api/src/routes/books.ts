@@ -1,10 +1,11 @@
 import { Router } from "express";
+import passport from "passport";
 
 import { addNewBook, getBookById, getAllBooks } from "../controllers/books";
 
 const router = Router();
 
-router.post("/", addNewBook);
+router.post("/",  passport.authenticate("jwt", { session: false }), addNewBook);
 router.get("/", getAllBooks);
 router.get("/:id", getBookById);
 

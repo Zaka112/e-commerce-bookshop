@@ -38,6 +38,7 @@ export default function Home() {
             {bookList.map((item) => {
               return (
                 <img
+                key={item._id}
                   alt={item.title}
                   src={
                     item.images[Math.floor(Math.random() * item.images.length)]

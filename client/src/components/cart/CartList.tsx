@@ -15,7 +15,7 @@ import { BASE_URL } from "../../api";
 export default function CartList() {
   const cartList = useSelector((state: RootState) => state.cartList.cartItems);
   const userInformation = useSelector(
-    (state: RootState) => state.users.userInformation
+    (state: RootState) => state.user.userInformation
   );
   const userId = userInformation?._id;
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function CartList() {
         },
       })
       .then((response) => {
-        console.log(response); // test
+       
         if (response.status === 201) {
           toast.info(
             "Successfully completed. Thanks for shoping with us. Come back soon :)",
@@ -102,6 +102,7 @@ export default function CartList() {
         {" "}
         Total Amount: $ {totalOrderPrice.toLocaleString()}
       </Typography>
+      {/* <Link to={"/users"}>Users</Link> */}
       {cartList.length > 0 ? (
         <Button
           size="small"

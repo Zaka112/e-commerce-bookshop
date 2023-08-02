@@ -7,6 +7,7 @@ import userReducer from "./slices/user";
 import cartReducer from "./slices/cart";
 import orderReducer from "./slices/orders";
 import themeReducer from "./slices/theme";
+import usersReducer from "./slices/users";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     bookDetail: bookDetailReducer,
     cartList: cartReducer,
     search: searchReducer,
-    users: userReducer,
+    user: userReducer,
+    userList: usersReducer,
     orders: orderReducer,
     theme: themeReducer,
   },

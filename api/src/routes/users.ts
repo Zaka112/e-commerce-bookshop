@@ -18,11 +18,11 @@ router.post("/register", createUser);
 router.post("/signin", logInController);
 
 //update user info
-// router.put(
-//   "/:id",
-//   passport.authenticate("jwt", { session: false }),
-//   updateUserInfoController
-// );
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  updateUserInfoController
+);
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
@@ -37,7 +37,7 @@ router.get(
 
 router.put(
   "/:userId/toggle-role",
-  passport.authenticate("jwt", { session: false }),
+ passport.authenticate("jwt", { session: false }),
   roleCheck,
   toggleRoleController
 );

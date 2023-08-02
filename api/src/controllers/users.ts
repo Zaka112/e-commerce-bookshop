@@ -9,6 +9,8 @@ import {
   findUserByEmailService,
   getUserByIdService,
   updateUserByIdService,
+  toggleRoleService,
+  getUserListService,
 } from "../services/users";
 import { UnauthorizedError } from "../helpers/apiError";
 
@@ -27,7 +29,7 @@ export const createUser = async (
     gender,
     country,
     interests,
-    role,
+    //  role,
   } = request.body;
   // can add validation logic to check fields are not empty
   try {
@@ -44,7 +46,7 @@ export const createUser = async (
       gender,
       country,
       interests,
-      role,
+      // role,
     });
 
     const newUser = await createUserService(userInformation);
@@ -110,16 +112,65 @@ export const getUserById = async (
   }
 };
 
+//get: get all users
+export const getUserListController = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const userById = await getUserListService();
+
+    response.status(200).json(userById);
+  } catch (error) {
+    next(error);
+  }
+};
+
 //put: update a user
 export const updateUserInfoController = async (
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
+  const {
+    firstName,
+    lastName,
+    userName,
+    gender,
+    country,
+    interests,
+     role,
+  } = request.body;
   try {
     const userId = request.params.id;
-    const updatedInformation = request.body;
+    const updatedInformation = {
+      firstName,
+      lastName,
+      userName,
+      gender,
+      country,
+      interests,
+       role,
+    };
+
     const updatedUser = await updateUserByIdService(userId, updatedInformation);
+
+    response.status(201).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+// put: toogle the role
+export const toggleRoleController = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = request.params.userId;
+
+    const updatedUser = await toggleRoleService(userId);
 
     response.status(201).json(updatedUser);
   } catch (error) {

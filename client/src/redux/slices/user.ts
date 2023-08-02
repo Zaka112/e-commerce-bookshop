@@ -25,6 +25,7 @@ const userSlice = createSlice({
     },
     removeUserData: (state) => {
       state.userInformation = initialState.userInformation;
+      localStorage.removeItem("userToken")
       state.isLogin = false;
       state.isLoading = false;
     },

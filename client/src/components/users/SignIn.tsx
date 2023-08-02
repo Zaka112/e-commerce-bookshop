@@ -78,7 +78,7 @@ export default function SignIn() {
           {invalidCredential !== "" ? (
             <Paper className="error">
               {invalidCredential} <br />
-              <Link to="register">Don't have an account yet? Sign Up</Link>
+              <Link to="/users/register">Don't have an account yet? Sign Up</Link>
             </Paper>
           ) : null}
 

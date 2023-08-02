@@ -28,10 +28,10 @@ export default function UserInformation() {
   const dispatch = useDispatch();
   // get user information from redux
   const userInformation = useSelector(
-    (state: RootState) => state.users.userInformation
+    (state: RootState) => state.user.userInformation
   );
 
-  const isLoading = useSelector((state: RootState) => state.users.isLoading);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
   const [updateData, setUpdateData] = useState({
     firstName: userInformation?.firstName,
     lastName: userInformation?.lastName,

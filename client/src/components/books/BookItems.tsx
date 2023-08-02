@@ -52,6 +52,24 @@ export default function BookItems({ bookItem }: Prop) {
       });
     }
   }
+  // function handelFavoriteBookIcon(book: Book): void {
+  //   dispatch(toggleThemeActions.currentTheme());
+  // //  if (!isFavorite) {
+  //     dispatch(bookActions.handleFavoriteBook(book));
+  //     toast.success(`${book.title} has been added to favorite list`, {
+  //       position: "top-left",
+  //       progress: undefined,
+  //       theme: currentTheme,
+  //     });
+  // //  } else {
+  //    // dispatch(bookActions.removeFavoriteBook(book));
+  //     // toast.success(`${book.title} removed from favorite list`, {
+  //     //   position: "top-left",
+  //     //   progress: undefined,
+  //     //   theme: currentTheme,
+  //     // });
+  //  // }
+  // }
   return (
     <Paper
       sx={{

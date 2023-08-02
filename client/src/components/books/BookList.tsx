@@ -18,14 +18,6 @@ import SearchForm from "../search/SerachForm";
 export default function BookList() {
   const [progress, setProgress] = React.useState(10);
   const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    dispatch(getBookList());
-    setProgress((prevProgress) =>
-      prevProgress >= 100 ? 0 : prevProgress + 10
-    );
-  }, [dispatch]);
-
   const bookList = useSelector((state: RootState) => state.books.books);
   const isLoading = useSelector((state: RootState) => state.books.isLoading);
   const searchedString = useSelector(
@@ -35,33 +27,23 @@ export default function BookList() {
   const searchedBook = bookList.filter((book) =>
     book.title.toLowerCase().includes(searchedString.toLowerCase())
   );
-  if (isLoading) {
-    return (
-      <Paper sx={{ minHeight: 600 }}>
-        <CircularProgressWithLabel size="10rem" value={progress} />
-      </Paper>
-    );
-  } else
-    return (
-      <Paper>
-        <Typography variant="h3" component="h3">
-          BuY !T
-        </Typography>
-        <SearchForm />
-        <Grid
-          container
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "1rem",
-          }}
-        >
-          {searchedBook.map((bookItem) => {
-            return <BookItems key={bookItem._id} bookItem={bookItem} />;
-          })}
-        </Grid>
-      </Paper>
-    );
+
+  useEffect(() => {
+    dispatch(getBookList());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setProgress((prevProgress) =>
+  //       prevProgress >= 100 ? 0 : prevProgress + 10
+  //     );
+  //   }, 600);
+
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
+
   function CircularProgressWithLabel(
     props: CircularProgressProps & { value: number }
   ) {
@@ -89,4 +71,32 @@ export default function BookList() {
       </Box>
     );
   }
+  if (isLoading) {
+    return (
+      <Paper sx={{ minHeight: 600 }}>
+        {/* <CircularProgress size="10rem" color="inherit" /> */}
+        <CircularProgressWithLabel size="10rem" value={progress} />
+      </Paper>
+    );
+  } else
+    return (
+      <Paper>
+        <Typography variant="h3" component="h3">
+          BuY !T
+        </Typography>
+        <SearchForm />
+        <Grid
+          container
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "1rem",
+          }}
+        >
+          {searchedBook.map((bookItem) => {
+            return <BookItems key={bookItem._id} bookItem={bookItem} />;
+          })}
+        </Grid>
+      </Paper>
+    );
 }

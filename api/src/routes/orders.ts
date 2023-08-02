@@ -7,6 +7,8 @@ import {
   findOrderByUserIdController,
 } from "../controllers/orders";
 
+import roleCheck from "../middlewares/roleCheck";
+
 const router = Router();
 
 router.post(
@@ -25,7 +27,6 @@ router.get(
 router.get(
   "/orderdetails/:orderId",
   passport.authenticate("jwt", { session: false }),
-
   findOrderByOrderIdController
 );
 export default router;

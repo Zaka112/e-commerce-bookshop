@@ -38,13 +38,13 @@ export default function UserOrdersList() {
   const navigate = useNavigate();
   const orderList = useSelector((state: RootState) => state.orders.userOrders);
   const userDetails = useSelector(
-    (state: RootState) => state.users.userInformation
+    (state: RootState) => state.user.userInformation
   );
 
   const { userId } = useParams<{ userId: string }>();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    if (userId) {
+    if (userId && userDetails) {
       dispatch(getUserOrderList(userId));
     }
   }, [dispatch, userId]);

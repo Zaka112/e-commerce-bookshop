@@ -58,9 +58,9 @@ export default function NavBar() {
     dispatch(toggleThemeActions.toggleTheme());
   }
   const userInformation = useSelector(
-    (state: RootState) => state.users.userInformation
+    (state: RootState) => state.user.userInformation
   );
-  let isLogin = useSelector((state: RootState) => state.users.isLogin);
+  let isLogin = useSelector((state: RootState) => state.user.isLogin);
   let userId: string;
   if (userInformation) {
     userId = userInformation?._id;

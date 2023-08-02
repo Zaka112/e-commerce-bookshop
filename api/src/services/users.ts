@@ -4,7 +4,7 @@ import User, { UserDocument } from "./../models/User";
 export const createUserService = async (
   user: UserDocument
 ): Promise<UserDocument> => {
-  const alreadyExist = await User.findOne({ email: user.email});
+  const alreadyExist = await User.findOne({ email: user.email });
   if (alreadyExist) {
     throw new AlreadyExist(`User with ${user.email} Already Exist`);
   } else return await user.save();
@@ -18,6 +18,11 @@ export const getUserByIdService = async (
     throw new NotFoundError(`No user found having ${userId}`);
   }
   return userById;
+};
+
+export const getUserListService = async (): Promise<UserDocument[]> => {
+  const userList = await User.find();
+  return userList;
 };
 
 export const findUserByEmailService = async (
@@ -41,4 +46,19 @@ export const updateUserByIdService = async (
     throw new NotFoundError(`No user found having ${userId}`);
   }
   return userById;
+};
+
+export const toggleRoleService = async (userId: string) => {
+  const foundUser = await User.findOne({ _id: userId });
+  if (foundUser) {
+    if (foundUser.role === "admin") {
+      foundUser.role = "user";
+    } else {
+      foundUser.role = "admin";
+    }
+
+    updateUserByIdService(userId, foundUser);
+  } else {
+    throw new NotFoundError(`User not found with ${userId}`);
+  }
 };

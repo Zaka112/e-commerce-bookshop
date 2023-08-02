@@ -102,7 +102,7 @@ export default function BookDetails() {
   function changeImage(image: string) {
     setCurrentImage(image);
   }
-  if (isLoading) {
+  if (isLoading && bookDetails === null) {
     return (
       <div>
         <CircularProgress />

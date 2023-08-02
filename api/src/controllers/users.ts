@@ -29,7 +29,6 @@ export const createUser = async (
     gender,
     country,
     interests,
-    //  role,
   } = request.body;
   // can add validation logic to check fields are not empty
   try {
@@ -46,7 +45,6 @@ export const createUser = async (
       gender,
       country,
       interests,
-      // role,
     });
 
     const newUser = await createUserService(userInformation);
@@ -59,6 +57,7 @@ export const createUser = async (
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET as string;
+
 //post: login user
 export const logInController = async (
   request: Request,
@@ -133,33 +132,30 @@ export const updateUserInfoController = async (
   response: Response,
   next: NextFunction
 ) => {
-  const {
-    firstName,
-    lastName,
-    userName,
-    gender,
-    country,
-    interests,
-     role,
-  } = request.body;
-  try {
-    const userId = request.params.id;
-    const updatedInformation = {
-      firstName,
-      lastName,
-      userName,
-      gender,
-      country,
-      interests,
-       role,
-    };
+  const { firstName, lastName, gender, country, interests } = request.body;
+  if (firstName!=="" && lastName!=="") {
+    try {
+      const userId = request.params.id;
+      const updatedInformation = {
+        firstName,
+        lastName,
+        gender,
+        country,
+        interests,
+      };
+      const updatedUser = await updateUserByIdService(userId, updatedInformation);
 
-    const updatedUser = await updateUserByIdService(userId, updatedInformation);
-
-    response.status(201).json(updatedUser);
-  } catch (error) {
-    next(error);
+      response.status(201).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
   }
+  else {
+    response.send("Please fill the required fields")
+  }
+ 
+
+  
 };
 // put: toogle the role
 export const toggleRoleController = async (

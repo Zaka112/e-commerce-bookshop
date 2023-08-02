@@ -57,7 +57,9 @@ export const toggleRoleService = async (userId: string) => {
       foundUser.role = "admin";
     }
 
-    updateUserByIdService(userId, foundUser);
+   const toggledUser =updateUserByIdService(userId, foundUser);
+   return toggledUser
+
   } else {
     throw new NotFoundError(`User not found with ${userId}`);
   }

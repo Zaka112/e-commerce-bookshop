@@ -31,14 +31,15 @@ router.get(
 //get: get all users
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false }), roleCheck,
+  passport.authenticate("jwt", { session: false }),
+  roleCheck,
   getUserListController
 );
 
 router.put(
   "/:userId/toggle-role",
  passport.authenticate("jwt", { session: false }),
-  roleCheck,
+ roleCheck,
   toggleRoleController
 );
 export default router;

@@ -11,13 +11,15 @@ export type Book = {
   publisher: string;
   publishedDate: Date;
   onSale: boolean;
-  mostSold: false;
-  newAddition: false;
+  mostSold: boolean;
+  newAddition: boolean;
 };
 
 export type BookOrder = Book & {
   counter: number;
 };
+
+
 
 export type User = {
   _id: string;
@@ -26,11 +28,11 @@ export type User = {
   email: string;
   password: string;
   userName: string;
-  age: number;
   gender: string;
   country: string;
-  phone: number;
   interests: string;
+  createdAt:Date,
+  role:string
 };
 
 export type Order = {
@@ -38,5 +40,5 @@ export type Order = {
   userId: string;
   bookList: BookOrder[];
   orderedAt: string;
-  total: number;
+  totalOrderPrice: number;
 };

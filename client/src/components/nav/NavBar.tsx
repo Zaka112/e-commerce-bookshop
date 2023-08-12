@@ -4,68 +4,44 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import {
-  SwipeableDrawer,
   Tooltip,
   Box,
   Toolbar,
   IconButton,
-  Badge,
-  MenuItem,
   Menu,
   AppBar,
+  Drawer,
+  List,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import InventoryIcon from "@mui/icons-material/Inventory";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-import { userActions } from "../../redux/slices/user";
-import FavoriteList from "../favorite/FavoriteList";
 import { RootState } from "../../redux/store";
 import logo from "../../assets/logo.jpg";
 import { toggleThemeActions } from "../../redux/slices/theme";
+import NavLinks from "./NavLinks";
+import NavUserMenu from "./NavUserMenu";
 
-type Anchor = "right"; // slider
 export default function NavBar() {
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+  };
+
   const dispatch = useDispatch();
 
-  // slider drawer for favorite
-  const [state, setState] = React.useState({
-    right: false,
-  });
-
-  const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event &&
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
-
-      setState({ ...state, [anchor]: open });
-    };
-  //-- end calling
   const themeMode = useSelector((state: RootState) => state.theme.theme);
 
   function toggleThemeHandler() {
     dispatch(toggleThemeActions.toggleTheme());
   }
-  const userInformation = useSelector(
-    (state: RootState) => state.user.userInformation
-  );
-  let isLogin = useSelector((state: RootState) => state.user.isLogin);
-  let userId: string;
-  if (userInformation) {
-    userId = userInformation?._id;
-  }
-  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -73,13 +49,6 @@ export default function NavBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const favoriteItems = useSelector((state: RootState) => state.books.favorite);
-  const cartItems = useSelector((state: RootState) => state.cartList.cartItems);
-
-  let favoriteItemsCount: number, cartItemsCount: number;
-  favoriteItemsCount = favoriteItems.length;
-  cartItemsCount = cartItems.length;
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -115,11 +84,7 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => showProfile()}>Profile</MenuItem>
-      <MenuItem onClick={() => shopHistory(userId)}>Shopping History</MenuItem>
-      <MenuItem onClick={isLogin ? signOut : signIn}>
-        {isLogin ? "Sign Out" : "Sign In"}
-      </MenuItem>
+      <NavUserMenu />
     </Menu>
   );
 
@@ -140,11 +105,7 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={() => showProfile()}>Profile</MenuItem>
-      <MenuItem onClick={() => shopHistory(userId)}>Shopping History</MenuItem>
-      <MenuItem onClick={isLogin ? signOut : signIn}>
-        {isLogin ? "Sign Out" : "Sign In"}
-      </MenuItem>
+      <NavUserMenu />
     </Menu>
   );
 
@@ -158,6 +119,7 @@ export default function NavBar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={handleDrawerOpen}
           >
             <MenuIcon />
           </IconButton>
@@ -176,64 +138,10 @@ export default function NavBar() {
             </IconButton>
           </Tooltip>
 
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1, display: "flex" }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Link
-              to="/books"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <IconButton size="large" aria-label="Book List" color="inherit">
-                <Tooltip title="Books" arrow>
-                  <InventoryIcon />
-                </Tooltip>
-              </IconButton>
-            </Link>
+            <NavLinks />
 
-            <IconButton
-              size="large"
-              aria-label={`show ${favoriteItemsCount} new notifications`}
-              color="inherit"
-              onClick={toggleDrawer("right", true)}
-            >
-              <Badge badgeContent={favoriteItemsCount} color="error">
-                <Tooltip title="Favorite" arrow>
-                  <FavoriteIcon />
-                </Tooltip>
-              </Badge>
-            </IconButton>
-            <SwipeableDrawer
-              anchor={"right"}
-              open={state["right"]}
-              onClose={toggleDrawer("right", false)}
-              onOpen={toggleDrawer("right", true)}
-            >
-              <Box
-                sx={{ width: 400, minHeight: 600, textAlign: "center" }}
-                role="presentation"
-                onClick={toggleDrawer("right", false)}
-                onKeyDown={toggleDrawer("right", false)}
-              >
-                {" "}
-                <FavoriteList />
-              </Box>
-            </SwipeableDrawer>
-
-            <Link
-              to="/cart"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <IconButton
-                size="large"
-                aria-label={`show ${cartItemsCount} `}
-                color="inherit"
-              >
-                <Badge badgeContent={cartItemsCount} color="error">
-                  <Tooltip title="Shoppingbag" arrow>
-                    <AddShoppingCartIcon />
-                  </Tooltip>
-                </Badge>
-              </IconButton>
-            </Link>
             <IconButton
               size="large"
               edge="end"
@@ -260,32 +168,14 @@ export default function NavBar() {
           </Box>
         </Toolbar>
       </AppBar>
+
       {renderMobileMenu}
       {renderMenu}
+      <Drawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
+        <List>
+          <NavLinks />
+        </List>
+      </Drawer>
     </Box>
   );
-  function showProfile(): void {
-    navigate(`/users/${userId}`);
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  }
-
-  function shopHistory(userId: string): void {
-    navigate(`/orders/${userId}`);
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  }
-  function signIn(): void {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-    navigate("/users/signin");
-  }
-  function signOut(): void {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userId");
-    setAnchorEl(null);
-    handleMobileMenuClose();
-    dispatch(userActions.removeUserData());
-    navigate("/users/signin");
-  }
 }

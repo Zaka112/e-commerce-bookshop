@@ -1,8 +1,8 @@
 import React from "react";
 
-import BookList from "../components/books/BookList";
+import BookList from "../components/pages/books/BookList";
 
-export default function books() {
+export default function Books() {
   return (
     <div>
       <BookList />

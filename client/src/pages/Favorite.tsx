@@ -1,6 +1,6 @@
 import React from "react";
 
-import FavoriteList from "../components/favorite/FavoriteList";
+import FavoriteList from "../components/pages/favorite/FavoriteList";
 
 export default function Favorite() {
   return (

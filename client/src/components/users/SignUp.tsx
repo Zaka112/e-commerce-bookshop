@@ -39,6 +39,7 @@ export default function SignUp() {
       password: data.get("password"),
       confirmPassword: data.get("confirmPassword"),
       gender: data.get("gender"),
+      country:data.get("country"),
       interests: data.get("interests"),
     };
 
@@ -217,7 +218,7 @@ export default function SignUp() {
                 id="country"
                 label="Country"
                 type="text"
-                name="Country"
+                name="country"
                 autoComplete="country"
               />
             </Grid>

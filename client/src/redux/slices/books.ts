@@ -39,6 +39,22 @@ const bookSlice = createSlice({
       );
       state.favorite = remainingAfterDelete;
     },
+    // handleFavoriteBook: (state, action: PayloadAction<Book>): void => {
+    //   const isInFavorite = state.favorite.some(
+    //     (book) => book._id === action.payload._id
+    //   );
+
+    //   if (!isInFavorite) {
+    //     state.favorite = [...state.favorite, action.payload];
+    //   } else {
+    //     const remainingAfterDelete = state.favorite.filter(
+    //       (book) => book._id !== action.payload._id
+    //     );
+    //     state.favorite = remainingAfterDelete;
+    //   }
+     
+    // },
+   
   },
 });
 

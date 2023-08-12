@@ -3,10 +3,11 @@ import React, { useEffect } from "react";
 import { CircularProgress, Paper } from "@mui/material";
 import { Col, Row } from "reactstrap";
 import { Carousel } from "react-responsive-carousel";
-
-import { getBookList } from "../../redux/thunk/books";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../redux/store";
+
+import { AppDispatch, RootState } from "../../../redux/store";
+import { getBookList } from "../../../redux/thunk/books";
+import loadingBook from "../../../assets/book-loading.gif"
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +22,8 @@ export default function Home() {
   if (isLoading) {
     return (
       <Paper >
-        <CircularProgress size="15rem" color="inherit" />
+        {/* <CircularProgress size="15rem" color="inherit" /> */}
+        <img src={loadingBook} alt="Loading..." />
       </Paper>
     );
   } else

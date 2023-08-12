@@ -9,6 +9,7 @@ export type UserDocument = Document & {
   gender: string;
   country: string;
   interests: string;
+  createdAt:Date;
   role: string;
 };
 export enum Gender {
@@ -75,6 +76,11 @@ const UserSchema = new mongoose.Schema({
     default: Role.user,
     required: true,
   },
+  createdAt:{
+    type:Date,
+    required: true,
+    default: Date.now,
+  }
 });
 // for later
 UserSchema.pre("save", function (next) {

@@ -14,7 +14,7 @@ async function roleCheck(
   if (userRole === "admin") {
     next();
   } else {
-    throw new ForbiddenError();
+    next(new ForbiddenError());
   }
 }
 

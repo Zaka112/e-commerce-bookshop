@@ -28,18 +28,26 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   getUserById
 );
-//get: get all users
+// //get: get single user by Id - admin
+// router.get(
+//   "/:userId/user-details",
+//   passport.authenticate("jwt", { session: false }),
+//  roleCheck,
+//   getUserListController
+// );
+//get: get all users 
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleCheck,
+ roleCheck,
   getUserListController
 );
+
 
 router.put(
   "/:userId/toggle-role",
  passport.authenticate("jwt", { session: false }),
- roleCheck,
+  roleCheck,
   toggleRoleController
 );
 export default router;

@@ -12,15 +12,20 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 import { store } from "../src/redux/store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+const clientId= process.env.REACT_APP_CLIENT_ID as string
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    
       <Provider store={store}>
+      <GoogleOAuthProvider clientId={clientId}>
         <App />
+        </GoogleOAuthProvider>
       </Provider>
     </BrowserRouter>
     <ToastContainer />

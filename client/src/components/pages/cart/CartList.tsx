@@ -8,9 +8,9 @@ import { confirmAlert } from "react-confirm-alert";
 import axios from "axios";
 
 import CartItems from "./CartItems";
-import { RootState } from "../../redux/store";
-import { cartListActions } from "../../redux/slices/cart";
-import { BASE_URL } from "../../api";
+import { RootState } from "../../../redux/store";
+import { cartListActions } from "../../../redux/slices/cart";
+import { BASE_URL } from "../../../api";
 
 export default function CartList() {
   const cartList = useSelector((state: RootState) => state.cartList.cartItems);
@@ -20,10 +20,12 @@ export default function CartList() {
   const userId = userInformation?._id;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const token = localStorage.getItem("userToken");
 
+  
   function checkOut() {
-    const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
+   const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
     const endPoint = `${BASE_URL}/orders/${userId}`;
 
     axios
@@ -34,7 +36,6 @@ export default function CartList() {
         },
       })
       .then((response) => {
-       
         if (response.status === 201) {
           toast.info(
             "Successfully completed. Thanks for shoping with us. Come back soon :)",
@@ -102,7 +103,7 @@ export default function CartList() {
         {" "}
         Total Amount: $ {totalOrderPrice.toLocaleString()}
       </Typography>
-      {/* <Link to={"/users"}>Users</Link> */}
+
       {cartList.length > 0 ? (
         <Button
           size="small"

@@ -7,8 +7,6 @@ import {
   findOrderByUserIdController,
 } from "../controllers/orders";
 
-import roleCheck from "../middlewares/roleCheck";
-
 const router = Router();
 
 router.post(

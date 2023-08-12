@@ -10,10 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 
-import { AppDispatch, RootState } from "../../redux/store";
-import { getBookList } from "../../redux/thunk/books";
+import { AppDispatch, RootState } from "../../../redux/store";
+import { getBookList } from "../../../redux/thunk/books";
 import BookItems from "./BookItems";
-import SearchForm from "../search/SerachForm";
+import SearchForm from "../../search/SerachForm";
 
 export default function BookList() {
   const [progress, setProgress] = React.useState(10);

@@ -17,13 +17,13 @@ import { toast } from "react-toastify";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-import { AppDispatch, RootState } from "../../redux/store";
-import { getBookDetailData } from "../../redux/thunk/books";
-import { Book } from "../../types/types";
-import { cartListActions } from "../../redux/slices/cart";
-import { BASE_URL } from "../../api";
-import { toggleThemeActions } from "../../redux/slices/theme";
-import { bookActions } from "../../redux/slices/books";
+import { AppDispatch, RootState } from "../../../redux/store";
+import { getBookDetailData } from "../../../redux/thunk/books";
+import { Book } from "../../../types/types";
+import { cartListActions } from "../../../redux/slices/cart";
+import { BASE_URL } from "../../../api";
+import { toggleThemeActions } from "../../../redux/slices/theme";
+import { bookActions } from "../../../redux/slices/books";
 
 export default function BookDetails() {
   const bookDetails = useSelector((state: RootState) => state.bookDetail.book);

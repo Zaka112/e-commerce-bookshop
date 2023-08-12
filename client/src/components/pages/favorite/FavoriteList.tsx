@@ -3,9 +3,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { Book } from "../../types/types";
-import { bookActions } from "../../redux/slices/books";
+import { RootState } from "../../../redux/store";
+import { Book } from "../../../types/types";
+import { bookActions } from "../../../redux/slices/books";
 import {
   CardMedia,
   IconButton,
@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-import wishListImage from "../../assets/heartbook.png";
+import wishListImage from "../../../assets/heartbook.png";
 
 export default function FavoriteList() {
   const favoriteBooks = useSelector((state: RootState) => state.books.favorite);

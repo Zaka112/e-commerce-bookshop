@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Box, CircularProgress, Grid, Paper, Typography } from "@mui/material";
+import {  CircularProgress, Grid, Paper, Typography } from "@mui/material";
 
 import { AppDispatch, RootState } from "../../../redux/store";
 import { getUserList } from "../../../redux/thunk/users";
 import UserItems from "./UserItems";
 
 export default function UserList() {
-
- 
   const dispatch = useDispatch<AppDispatch>();
   const userList = useSelector((state: RootState) => state.userList.users);
 
@@ -19,7 +17,9 @@ export default function UserList() {
     (state: RootState) => state.user.userInformation
   );
 
- const excludeMe = userList.filter(user=> user._id!==userInformation?._id)
+  const excludeMe = userList.filter(
+    (user) => user._id !== userInformation?._id
+  );
 
   useEffect(() => {
     dispatch(getUserList());
@@ -31,13 +31,12 @@ export default function UserList() {
         <CircularProgress size="10rem" color="inherit" />
       </Paper>
     );
-    } else if (userInformation?.role!=="admin")
-    {
-      return (<Paper>not allowed</Paper>)
+  } else if (userInformation?.role !== "admin") {
+    return <Paper>Restricted access!</Paper>;
   } else
     return (
       <Paper>
-        <Typography variant="h3" component="h3">
+        <Typography variant="h4" component="h3">
           User List
         </Typography>
 

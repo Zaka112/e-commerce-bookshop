@@ -1,24 +1,12 @@
-import * as React from "react";
+import React from "react";
 
-import {
-  Typography,
-  Paper,
-  Grid,
-  styled,
-  IconButton,
-  Button,
-} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Typography, Paper, Grid, styled, Button } from "@mui/material";
+import { useSelector } from "react-redux";
 
-import { AppDispatch, RootState } from "../../../redux/store";
-import { usersActions } from "../../../redux/slices/users";
+import { RootState } from "../../../redux/store";
 import { User } from "../../../types/types";
 import { BASE_URL } from "../../../api";
 import axios from "axios";
-import UserList from "./UserList";
-import UserListPage from "../../../pages/users/userRoleList/UserListPage";
 
 const Img = styled("img")({
   margin: "auto",
@@ -31,16 +19,13 @@ type Prop = {
   userItem: User;
 };
 export default function UserItems({ userItem }: Prop) {
-   const dispatch = useDispatch<AppDispatch>();
-   
-   
   const currentTheme = useSelector(
     (state: RootState) => state.theme.currentTheme
   );
   const userInformation = useSelector(
     (state: RootState) => state.user.userInformation
   );
-  
+
   function toggleRole(_id: string): void {
     const token = localStorage.getItem("userToken"); // token from local storage
 
@@ -57,14 +42,8 @@ export default function UserItems({ userItem }: Prop) {
         }
       )
       .then((response) => {
-        console.log(response, "new data"); //TODO:: remove later display new information
         if (response.status === 201) {
           console.log("success");
-           //onSuccess();
-         //  dispatch(usersActions.getUsers(Users[]));
-          // update information in redux
-
-          // //TODO:: try fetch user by id - useParams
         }
       })
       .catch((error) => {
@@ -108,20 +87,6 @@ export default function UserItems({ userItem }: Prop) {
               </Button>
             </Grid>
           </Grid>
-          {/* <Grid item>
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={() => {
-                    handelFavoriteuserIcon(userItem);
-                  }}
-                  sx={isFavorite ? { color: "red" } : { color: "inherit" }}
-                >
-                  <FavoriteIcon fontSize="small" />
-                </IconButton>
-                <Typography variant="subtitle1" component="div">
-                  ${userItem.price}
-                </Typography>
-              </Grid> */}
         </Grid>
       </Grid>
     </Paper>

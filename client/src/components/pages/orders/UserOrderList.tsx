@@ -28,7 +28,7 @@ export default function UserOrdersList() {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
-console.log(rowsPerPage)
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -52,7 +52,7 @@ console.log(rowsPerPage)
   if (userDetails) {
     return (
       <Paper>
-        <Typography variant="h2" component="div">
+        <Typography variant="h4" component="div">
           OrderList{" "}
         </Typography>
         <Paper>
@@ -96,7 +96,7 @@ console.log(rowsPerPage)
 
             {orderList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((order) => (
               <TableBody key={order._id}>
-                <UserOrderItems order={order} />
+                <UserOrderItems order={order}  />
               </TableBody>
 
             ))}
@@ -105,7 +105,7 @@ console.log(rowsPerPage)
          
         </TableContainer>
         <TablePagination
-        //  ActionsComponent={TablePaginationActions}
+         ActionsComponent={TablePaginationActions}
           rowsPerPage={rowsPerPage}
           page={page}
           count={orderList.length}
@@ -118,4 +118,5 @@ console.log(rowsPerPage)
   } else {
     return <NotFound />;
   }
+ 
 }

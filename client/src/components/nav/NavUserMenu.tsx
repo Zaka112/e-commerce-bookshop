@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import { MenuItem } from "@mui/material";
@@ -22,7 +21,7 @@ export default function NavUserMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
- 
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };

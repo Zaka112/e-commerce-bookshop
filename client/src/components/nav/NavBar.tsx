@@ -106,6 +106,11 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <NavUserMenu />
+      <Drawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
+        <List>
+          <NavLinks />
+        </List>
+      </Drawer>
     </Menu>
   );
 
@@ -171,11 +176,6 @@ export default function NavBar() {
 
       {renderMobileMenu}
       {renderMenu}
-      <Drawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
-        <List>
-          <NavLinks />
-        </List>
-      </Drawer>
     </Box>
   );
 }

@@ -1,6 +1,38 @@
-# Fullstack Project
+# Fullstack Project - E-Commerace: Book Shop
 
-## How to run project
+## Live project
+
+I am using free instance from render.com, so it takes a bit longer time to load the APIs. If one do not spend money to buy, he have to pay it by spending time in waiting. :D
+
+https://frontend-8bsn.onrender.com (UI)
+
+https://backend-dewo.onrender.com (API)
+
+### Accomplished at Integrify
+
+Description: The subjected project allows users to visit and view the books as well as add them to favorite and cart list. However, buying items is only possible after the user has logged in. Registered users can make orders, can check the list of orders and update their credentials.
+By default the register user has a role of "user". There are other roles as well. Admin can view the list of users and change their roles. 
+
+## Tech Stack
+### Back-end
+
+- Express
+- MongoDB
+- passport
+- jwt strategy
+- REST APIs
+
+### Front-end
+
+- TypeScript
+- React
+- Redux Toolkit
+- React hooks
+- Axios
+- Material UI
+- Carousel
+- React toastify
+## How to run project at localhost
 
 ### Front-end
 
@@ -14,35 +46,8 @@
 2. Step 2: yarn
 3. Step 3: yarn start
 
+### Business Logics
+1. Create a project
+2. Create envoirmental variable to connect with the project
+
 **_Remember to run both front-end and back-end at the same time_**
-
-## Requirements
-
-### Back-end
-
-1. Create a server
-2. Connect to database
-3. Create at least 5 products in Database by POST methods
-4. Create a route that allow user can get list of products
-5. Create a route that allow user can get product detail
-6. Create a route that allow user can register, log in with password and email
-7. Create a route that allow user can make order in front-end then send order information to database
-8. User can display his/her orders
-
-### Front-end
-
-The website has at least these pages: landing page, product page, product details, wish list ,order page, user register,log in page and user information page
-
-- Redux Toolkit is optional
-
-- Styling library: free to choose
-
-**_MAKE THE WEBSITE AS BEAUTIFUL AS MUCH AS YOU CAN_**
-
-**_DEADLINE 28/07/2023_**
-
-https://frontend-8bsn.onrender.com
-
-https://backend-dewo.onrender.com
-
-takes time to load

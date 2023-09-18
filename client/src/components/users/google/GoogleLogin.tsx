@@ -5,13 +5,18 @@ import { GoogleLogin } from "@react-oauth/google";
 
 import user from "../../../assets/user.jpg";
 import { BASE_URL } from "../../../api";
-
+import { User } from "../../../types/types";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../../redux/slices/user";
+import { Paper, Typography } from "@mui/material";
 
 export type UserGoogle = {
   _id: string;
   email: string;
   firstName: string;
   lastName: string;
+  userName: string;
   avatar: string;
 };
 export default function GoogleLogIn() {
@@ -20,24 +25,40 @@ export default function GoogleLogIn() {
     email: "",
     firstName: "",
     lastName: "",
+    userName: "",
     avatar: user,
   });
-  // function
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
-    <div>
-      <h1>GoogleLogIn</h1>
+    <Paper >
+     
       <GoogleLogin
-        // type="icon"
-        size="medium"
+    
+        type="standard"
+        size="large"
         shape="rectangular"
+      
         onSuccess={async (credentialResponse) => {
-          console.log(credentialResponse, "credential");
           const url = `${BASE_URL}/users/google-login`;
           const credential = credentialResponse.credential;
           let res = await axios.post(url, { id_token: credential });
           if (res.status === 200) {
-            console.log(res, "response from BE");
             setUserGoogle(res.data.userData);
+            const user = res.data.userData;
+
+            const userToken = res.data.token; // from data object. get and assign the token
+            // const userId = currentUser?._id
+            localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
+            const currentUserInformation: User = {
+              ...user,
+              token: userToken,
+            };
+            const id = user._id;
+            dispatch(userActions.setUserData(res.data.userData)); // store userinformation to the redux
+
+            dispatch(userActions.userLogin(true));
+            navigate("/");
           } else {
             alert("Login false");
           }
@@ -46,15 +67,7 @@ export default function GoogleLogIn() {
           console.log("Login Failed");
         }}
       />
-      <h1> user information from google</h1>
-      <p> first Name:{userGoogle.firstName} </p>
-      <p> last name: {userGoogle.lastName}</p>
-      <img
-        src={userGoogle.avatar}
-        alt={userGoogle.email}
-        height="50px"
-        width="50px"
-      />
-    </div>
+   
+    </Paper>
   );
 }

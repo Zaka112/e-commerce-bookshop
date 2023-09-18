@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-import User from "../models/User";
+import User, { UserDocument } from "../models/User";
 import {
   createUserService,
   findUserByEmailService,
@@ -31,6 +31,7 @@ export const createUser = async (
     interests,
   } = request.body;
   // can add validation logic to check fields are not empty
+  if (password!== "" ) {
   try {
     //hash password
     const salt = await bcrypt.genSalt(10);
@@ -53,6 +54,9 @@ export const createUser = async (
   } catch (error) {
     next(error);
   }
+} else {
+  response.status(500).send("Password required");
+}
 };
 
 dotenv.config();
@@ -153,9 +157,7 @@ export const updateUserInfoController = async (
   else {
     response.send("Please fill the required fields")
   }
- 
-
-  
+   
 };
 // put: toogle the role
 export const toggleRoleController = async (
@@ -169,6 +171,34 @@ export const toggleRoleController = async (
     const updatedUser = await toggleRoleService(userId);
 
     response.status(201).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// google
+export const googleAuthenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userData = req.user as UserDocument;
+    const token = jwt.sign(
+      {
+        email: userData.email,
+        _id: userData._id,
+      },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    if (!userData) {
+      res.json({ message: "can't find user with this email" });
+      return;
+    } else {
+      res.json({ token, userData });
+    }
+   // await updateLastLoginService(userData._id);
   } catch (error) {
     next(error);
   }

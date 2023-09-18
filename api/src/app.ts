@@ -6,7 +6,7 @@ import booksRouter from "./routes/books";
 import usersRouter from "./routes/users";
 import ordersRouter from "./routes/orders";
 import apiErrorHandler from "./middlewares/apiErrorHandler";
-import { jwtStrategy } from "./config/passport";
+import { googleStrategy, jwtStrategy } from "./config/passport";
 
 const app = express();
 
@@ -15,6 +15,7 @@ app.use(cors());
 //initilize passport and mention the stretegy you gonna use
 app.use(passport.initialize());
 passport.use(jwtStrategy);
+passport.use(googleStrategy)
 
 app.use("/books", booksRouter);
 app.use("/users", usersRouter);

@@ -1,4 +1,4 @@
-import { AlreadyExist, NotFoundError } from "../helpers/apiError";
+import { AlreadyExist, InternalServerError, NotFoundError } from "../helpers/apiError";
 import User, { UserDocument } from "./../models/User";
 
 export const createUserService = async (
@@ -34,6 +34,34 @@ export const findUserByEmailService = async (
   }
   return foundUser;
 };
+
+export const findOrCreateUserService = async (
+  payload: Partial<UserDocument>
+): Promise<UserDocument> => {
+  const user = await User.findOne({ email: payload.email });
+
+  if (user) {
+    return user;
+  } else {
+    const newUser = new User({
+      email: payload.email,
+      userName: payload.userName,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      avatar: payload.avatar,
+    });
+
+    try {
+      return await newUser.save();
+    } catch (error) {
+      console.error("Error creating account by:", error);
+      throw new InternalServerError(
+        "An error occured while creating the account."
+      );
+    }
+  }
+};
+
 
 export const updateUserByIdService = async (
   userId: string,

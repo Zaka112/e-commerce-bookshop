@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 
 import { userActions } from "../../redux/slices/user";
 import { BASE_URL } from "../../api";
+import GoogleLogIn from "./google/GoogleLogin";
 
 
 export default function SignIn() {
@@ -57,6 +58,7 @@ export default function SignIn() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      
       <Box
         sx={{
           marginTop: 8,
@@ -64,7 +66,10 @@ export default function SignIn() {
           flexDirection: "column",
           alignItems: "center",
         }}
-      >
+        
+      > <Typography component="div" variant="h5" margin={1}>Sign in using Google</Typography>
+        <GoogleLogIn/>
+        <Typography component="div" variant="h5">OR</Typography>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>

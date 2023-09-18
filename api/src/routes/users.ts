@@ -8,6 +8,7 @@ import {
   updateUserInfoController,
   toggleRoleController,
   getUserListController,
+  googleAuthenticate,
 } from "../controllers/users";
 import roleCheck from "../middlewares/roleCheck";
 
@@ -16,6 +17,13 @@ const router = Router();
 router.post("/register", createUser);
 //login
 router.post("/signin", logInController);
+
+//google login
+router.post(
+  "/google-login",
+  passport.authenticate("google-id-token", { session: false }),
+  googleAuthenticate
+);
 
 //update user info
 router.put(

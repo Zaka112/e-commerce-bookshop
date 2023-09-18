@@ -5,11 +5,10 @@ import { GoogleLogin } from "@react-oauth/google";
 
 import user from "../../../assets/user.jpg";
 import { BASE_URL } from "../../../api";
-import { User } from "../../../types/types";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../../redux/slices/user";
-import { Paper, Typography } from "@mui/material";
+import { Paper } from "@mui/material";
 
 export type UserGoogle = {
   _id: string;
@@ -45,16 +44,16 @@ export default function GoogleLogIn() {
           let res = await axios.post(url, { id_token: credential });
           if (res.status === 200) {
             setUserGoogle(res.data.userData);
-            const user = res.data.userData;
+          //  const user = res.data.userData;
 
             const userToken = res.data.token; // from data object. get and assign the token
             // const userId = currentUser?._id
             localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
-            const currentUserInformation: User = {
-              ...user,
-              token: userToken,
-            };
-            const id = user._id;
+            // const currentUserInformation: User = {
+            //   ...user,
+            //   token: userToken,
+            // };
+          //  const id = user._id;
             dispatch(userActions.setUserData(res.data.userData)); // store userinformation to the redux
 
             dispatch(userActions.userLogin(true));

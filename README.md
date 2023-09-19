@@ -4,14 +4,18 @@
 
 I am using free instance from render.com, so it takes a bit longer time to load the APIs. If one do not spend money to buy, he have to pay it by spending time in waiting. :D
 
-https://frontend-8bsn.onrender.com (UI)
+https://bookshop-frontend-dos8.onrender.com (UI)
 
-https://backend-dewo.onrender.com (API)
+https://bookshop-3ccg.onrender.com (API)
 
 ### Accomplished at Integrify
 
 Description: The subjected project allows users to visit and view the books as well as add them to favorite and cart list. However, buying items is only possible after the user has logged in. Registered users can make orders, can check the list of orders and update their credentials.
 By default the register user has a role of "user". There are other roles as well. Admin can view the list of users and change their roles. 
+
+### New: Google signup/signin fuctionlaity has also been added.
+
+Now users can use their google accounts to signup/signin.
 
 ## Tech Stack
 ### Back-end
@@ -20,6 +24,7 @@ By default the register user has a role of "user". There are other roles as well
 - MongoDB
 - passport
 - jwt strategy
+- google strategy
 - REST APIs
 
 ### Front-end

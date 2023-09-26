@@ -23,7 +23,7 @@ export default function UserList() {
 
   useEffect(() => {
     dispatch(getUserList());
-  }, [dispatch]);
+  }, [dispatch, excludeMe]);
 
   if (isLoading) {
     return (

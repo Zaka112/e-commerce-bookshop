@@ -1,12 +1,13 @@
 import React from "react";
 
 import { Typography, Paper, Grid, styled, Button } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../../redux/store";
 import { User } from "../../../types/types";
 import { BASE_URL } from "../../../api";
 import axios from "axios";
+import { userActions } from "../../../redux/slices/user";
 
 const Img = styled("img")({
   margin: "auto",
@@ -19,6 +20,8 @@ type Prop = {
   userItem: User;
 };
 export default function UserItems({ userItem }: Prop) {
+
+  const dispatch = useDispatch();
   const currentTheme = useSelector(
     (state: RootState) => state.theme.currentTheme
   );
@@ -43,6 +46,8 @@ export default function UserItems({ userItem }: Prop) {
       )
       .then((response) => {
         if (response.status === 201) {
+          // TODO:: continue working with changing the state
+         //  dispatch(userActions.setUserData(userItem));
           console.log("success");
         }
       })

@@ -13,7 +13,7 @@ https://bookshop-3ccg.onrender.com (API)
 Description: The subjected project allows users to visit and view the books as well as add them to favorite and cart list. However, buying items is only possible after the user has logged in. Registered users can make orders, can check the list of orders and update their credentials.
 By default the register user has a role of "user". There are other roles as well. Admin can view the list of users and change their roles. 
 
-### New: Google signup/signin fuctionlaity has also been added.
+### New: Google signup/signin functionality has also been added.
 
 Now users can use their google accounts to signup/signin.
 

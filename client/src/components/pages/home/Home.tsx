@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { CircularProgress, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { Col, Row } from "reactstrap";
 import { Carousel } from "react-responsive-carousel";
 import { useDispatch, useSelector } from "react-redux";

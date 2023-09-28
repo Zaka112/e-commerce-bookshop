@@ -7,24 +7,23 @@ import { RootState } from "../../../redux/store";
 import { User } from "../../../types/types";
 import { BASE_URL } from "../../../api";
 import axios from "axios";
-import { userActions } from "../../../redux/slices/user";
 
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-});
+// const Img = styled("img")({
+//   margin: "auto",
+//   display: "block",
+//   maxWidth: "100%",
+//   maxHeight: "100%",
+// });
 
 type Prop = {
   userItem: User;
 };
 export default function UserItems({ userItem }: Prop) {
 
-  const dispatch = useDispatch();
-  const currentTheme = useSelector(
-    (state: RootState) => state.theme.currentTheme
-  );
+ // const dispatch = useDispatch();
+  // const currentTheme = useSelector(
+  //   (state: RootState) => state.theme.currentTheme
+  // );
   const userInformation = useSelector(
     (state: RootState) => state.user.userInformation
   );

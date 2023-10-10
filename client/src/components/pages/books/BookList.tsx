@@ -14,6 +14,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { getBookList } from "../../../redux/thunk/books";
 import BookItems from "./BookItems";
 import SearchForm from "../../search/SerachForm";
+import SortForm from "../../sort/SortForm";
 
 export default function BookList() {
   const [progress, setProgress] = React.useState(10);
@@ -85,6 +86,7 @@ export default function BookList() {
           BuY !T
         </Typography>
         <SearchForm />
+        <SortForm/>
         <Grid
           container
           sx={{

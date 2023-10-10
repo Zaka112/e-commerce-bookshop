@@ -6,12 +6,14 @@ type BookList = {
   books: Book[];
   isLoading: boolean;
   favorite: Book[];
+  fetchedBooks:Book[];
 };
 
 const initialState: BookList = {
   books: [],
   isLoading: true,
   favorite: [],
+  fetchedBooks:[]
 };
 
 const bookSlice = createSlice({
@@ -20,6 +22,7 @@ const bookSlice = createSlice({
   reducers: {
     getBooksData: (state, action: PayloadAction<Book[]>) => {
       state.books = action.payload;
+      state.fetchedBooks= action.payload;
       state.isLoading = false;
     },
     addFavoriteBook: (state, action: PayloadAction<Book>): void => {
@@ -39,6 +42,26 @@ const bookSlice = createSlice({
       );
       state.favorite = remainingAfterDelete;
     },
+    sorting: (state, action: PayloadAction<string>) => {
+      if (action.payload === "lowestPrice") {
+        state.books.sort((a, b) => a.price - b.price);
+      }
+      if (action.payload === "highestPrice") {
+        state.books.sort((a, b) => b.price - a.price);
+      }
+      if (action.payload === "AZ") {
+        state.books.sort((a, b) => a.title.localeCompare(b.title));
+      }
+      if (action.payload === "ZA") {
+        state.books.sort((a, b) => b.title.localeCompare(a.title));
+      }
+      if (action.payload === "reset") {
+        state.books=state.fetchedBooks
+      }
+    },
+  },
+});
+
     // handleFavoriteBook: (state, action: PayloadAction<Book>): void => {
     //   const isInFavorite = state.favorite.some(
     //     (book) => book._id === action.payload._id
@@ -55,8 +78,6 @@ const bookSlice = createSlice({
      
     // },
    
-  },
-});
 
 export const bookActions = bookSlice.actions;
 const bookReducer = bookSlice.reducer;

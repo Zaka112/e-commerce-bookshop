@@ -6,6 +6,7 @@ import {
   CircularProgress,
   CircularProgressProps,
   Grid,
+  Pagination,
   Paper,
   Typography,
 } from "@mui/material";
@@ -18,20 +19,36 @@ import SortForm from "../../sort/SortForm";
 
 export default function BookList() {
   const [progress, setProgress] = React.useState(10);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  
+
   const dispatch = useDispatch<AppDispatch>();
   const bookList = useSelector((state: RootState) => state.books.books);
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(bookList.length / itemsPerPage);
   const isLoading = useSelector((state: RootState) => state.books.isLoading);
   const searchedString = useSelector(
     (state: RootState) => state.search.searchedString
   );
 
-  const searchedBook = bookList.filter((book) =>
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const booksPerPage = bookList.slice(startIndex, endIndex);
+
+  const searchedBook = booksPerPage.filter((book) =>
     book.title.toLowerCase().includes(searchedString.toLowerCase())
   );
 
   useEffect(() => {
     dispatch(getBookList());
   }, [dispatch]);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
 
   // useEffect(() => {
   //   const timer = setInterval(() => {
@@ -86,7 +103,7 @@ export default function BookList() {
           BuY !T
         </Typography>
         <SearchForm />
-        <SortForm/>
+        <SortForm />
         <Grid
           container
           sx={{
@@ -99,6 +116,11 @@ export default function BookList() {
             return <BookItems key={bookItem._id} bookItem={bookItem} />;
           })}
         </Grid>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
       </Paper>
     );
 }

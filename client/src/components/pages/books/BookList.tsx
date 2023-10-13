@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Box,
   CircularProgress,
-  CircularProgressProps,
   Grid,
   Pagination,
   Paper,
@@ -18,9 +16,7 @@ import SearchForm from "../../search/SerachForm";
 import SortForm from "../../sort/SortForm";
 
 export default function BookList() {
-  const [progress, setProgress] = React.useState(10);
   const [currentPage, setCurrentPage] = React.useState(1);
-  
 
   const dispatch = useDispatch<AppDispatch>();
   const bookList = useSelector((state: RootState) => state.books.books);
@@ -50,50 +46,11 @@ export default function BookList() {
     setCurrentPage(page);
   };
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= 100 ? 0 : prevProgress + 10
-  //     );
-  //   }, 600);
-
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
-
-  function CircularProgressWithLabel(
-    props: CircularProgressProps & { value: number }
-  ) {
-    return (
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
-        <CircularProgress variant="determinate" {...props} />
-        <Box
-          sx={{
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Typography
-            variant="caption"
-            component="div"
-            color="text.secondary"
-          >{`${Math.round(props.value)}%`}</Typography>
-        </Box>
-      </Box>
-    );
-  }
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600 }}>
-        {/* <CircularProgress size="10rem" color="inherit" /> */}
-        <CircularProgressWithLabel size="10rem" value={progress} />
+        <CircularProgress size="10rem" color="inherit" />
+        {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
       </Paper>
     );
   } else

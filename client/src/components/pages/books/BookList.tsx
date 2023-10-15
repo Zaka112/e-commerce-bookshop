@@ -25,7 +25,7 @@ export default function BookList() {
   const bookList = useSelector((state: RootState) => state.books.books);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(bookList.length / itemsPerPage);
-  const isLoading = useSelector((state: RootState) => state.books.isLoading);
+  let isLoading = useSelector((state: RootState) => state.books.isLoading);
   const searchedString = useSelector(
     (state: RootState) => state.search.searchedString
   );
@@ -54,6 +54,7 @@ export default function BookList() {
       const timer = setInterval(() => {
         setProgress((prevProgress) =>
           prevProgress >= 100 ? 10 : prevProgress + 10
+          
         );
       }, 600);
 

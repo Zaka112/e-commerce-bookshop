@@ -46,13 +46,11 @@ const UserSchema = new mongoose.Schema(
 
     password: {
       type: String,
-     // required: true,
       maxLength: 200,
     },
 
     userName: {
       type: String,
-      //required: true,
       unique: true,
       maxLength: 50,
     },

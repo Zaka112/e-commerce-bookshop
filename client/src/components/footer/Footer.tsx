@@ -62,8 +62,8 @@ export default function Footer() {
         <Box mt={5}>
           <Typography variant="body2" color="text.secondary" align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://buyit.com/">
-              BuY !T
+            <Link color="inherit" href="https://#.com/">
+              Book Shop
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}

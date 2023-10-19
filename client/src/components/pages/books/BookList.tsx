@@ -102,7 +102,7 @@ export default function BookList() {
     return (
       <Paper>
         <Typography variant="h3" component="h3">
-          BuY !T
+          Book Shop
         </Typography>
         <SearchForm />
         <SortForm />

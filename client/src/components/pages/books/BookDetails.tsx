@@ -123,16 +123,16 @@ export default function BookDetails() {
             display: "flex",
           }}
         >
-          <Card sx={{ minWidth: 600, minHeight: 600 }}>
+          <Card sx={{ maxWidth: '50%', minHeight: 600 }}>
             <CardMedia
               component="img"
               alt="Book Image"
               height={600}
-              width={600}
+             // width={600}
               image={currentImage}
             />
           </Card>
-          <Card sx={{ minWidth: 600, minHeight: 600 }}>
+          <Card sx={{ minWidth: '50%', minHeight: 600 }}>
             <Paper sx={{ display: "flex", justifyContent: "center" }}>
               {bookDetails?.images
                 ? Object.entries(bookDetails.images).map((images) => {

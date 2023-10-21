@@ -24,6 +24,7 @@ import { cartListActions } from "../../../redux/slices/cart";
 import { BASE_URL } from "../../../api";
 import { toggleThemeActions } from "../../../redux/slices/theme";
 import { bookActions } from "../../../redux/slices/books";
+import { Height } from "@mui/icons-material";
 
 export default function BookDetails() {
   const bookDetails = useSelector((state: RootState) => state.bookDetail.book);
@@ -123,16 +124,16 @@ export default function BookDetails() {
             display: "flex",
           }}
         >
-          <Card sx={{ width: '50%', minHeight: '50%' }}>
+          <Card sx={{ width: '50%'  }}>
             <CardMedia
               component="img"
               alt="Book Image"
-             // height={600}
-             // width={600}
+              height='100%'
+             width='100%'
               image={currentImage}
             />
           </Card>
-          <Card sx={{ width: '50%', height: '50%' }}>
+          <Card sx={{ width: '50%' }}>
             <Paper sx={{ display: "flex", justifyContent: "center" }}>
               {bookDetails?.images
                 ? Object.entries(bookDetails.images).map((images) => {

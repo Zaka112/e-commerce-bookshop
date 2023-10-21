@@ -20,12 +20,11 @@ export default function CartList() {
   const userId = userInformation?._id;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const token = localStorage.getItem("userToken");
 
-  
   function checkOut() {
-   const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
+    const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
     const endPoint = `${BASE_URL}/orders/${userId}`;
 
     axios
@@ -85,11 +84,16 @@ export default function CartList() {
         </Typography>
       ) : (
         <Grid
-          marginTop={5}
+          item
+          xs={4}
+          md={8}
+         // spacing={{ xs: 2, md: 3 }}
+        // columns={{ xs: 4, sm: 8, md: 12 }}
+         /// marginTop={5}
           container
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
+          // gridTemplateColumns: "repeat(2, 1fr)",
             gap: "1rem",
           }}
         >

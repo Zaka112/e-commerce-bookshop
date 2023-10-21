@@ -123,16 +123,16 @@ export default function BookDetails() {
             display: "flex",
           }}
         >
-          <Card sx={{ maxWidth: '50%', minHeight: 600 }}>
+          <Card sx={{ width: '50%', minHeight: '50%' }}>
             <CardMedia
               component="img"
               alt="Book Image"
-              height={600}
+             // height={600}
              // width={600}
               image={currentImage}
             />
           </Card>
-          <Card sx={{ minWidth: '50%', minHeight: 600 }}>
+          <Card sx={{ width: '50%', height: '50%' }}>
             <Paper sx={{ display: "flex", justifyContent: "center" }}>
               {bookDetails?.images
                 ? Object.entries(bookDetails.images).map((images) => {
@@ -140,8 +140,8 @@ export default function BookDetails() {
                       <Paper key={uuidv4()} sx={{ padding: 0.5 }}>
                         <img
                           src={images[1]}
-                          width={100}
-                          height={100}
+                          width='50%'
+                         height='50%'
                           alt={bookDetails?.title}
                           onClick={() => changeImage(images[1])}
                         />

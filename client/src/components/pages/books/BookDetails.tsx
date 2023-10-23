@@ -88,13 +88,13 @@ export default function BookDetails() {
     }
   }
 
-  function alreadyInCart(): void {
-    toast.info("This item is already in the cart!", {
-      position: "top-center",
-      progress: undefined,
-      theme: "light",
-    });
-  }
+  // function alreadyInCart(): void {
+  //   toast.info("This item is already in the cart!", {
+  //     position: "top-center",
+  //     progress: undefined,
+  //     theme: "light",
+  //   });
+  // }
 
   useEffect(() => {
     dispatchApp(getBookDetailData(bookDetailURL));
@@ -125,13 +125,7 @@ export default function BookDetails() {
           }}
         >
           <Card sx={{ width: "50%" }}>
-            <CardMedia
-              component="img"
-              alt="Book Image"
-              height="100%"
-              width="100%"
-              image={currentImage}
-            />
+            <CardMedia component="img" alt="Book Image" image={currentImage} />
           </Card>
           <Card sx={{ width: "50%" }}>
             <Paper sx={{ display: "flex", justifyContent: "center" }}>

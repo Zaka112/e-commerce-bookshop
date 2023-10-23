@@ -238,7 +238,7 @@ export default function BookDetails() {
               </Typography>
               <Link to="/books" style={{ color: "inherit" }}>
                 <Button variant="contained" sx={{ mt: 3, mb: 2 }} size="small">
-                 + Add more items
+                  + Add more items
                 </Button>
               </Link>
             </Paper>

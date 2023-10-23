@@ -83,20 +83,7 @@ export default function CartList() {
           page.
         </Typography>
       ) : (
-        <Grid
-          item
-          xs={6}
-          md={8}
-         // spacing={{ xs: 2, md: 3 }}
-        // columns={{ xs: 4, sm: 8, md: 12 }}
-         /// marginTop={5}
-          container
-          sx={{
-            display: "grid",
-          // gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "1rem",
-          }}
-        >
+        <Grid container>
           {cartList.map((cartItem) => {
             return <CartItems cartItem={cartItem} key={cartItem._id} />;
           })}

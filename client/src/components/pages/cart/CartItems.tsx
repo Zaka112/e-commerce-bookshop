@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -26,7 +26,8 @@ export default function CartItems({ cartItem }: Prop) {
   }
 
   return (
-    <Paper>
+    <Paper sx={{margin:1}}>
+       <Grid  item xs={12} sm={4}>
       <Box
         sx={{
           display: "flex",
@@ -42,7 +43,6 @@ export default function CartItems({ cartItem }: Prop) {
         </Tooltip>
         <Box
           sx={{
-            minWidth: 345,
             display: "flex",
             flexDirection: "column",
           }}
@@ -51,7 +51,7 @@ export default function CartItems({ cartItem }: Prop) {
             {cartItem.title}
           </Typography>
           <Typography>Price: $ {cartItem.price}</Typography>
-          <IconButton onClick={removeItem}>
+          <IconButton onClick={removeItem} sx={{ color: "red" }} >
             <Tooltip title="remove Item" arrow placement="bottom">
               <DeleteForeverIcon />
             </Tooltip>
@@ -76,7 +76,7 @@ export default function CartItems({ cartItem }: Prop) {
             </Tooltip>
           </IconButton>
         </Box>
-      </Box>
+      </Box></Grid>
     </Paper>
   );
 }

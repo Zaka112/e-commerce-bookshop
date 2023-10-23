@@ -10,6 +10,7 @@ import { Book } from "../../../types/types";
 import { RootState } from "../../../redux/store";
 import { bookActions } from "../../../redux/slices/books";
 import { toggleThemeActions } from "../../../redux/slices/theme";
+import { Button } from "reactstrap";
 
 const Img = styled("img")({
   margin: "auto",
@@ -105,7 +106,13 @@ export default function BookItems({ bookItem }: Prop) {
             <Grid item xs>
               <Typography variant="body2" color="text.secondary">
                 ISBN: {bookItem.isbn}
-              </Typography>
+              </Typography><br />
+              <Link
+            to={`/books/${bookItem._id}`}
+            style={{ textDecoration: "none", color: "white" }}
+          >   <Button variant="contained" >
+                Learn more...
+              </Button></Link>
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: "pointer" }} variant="body2">

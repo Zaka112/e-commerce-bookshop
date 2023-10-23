@@ -124,16 +124,16 @@ export default function BookDetails() {
             display: "flex",
           }}
         >
-          <Card sx={{ width: '50%'  }}>
+          <Card sx={{ width: "50%" }}>
             <CardMedia
               component="img"
               alt="Book Image"
-              height='100%'
-             width='100%'
+              height="100%"
+              width="100%"
               image={currentImage}
             />
           </Card>
-          <Card sx={{ width: '50%' }}>
+          <Card sx={{ width: "50%" }}>
             <Paper sx={{ display: "flex", justifyContent: "center" }}>
               {bookDetails?.images
                 ? Object.entries(bookDetails.images).map((images) => {
@@ -141,8 +141,8 @@ export default function BookDetails() {
                       <Paper key={uuidv4()} sx={{ padding: 0.5 }}>
                         <img
                           src={images[1]}
-                          width='50%'
-                         height='50%'
+                          width="50%"
+                          height="50%"
                           alt={bookDetails?.title}
                           onClick={() => changeImage(images[1])}
                         />
@@ -161,34 +161,84 @@ export default function BookDetails() {
               <Typography gutterBottom variant="body2" component="div">
                 Price: {bookDetails?.price} $
               </Typography>{" "}
-              <IconButton
-                aria-label="add to favorites"
+              <Button
+                variant="contained"
+                sx={{ mt: 3, mb: 2, border: 2, borderRadius: 2 }}
+                size="small"
                 onClick={() => {
                   if (bookDetails) {
                     handelFavoriteBookIcon(bookDetails);
                   }
                 }}
-                sx={isFavorite ? { color: "red" } : { color: "inherit" }}
               >
-                <FavoriteIcon fontSize="small" />
-              </IconButton>
-              <IconButton
-                aria-label="add to cart"
-                onClick={
-                  bookDetails !== null && !isInCart
-                    ? () => addToCart(bookDetails)
-                    : () => alreadyInCart()
-                }
-                sx={isInCart ? { color: "red" } : { color: "inherit" }}
-              >
-                <AddShoppingCartIcon fontSize="small" />
-              </IconButton>
-              <Typography variant="body2" color="text.secondary">
+                {" "}
+                add to favorite{" "}
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => {
+                    if (bookDetails) {
+                      handelFavoriteBookIcon(bookDetails);
+                    }
+                  }}
+                  sx={isFavorite ? { color: "red" } : { color: "inherit" }}
+                >
+                  <FavoriteIcon fontSize="small" />
+                </IconButton>
+              </Button>{" "}
+              <br />
+              {bookDetails !== null && !isInCart ? (
+                <Button
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, border: 2, borderRadius: 2 }}
+                  size="small"
+                  onClick={() => addToCart(bookDetails)}
+                >
+                  {" "}
+                  add to cart{" "}
+                  {/* <IconButton
+                  aria-label="add to cart"
+                  onClick={
+                    bookDetails !== null && !isInCart
+                      ? () => addToCart(bookDetails)
+                      : () => alreadyInCart()
+                  }
+                  sx={isInCart ? { color: "red" } : { color: "inherit" }}
+                > */}
+                  <IconButton
+                    aria-label="add to cart"
+                    sx={{ color: "inherit" }}
+                  >
+                    <AddShoppingCartIcon fontSize="small" />
+                  </IconButton>
+                </Button>
+              ) : (
+                <Link to="/cart" style={{ color: "inherit" }}>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2, border: 2, borderRadius: 2 }}
+                    size="small"
+                  >
+                    {" "}
+                    go to checkout{" "}
+                    <IconButton
+                      aria-label="go to checkout"
+                      sx={{ color: "red" }}
+                    >
+                      <AddShoppingCartIcon fontSize="small" />
+                    </IconButton>
+                  </Button>
+                </Link>
+              )}
+              {/* <Typography variant="body2" color="text.secondary">
                 {bookDetails?.category}
+              </Typography> */}
+              <Typography variant="h5" component="div">
+                OR
               </Typography>
               <Link to="/books" style={{ color: "inherit" }}>
                 <Button variant="contained" sx={{ mt: 3, mb: 2 }} size="small">
-                  Back to shop
+                 + Add more items
                 </Button>
               </Link>
             </Paper>

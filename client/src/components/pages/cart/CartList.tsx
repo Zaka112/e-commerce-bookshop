@@ -85,7 +85,7 @@ export default function CartList() {
       ) : (
         <Grid
           item
-          xs={4}
+          xs={6}
           md={8}
          // spacing={{ xs: 2, md: 3 }}
         // columns={{ xs: 4, sm: 8, md: 12 }}

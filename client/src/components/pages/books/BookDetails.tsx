@@ -169,11 +169,11 @@ export default function BookDetails() {
                 add to favorite{" "}
                 <IconButton
                   aria-label="add to favorites"
-                  onClick={() => {
-                    if (bookDetails) {
-                      handelFavoriteBookIcon(bookDetails);
-                    }
-                  }}
+                  //onClick={() => {
+                    //if (bookDetails) {
+                      //handelFavoriteBookIcon(bookDetails);
+                    //}
+                  //}}
                   sx={isFavorite ? { color: "red" } : { color: "inherit" }}
                 >
                   <FavoriteIcon fontSize="small" />

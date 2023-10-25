@@ -13,9 +13,10 @@ export const createNewOrderController = async (
   next: NextFunction
 ) => {
   try {
-    const { bookList, totalOrderPrice } = request.body;
+    const { bookList, totalOrderPrice, firstName } = request.body;
     const order = new Order({
       userId: request.params.userId,
+      firstName,
       bookList,
       totalOrderPrice,
     });

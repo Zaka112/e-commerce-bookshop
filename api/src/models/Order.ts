@@ -25,12 +25,14 @@ const BookOrderSchema = new mongoose.Schema({
 
 export type OrderDocument = Document & {
   userId: string;
+  firstName:string;
   bookList: BookDocument[];
   orderedAt: Date;
 };
 
 const OrderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  firstName: { type: mongoose.Schema.Types.String, ref: "User" },
   bookList: [BookOrderSchema],
   orderedAt: {
     type: Date,

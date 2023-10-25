@@ -18,13 +18,14 @@ export default function CartList() {
     (state: RootState) => state.user.userInformation
   );
   const userId = userInformation?._id;
+  const firstName= userInformation?.firstName
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("userToken");
 
   function checkOut() {
-    const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice };
+    const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice, firstName:firstName };
     const endPoint = `${BASE_URL}/orders/${userId}`;
 
     axios

@@ -41,4 +41,5 @@ export type Order = {
   bookList: BookOrder[];
   orderedAt: string;
   totalOrderPrice: number;
+  firstName: string;
 };

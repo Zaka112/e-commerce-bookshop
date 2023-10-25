@@ -32,7 +32,7 @@ export default function UserOrderDetails() {
       <div>
         {" "}
         <Button onClick={() => navigate(-1)}>Back</Button><Typography>Order Details for{" "}
-       <Typography variant="h5"  component='div' fontWeight="bold">{orderDetails._id}</Typography>  created at {new Date (orderDetails.orderedAt).toLocaleDateString()}</Typography>
+       <Typography variant="h5"  component='div' fontWeight="bold">{orderDetails.firstName}</Typography>  created at {new Date (orderDetails.orderedAt).toLocaleDateString()}</Typography>
         <Table>
           <TableHead>
             <TableRow>

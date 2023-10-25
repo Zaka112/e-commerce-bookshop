@@ -14,6 +14,7 @@ export const getUserByIdService = async (
   userId: string
 ): Promise<UserDocument> => {
   const userById = await User.findById(userId);
+  
   if (!userById) {
     throw new NotFoundError(`No user found having ${userId}`);
   }

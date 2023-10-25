@@ -15,5 +15,8 @@ export const findOrderByUserIdService = async (
 export const findOrderByOrderIdService = async (
   orderId: string
 ): Promise<OrderDocument | null> => {
-  return await Order.findById(orderId);
+  return await Order.findById(orderId).populate({
+    // populate to see the user detail
+    path: "userId",
+  });
 };

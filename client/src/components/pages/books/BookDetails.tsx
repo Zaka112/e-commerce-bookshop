@@ -24,7 +24,6 @@ import { cartListActions } from "../../../redux/slices/cart";
 import { BASE_URL } from "../../../api";
 import { toggleThemeActions } from "../../../redux/slices/theme";
 import { bookActions } from "../../../redux/slices/books";
-import { Height } from "@mui/icons-material";
 
 export default function BookDetails() {
   const bookDetails = useSelector((state: RootState) => state.bookDetail.book);
@@ -169,16 +168,6 @@ export default function BookDetails() {
                 add to favorite{" "}
                 <IconButton
                   aria-label="add to favorites"
-                  //onClick={() => {
-                    //if (bookDetails) {
-                      //handelFavoriteBookIcon(bookDetails);
-                    //}
-                  //}}
-                  // onClick={() => {
-                  //   if (bookDetails) {
-                  //     handelFavoriteBookIcon(bookDetails);
-                  //   }
-                  // }}
                   sx={isFavorite ? { color: "red" } : { color: "inherit" }}
                 >
                   <FavoriteIcon fontSize="small" />
@@ -229,9 +218,6 @@ export default function BookDetails() {
                   </Button>
                 </Link>
               )}
-              {/* <Typography variant="body2" color="text.secondary">
-                {bookDetails?.category}
-              </Typography> */}
               <Typography variant="h5" component="div">
                 OR
               </Typography>

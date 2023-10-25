@@ -24,7 +24,6 @@ import { userActions } from "../../redux/slices/user";
 import { BASE_URL } from "../../api";
 import GoogleLogIn from "./google/GoogleLogin";
 
-
 export default function SignIn() {
   const [invalidCredential, setInvalidCredential] = useState("");
   const navigate = useNavigate();
@@ -36,16 +35,19 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     };
+
     const endpoint = `${BASE_URL}/users/signin`;
     axios
       .post(endpoint, userLogin)
 
       .then((response) => {
         if (response.status === 200) {
-          dispatch(userActions.setUserData(response.data.userData)); // store userinformation to the redux
           const userToken = response.data.token; // from data object. get and assign the token
-
+          const userId = response.data.userData._id;
+          localStorage.setItem("userId", userId);
           localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
+          dispatch(userActions.setUserData(response.data.userData)); // store userinformation to the redux
+          dispatch(userActions.userLogin(true));
           navigate("/books");
         }
       })
@@ -58,7 +60,7 @@ export default function SignIn() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      
+
       <Box
         sx={{
           marginTop: 8,
@@ -66,10 +68,15 @@ export default function SignIn() {
           flexDirection: "column",
           alignItems: "center",
         }}
-        
-      > <Typography component="div" variant="h5" margin={1}>Sign in using Google</Typography>
-        <GoogleLogIn/>
-        <Typography component="div" variant="h5">OR</Typography>
+      >
+        {" "}
+        <Typography component="div" variant="h5" margin={1}>
+          Sign in using Google
+        </Typography>
+        <GoogleLogIn />
+        <Typography component="div" variant="h5">
+          OR
+        </Typography>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -124,7 +131,6 @@ export default function SignIn() {
             Sign In
           </Button>
 
-        
           <Grid container>
             <Grid item>
               <Link to="/users/register">Don't have an account? Sign Up</Link>

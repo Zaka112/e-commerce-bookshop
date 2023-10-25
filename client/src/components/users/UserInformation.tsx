@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
@@ -16,13 +16,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 
-import { RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
 import { userActions } from "../../redux/slices/user";
+import { getSingleUser } from "../../redux/thunk/users";
 import NotFound from "../Error";
 import { BASE_URL } from "../../api";
+
 
 export default function UserInformation() {
   const dispatch = useDispatch();
@@ -32,6 +34,8 @@ export default function UserInformation() {
   );
 
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
+  const isLogin = useSelector((state: RootState) => state.user.isLogin);
+  
   const [updateData, setUpdateData] = useState({
     firstName: userInformation?.firstName,
     lastName: userInformation?.lastName,
@@ -39,6 +43,13 @@ export default function UserInformation() {
     interests: userInformation?.interests,
     gender: userInformation?.gender,
   });
+  
+   const dispatchApp = useDispatch<AppDispatch>();
+  const { userId } = useParams<{ userId: string }>();
+  const singleUserURL = `${BASE_URL}/users/${userId}`;
+  useEffect(() => {
+    dispatchApp(getSingleUser(singleUserURL));
+  }, [dispatchApp, singleUserURL]);
 
   const [readOnly, setReadOnly] = useState(true);
 
@@ -98,7 +109,7 @@ export default function UserInformation() {
   }
   function onSuccess() {
     confirmAlert({
-      title: `Awesome! ${userInformation?.userName}`,
+      title: `Awesome! ${userInformation?.firstName}`,
       message: `Information updated`,
       buttons: [
         {
@@ -120,8 +131,8 @@ export default function UserInformation() {
       ],
     });
   }
-
-  if (!userInformation) {
+console.log(userInformation, "User Information")
+  if (!userInformation ) {
     return <NotFound />;
   } else if (isLoading) {
     <Paper>

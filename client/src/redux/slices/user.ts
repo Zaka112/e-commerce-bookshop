@@ -8,6 +8,12 @@ type SingleUser = {
   isLoading: boolean;
 };
 
+// const initialState: SingleUser = {
+//   userInformation: null,
+//   isLoading: true,
+//  isLogin:false,
+// };
+
 const storedUserState = localStorage.getItem("userState");
 const initialState: SingleUser = storedUserState
   ? JSON.parse(storedUserState)
@@ -32,8 +38,8 @@ const userSlice = createSlice({
     },
     removeUserData: (state) => {
       state.userInformation = initialState.userInformation;
-      localStorage.removeItem("userToken")
-      localStorage.removeItem("userState")
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("userState");
       localStorage.clear();
       state.isLogin = false;
       state.isLoading = false;

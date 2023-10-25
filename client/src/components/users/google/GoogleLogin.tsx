@@ -47,8 +47,10 @@ export default function GoogleLogIn() {
           //  const user = res.data.userData;
 
             const userToken = res.data.token; // from data object. get and assign the token
-            // const userId = currentUser?._id
+             const userId = res.data.userData._id
+             localStorage.setItem("userId", userId);
             localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
+            
             // const currentUserInformation: User = {
             //   ...user,
             //   token: userToken,
@@ -57,7 +59,7 @@ export default function GoogleLogIn() {
             dispatch(userActions.setUserData(res.data.userData)); // store userinformation to the redux
 
             dispatch(userActions.userLogin(true));
-            navigate("/");
+            navigate("/books");
           } else {
             alert("Login false");
           }

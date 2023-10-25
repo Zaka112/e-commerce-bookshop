@@ -31,6 +31,7 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   updateUserInfoController
 );
+// get user by id
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),

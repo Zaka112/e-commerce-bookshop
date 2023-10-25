@@ -48,7 +48,7 @@ export default function UserOrdersList() {
     if (userId && userDetails) {
       dispatch(getUserOrderList(userId));
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId, userDetails]);
   if (userDetails) {
     return (
       <Paper>
@@ -58,7 +58,7 @@ export default function UserOrdersList() {
         <Paper>
           {" "}
           <Button onClick={() => navigate(-1)}>Back</Button>{" "}
-          {userDetails?.userName + ` - your order history`}{" "}
+          {userDetails.firstName + ` - your order history`}{" "}
         </Paper>
         <TableContainer>
           <Table>

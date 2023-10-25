@@ -8,12 +8,14 @@ import { Order } from "../../../types/types";
 
 type Prop = {
   order: Order;
+  orderNumber: number;
 };
 
-export default function UserOrderItems({ order }: Prop) {
+export default function UserOrderItems({ order, orderNumber }: Prop) {
+  // numBr
   return (
     <TableRow key={order._id}>
-      <TableCell></TableCell>
+      <TableCell>{orderNumber + 1}</TableCell>
       <TableCell>{order._id}</TableCell>
       <TableCell>{new Date(order.orderedAt).toLocaleDateString()}</TableCell>
       <TableCell sx={{ textDecoration: "none" }}>

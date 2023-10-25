@@ -49,76 +49,84 @@ export default function UserOrdersList() {
       dispatch(getUserOrderList(userId));
     }
   }, [dispatch, userId, userDetails]);
-  if (userDetails ) {
-    if (orderList.length>0) {return (
-      <Paper>
-        <Typography variant="h4" component="div">
-          OrderList{" "}
-        </Typography>
+  if (userDetails) {
+    if (orderList.length > 0) {
+      return (
         <Paper>
-          {" "}
-          <Button onClick={() => navigate(-1)}>Back</Button>{" "}
-          {userDetails.firstName + ` - your order history`}{" "}
-        </Paper>
-        
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography
-                    variant="h5"
-                    sx={{ fontWeight: 800 }}
-                    component="h1"
-                  >
-                    No.
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="h5"
-                    sx={{ fontWeight: 800 }}
-                    component="h1"
-                  >
-                    Order No.
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="h5"
-                    sx={{ fontWeight: 800 }}
-                    component="h1"
-                  >
-                    Order Date
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
+          <Typography variant="h4" component="div">
+            OrderList{" "}
+          </Typography>
+          <Paper>
+            {" "}
+            <Button onClick={() => navigate(-1)}>Back</Button>{" "}
+            {userDetails.firstName + ` - your order history`}{" "}
+          </Paper>
 
-            {orderList
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((order) => (
-                <TableBody key={order._id}>
-                  <UserOrderItems order={order} />
-                </TableBody>
-              ))}
-          </Table>
-        </TableContainer>
-        {orderList.length > 10 ? (
-          <TablePagination
-            ActionsComponent={TablePaginationActions}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            count={orderList.length}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            component="div"
-          />
-        ) : null}
-      </Paper>
-    )} 
-    else 
-    return <Typography variant="h4">You have not made any order yet</Typography> 
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: 800 }}
+                      component="h1"
+                    >
+                      No.
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: 800 }}
+                      component="h1"
+                    >
+                      Order No.
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: 800 }}
+                      component="h1"
+                    >
+                      Order Date
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              {}
+              {orderList
+
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                //.reverse()
+                .map((order) => (
+                  <TableBody key={order._id}>
+                    <UserOrderItems
+                      order={order}
+                      orderNumber={orderList.indexOf(order, 0)}
+                    />
+                  </TableBody>
+                ))}
+            </Table>
+          </TableContainer>
+          {orderList.length > 10 ? (
+            <TablePagination
+              ActionsComponent={TablePaginationActions}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              count={orderList.length}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              component="div"
+            />
+          ) : null}
+        </Paper>
+      );
+    } else
+      return (
+        <Typography variant="h4">You have not made any order yet</Typography>
+      );
   } else {
     return <NotFound />;
   }

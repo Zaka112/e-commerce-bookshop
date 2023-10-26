@@ -48,7 +48,7 @@ export default function UserOrderDetails() {
                   sx={{ fontWeight: 800 }}
                   component="h1"
                 >
-                  No.
+                  Items
                 </Typography>
               </TableCell>
               <TableCell>
@@ -84,7 +84,9 @@ export default function UserOrderDetails() {
             return (
               <TableBody>
                 <TableRow>
-                  <TableCell></TableCell>
+                  <TableCell>
+                  Item no.  {orderDetails.bookList.indexOf(book, 0) + 1}
+                  </TableCell>
                   <TableCell>{book.title}</TableCell>
                   <TableCell>{book.counter}</TableCell>
                   <TableCell sx={{ textDecoration: "none" }}>
@@ -95,7 +97,7 @@ export default function UserOrderDetails() {
             );
           })}
         </Table>
-        <Typography>
+        <Typography variant="h4" fontFamily="bold">
           {" "}
           Total Order Price: {orderDetails.totalOrderPrice}{" "}
         </Typography>

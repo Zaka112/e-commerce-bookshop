@@ -18,6 +18,7 @@ const orderSlice = createSlice({
   reducers: {
     getUserOrders: (state, action: PayloadAction<Order[]>) => {
       state.userOrders = action.payload;
+      state.userOrders.reverse();
     },
     getOrderDetails: (state, action: PayloadAction<Order>) => {
       state.userOrderDetails = action.payload;

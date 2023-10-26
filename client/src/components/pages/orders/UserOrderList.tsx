@@ -81,7 +81,17 @@ export default function UserOrdersList() {
                       sx={{ fontWeight: 800 }}
                       component="h1"
                     >
-                      Order No.
+                      Order no.
+                    </Typography>
+                  </TableCell>
+                 
+                  <TableCell>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: 800 }}
+                      component="h1"
+                    >
+                      Order Date
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -90,7 +100,7 @@ export default function UserOrdersList() {
                       sx={{ fontWeight: 800 }}
                       component="h1"
                     >
-                      Order Date
+                      Number of items
                     </Typography>
                   </TableCell>
                 </TableRow>

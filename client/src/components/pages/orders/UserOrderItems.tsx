@@ -19,6 +19,7 @@ export default function UserOrderItems({ order, orderNumber }: Prop) {
       <TableCell>{order._id}</TableCell>
       <TableCell>{new Date(order.orderedAt).toLocaleDateString()}</TableCell>
       <TableCell>{order.bookList.length}</TableCell>
+      <TableCell>{order.totalOrderPrice}</TableCell>
       <TableCell sx={{ textDecoration: "none" }}>
         <Link to={`/orders/orderdetails/${order._id}`}>
           <KeyboardArrowRightIcon />

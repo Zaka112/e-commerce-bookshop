@@ -56,7 +56,7 @@ export default function CartList() {
           • the resource server is accessible
           • you're logged in`,
             {
-              position: "top-left",
+              position: "top-center",
               progress: undefined,
               theme: "light",
             }

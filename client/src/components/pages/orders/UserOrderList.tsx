@@ -20,7 +20,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { getUserOrderList } from "../../../redux/thunk/orders";
 import UserOrderItems from "./UserOrderItems";
 import NotFound from "../../Error";
-import UserList from "../../users/userRoleList/UserList";
+import { orderActions } from "../../../redux/slices/orders";
 
 export default function UserOrdersList() {
   const [page, setPage] = useState<number>(0);
@@ -49,6 +49,10 @@ export default function UserOrdersList() {
       dispatch(getUserOrderList(userId));
     }
   }, [dispatch, userId, userDetails]);
+  
+    function sortHandel(): void {
+      dispatch(orderActions.orderListById());
+    }
   if (userDetails) {
     if (orderList.length > 0) {
       return (
@@ -84,7 +88,7 @@ export default function UserOrdersList() {
                       Order no.
                     </Typography>
                   </TableCell>
-                 
+
                   <TableCell>
                     <Typography
                       variant="h5"
@@ -103,13 +107,22 @@ export default function UserOrdersList() {
                       Number of items
                     </Typography>
                   </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: 800 }}
+                      component="h1"
+                    >
+                     <Button onClick={sortHandel}> Total amount</Button>
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               {}
               {orderList
 
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                //.reverse()
+
                 .map((order) => (
                   <TableBody key={order._id}>
                     <UserOrderItems

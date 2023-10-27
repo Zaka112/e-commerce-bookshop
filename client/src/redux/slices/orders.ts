@@ -23,6 +23,11 @@ const orderSlice = createSlice({
     getOrderDetails: (state, action: PayloadAction<Order>) => {
       state.userOrderDetails = action.payload;
     },
+    orderListById: (state) => {
+     // state.userOrders = action.payload;
+     
+     state.userOrders.sort((a, b) => b.totalOrderPrice - a.totalOrderPrice);
+    },
   },
 });
 

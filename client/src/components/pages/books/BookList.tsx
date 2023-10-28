@@ -16,6 +16,7 @@ import { getBookList } from "../../../redux/thunk/books";
 import BookItems from "./BookItems";
 import SearchForm from "../../search/SerachForm";
 import SortForm from "../../sort/SortForm";
+import { AlignHorizontalCenter } from "@mui/icons-material";
 
 export default function BookList() {
   const [progress, setProgress] = React.useState(10);
@@ -93,7 +94,7 @@ export default function BookList() {
   }
   if (isLoading) {
     return (
-      <Paper sx={{ minHeight: 600 }}>
+      <Paper sx={{ minHeight: 600}}>
         {/* <CircularProgress size="10rem" color="inherit" /> */}
         <CircularProgressWithLabel size="10rem" value={progress} />
       </Paper>

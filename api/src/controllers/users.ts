@@ -11,6 +11,7 @@ import {
   updateUserByIdService,
   toggleRoleService,
   getUserListService,
+  updateLastLoginService,
 } from "../services/users";
 import { UnauthorizedError } from "../helpers/apiError";
 
@@ -94,6 +95,7 @@ export const logInController = async (
       { expiresIn: "1h" }
     );
     response.json({ userData, token });
+    await updateLastLoginService(userData._id);
   } catch (error) {
     next(error);
   }
@@ -198,7 +200,7 @@ export const googleAuthenticate = async (
     } else {
       res.json({ token, userData });
     }
-   // await updateLastLoginService(userData._id);
+    await updateLastLoginService(userData._id);
   } catch (error) {
     next(error);
   }

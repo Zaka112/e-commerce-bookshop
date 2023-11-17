@@ -36,6 +36,19 @@ export const findUserByEmailService = async (
   return foundUser;
 };
 
+export const updateLastLoginService = async (
+  id: string
+): Promise<UserDocument> => {
+  const foundUser = await User.findByIdAndUpdate(id, {
+    lastLogin: Date.now(),
+  });
+
+  if (!foundUser) {
+    throw new NotFoundError(`User with ${id} not found`);
+  }
+  return foundUser;
+};
+
 export const findOrCreateUserService = async (
   payload: Partial<UserDocument>
 ): Promise<UserDocument> => {

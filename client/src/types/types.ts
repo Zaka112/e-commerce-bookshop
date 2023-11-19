@@ -32,7 +32,8 @@ export type User = {
   country: string;
   interests: string;
   createdAt:Date,
-  role:string
+  role:string,
+  isBanned:boolean,
 };
 
 export type Order = {

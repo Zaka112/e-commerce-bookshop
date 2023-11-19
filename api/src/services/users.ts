@@ -106,3 +106,20 @@ export const toggleRoleService = async (userId: string) => {
     throw new NotFoundError(`User not found with ${userId}`);
   }
 };
+
+// update restrictions (Banning)
+export const updateRestrictionService = async (userId: string) => {
+  const foundUser = await User.findOne({ _id: userId });
+  if (foundUser) {
+    if (foundUser.isBanned === false) {
+      foundUser.isBanned = true;
+    } else {
+      foundUser.isBanned = false;
+    }
+
+    const updatedUser = updateUserByIdService(userId, foundUser);
+    return updatedUser;
+  } else {
+    throw new NotFoundError(`User not found with ${userId}`);
+  }
+};

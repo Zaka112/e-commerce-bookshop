@@ -12,6 +12,7 @@ import {
   toggleRoleService,
   getUserListService,
   updateLastLoginService,
+  updateRestrictionService,
 } from "../services/users";
 import { UnauthorizedError } from "../helpers/apiError";
 
@@ -171,6 +172,23 @@ export const toggleRoleController = async (
     const userId = request.params.userId;
 
     const updatedUser = await toggleRoleService(userId);
+
+    response.status(201).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// put: Ban/Unban the user
+export const handelRestrictionController = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = request.params.userId;
+
+    const updatedUser = await updateRestrictionService(userId);
 
     response.status(201).json(updatedUser);
   } catch (error) {

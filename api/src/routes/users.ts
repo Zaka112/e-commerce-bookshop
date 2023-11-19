@@ -9,6 +9,7 @@ import {
   toggleRoleController,
   getUserListController,
   googleAuthenticate,
+  handelRestrictionController,
 } from "../controllers/users";
 import roleCheck from "../middlewares/roleCheck";
 
@@ -58,5 +59,12 @@ router.put(
  passport.authenticate("jwt", { session: false }),
   roleCheck,
   toggleRoleController
+);
+
+router.put(
+  "/:userId/handelRestriction",
+ passport.authenticate("jwt", { session: false }),
+  roleCheck,
+  handelRestrictionController
 );
 export default router;

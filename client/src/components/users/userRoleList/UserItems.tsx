@@ -58,6 +58,36 @@ export default function UserItems({ userItem }: Prop) {
       });
   }
 
+  function handelRestriction(_id: string): void {
+    const token = localStorage.getItem("userToken"); // token from local storage
+
+    const url = `${BASE_URL}/users/${userItem?._id}/handelRestriction`;
+    axios
+      .put(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 201) {
+          // TODO:: continue working with changing the state
+         //  dispatch(userActions.setUserData(userItem));
+          console.log("success");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          console.log(error); //   onError(); // in case of expiry
+          return;
+        }
+      });
+  }
+
   return (
     <Paper
       sx={{
@@ -88,6 +118,18 @@ export default function UserItems({ userItem }: Prop) {
                 }
               >
                 {userItem.role === "admin" ? "Make User" : "Make Admin"}
+              </Button>
+              
+              <Button
+                onClick={
+                  userInformation?.role === "admin"
+                    ? () => handelRestriction(userItem._id)
+                    : () => {
+                        alert("not authorized");
+                      }
+                }
+              >
+                {userItem.isBanned === true ? "Unban User" : "Ban User"}
               </Button>
             </Grid>
           </Grid>

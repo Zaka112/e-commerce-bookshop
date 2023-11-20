@@ -75,6 +75,7 @@ export default function CartList() {
 
   return (
     <Paper sx={{ minHeight: 200 }}>
+      
       {cartList.length === 0 ? (
         <Typography variant="h5" component="div">
           Your cart is empty, return to the{" "}
@@ -97,6 +98,7 @@ export default function CartList() {
       </Typography>
 
       {cartList.length > 0 ? (
+        
         <Button
           size="small"
           variant="contained"

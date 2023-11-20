@@ -45,25 +45,24 @@ router.get(
 //  roleCheck,
 //   getUserListController
 // );
-//get: get all users 
+//get: get all users
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
- roleCheck,
+  roleCheck,
   getUserListController
 );
 
-
 router.put(
   "/:userId/toggle-role",
- passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   roleCheck,
   toggleRoleController
 );
 
 router.put(
   "/:userId/handelRestriction",
- passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   roleCheck,
   handelRestrictionController
 );

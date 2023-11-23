@@ -87,14 +87,6 @@ export default function BookDetails() {
     }
   }
 
-  // function alreadyInCart(): void {
-  //   toast.info("This item is already in the cart!", {
-  //     position: "top-center",
-  //     progress: undefined,
-  //     theme: "light",
-  //   });
-  // }
-
   useEffect(() => {
     dispatchApp(getBookDetailData(bookDetailURL));
   }, [dispatchApp, bookDetailURL]);
@@ -183,15 +175,6 @@ export default function BookDetails() {
                 >
                   {" "}
                   add to cart{" "}
-                  {/* <IconButton
-                  aria-label="add to cart"
-                  onClick={
-                    bookDetails !== null && !isInCart
-                      ? () => addToCart(bookDetails)
-                      : () => alreadyInCart()
-                  }
-                  sx={isInCart ? { color: "red" } : { color: "inherit" }}
-                > */}
                   <IconButton
                     aria-label="add to cart"
                     sx={{ color: "inherit" }}

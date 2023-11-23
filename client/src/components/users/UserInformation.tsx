@@ -131,7 +131,7 @@ export default function UserInformation() {
       ],
     });
   }
-console.log(userInformation, "User Information")
+
   if (!userInformation ) {
     return <NotFound />;
   } else if (isLoading) {

@@ -16,7 +16,7 @@ export function getUserList() {
         Authorization: `Bearer ${token}`,
       },
     });
-    const fetchedUserList:User[] = await response.json();
+    const fetchedUserList: User[] = await response.json();
 
     dispatch(usersActions.setUserList(fetchedUserList));
   };
@@ -26,7 +26,12 @@ export function getUserList() {
 export function getSingleUser(singleUserURL: string) {
   const token = localStorage.getItem("userToken");
   return async (dispatch: AppDispatch) => {
-    const response = await fetch(singleUserURL);
+    const response = await fetch(singleUserURL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const fetchedSingleUser = await response.json();
     dispatch(userActions.setUserData(fetchedSingleUser));
   };

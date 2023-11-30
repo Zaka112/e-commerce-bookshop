@@ -49,20 +49,20 @@ export default function BookList() {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    if (isLoading) {
-      const timer = setInterval(() => {
-        setProgress((prevProgress) =>
-          prevProgress >= 100 ? 10 : prevProgress + 10
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     const timer = setInterval(() => {
+  //       setProgress((prevProgress) =>
+  //         prevProgress >= 100 ? 10 : prevProgress + 10
           
-        );
-      }, 600);
+  //       );
+  //     }, 600);
 
-      return () => {
-        clearInterval(timer);
-      };
-    }
-  }, [isLoading]);
+  //     return () => {
+  //       clearInterval(timer);
+  //     };
+  //   }
+  // }, [isLoading]);
 
   // function CircularProgressWithLabel(
   //   props: CircularProgressProps & { value: number }

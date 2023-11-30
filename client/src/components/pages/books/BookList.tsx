@@ -16,7 +16,6 @@ import { getBookList } from "../../../redux/thunk/books";
 import BookItems from "./BookItems";
 import SearchForm from "../../search/SerachForm";
 import SortForm from "../../sort/SortForm";
-import { AlignHorizontalCenter } from "@mui/icons-material";
 
 export default function BookList() {
   const [progress, setProgress] = React.useState(10);
@@ -65,38 +64,38 @@ export default function BookList() {
     }
   }, [isLoading]);
 
-  function CircularProgressWithLabel(
-    props: CircularProgressProps & { value: number }
-  ) {
-    return (
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
-        <CircularProgress variant="determinate" {...props} />
-        <Box
-          sx={{
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Typography
-            variant="caption"
-            component="div"
-            color="text.secondary"
-          >{`${Math.round(props.value)}%`}</Typography>
-        </Box>
-      </Box>
-    );
-  }
+  // function CircularProgressWithLabel(
+  //   props: CircularProgressProps & { value: number }
+  // ) {
+  //   return (
+  //     <Box sx={{ position: "relative", display: "inline-flex" }}>
+  //       <CircularProgress variant="determinate" {...props} />
+  //       <Box
+  //         sx={{
+  //           top: 0,
+  //           left: 0,
+  //           bottom: 0,
+  //           right: 0,
+  //           position: "absolute",
+  //           display: "flex",
+  //           alignItems: "center",
+  //           justifyContent: "center",
+  //         }}
+  //       >
+  //         <Typography
+  //           variant="caption"
+  //           component="div"
+  //           color="text.secondary"
+  //         >{`${Math.round(props.value)}%`}</Typography>
+  //       </Box>
+  //     </Box>
+  //   );
+  // }
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600}}>
-        {/* <CircularProgress size="10rem" color="inherit" /> */}
-        <CircularProgressWithLabel size="10rem" value={progress} />
+        <CircularProgress size="10rem" color="inherit" /> 
+        {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
       </Paper>
     );
   } else

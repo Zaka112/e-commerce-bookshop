@@ -24,8 +24,9 @@ import { orderActions } from "../../../redux/slices/orders";
 
 export default function UserOrdersList() {
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const handleChangePage = (event: unknown, newPage: number) => {
+    const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+    const [sortAction, setSortAction] = useState("");  
+    const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -50,8 +51,9 @@ export default function UserOrdersList() {
     }
   }, [dispatch, userId, userDetails]);
   
-    function sortHandel(): void {
-      dispatch(orderActions.orderListById());
+    function sortHandel() {
+     
+      dispatch(orderActions.orderListById("asc"));
     }
   if (userDetails) {
     if (orderList.length > 0) {
@@ -118,7 +120,7 @@ export default function UserOrdersList() {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              {}
+              
               {orderList
 
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

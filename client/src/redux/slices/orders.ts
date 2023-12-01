@@ -5,11 +5,13 @@ import { Order } from "../../types/types";
 type InitialState = {
   userOrders: Order[];
   userOrderDetails: Order | null;
+ 
 };
 
 const initialState: InitialState = {
   userOrders: [],
   userOrderDetails: null,
+ 
 };
 
 const orderSlice = createSlice({
@@ -23,9 +25,8 @@ const orderSlice = createSlice({
     getOrderDetails: (state, action: PayloadAction<Order>) => {
       state.userOrderDetails = action.payload;
     },
-    orderListById: (state) => {
-     // state.userOrders = action.payload;
-     
+    orderListById: (state, action: PayloadAction<String>) => {
+   
      state.userOrders.sort((a, b) => b.totalOrderPrice - a.totalOrderPrice);
     },
   },

@@ -1,7 +1,7 @@
 import { orderActions } from "../slices/orders";
 import { AppDispatch } from "../store";
-import { Order } from "../../types/types";
-import { BASE_URL } from "../../api";
+import { Order } from "types/types";
+import { BASE_URL } from "api";
 
 export function getUserOrderList(userId: string) {
   const token = localStorage.getItem("userToken");

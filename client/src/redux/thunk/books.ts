@@ -1,8 +1,8 @@
 import { bookActions } from "../slices/books";
 import { AppDispatch } from "../store";
 import { bookDetailActions } from "../slices/bookDetails";
-import { Book } from "../../types/types";
-import { BASE_URL } from "../../api";
+import { Book } from "types/types";
+import { BASE_URL } from "api";
 
 const booksURL = `${BASE_URL}/books`;
 

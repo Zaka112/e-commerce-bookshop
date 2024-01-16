@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Book } from "../../types/types";
+import { Book } from "types/types";
 
 type BookList = {
   books: Book[];

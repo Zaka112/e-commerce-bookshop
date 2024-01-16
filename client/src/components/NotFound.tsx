@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Paper, Typography } from "@mui/material";
 
-import notFound from "../assets/notFound.jpg";
+import notFound from "assets/notFound.jpg";
 
 export default function NotFound() {
   const navigate = useNavigate();

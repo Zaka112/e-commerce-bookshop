@@ -18,9 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-import { RootState } from "../../redux/store";
-import logo from "../../assets/logo.jpg";
-import { toggleThemeActions } from "../../redux/slices/theme";
+import { RootState } from "redux/store";
+import logo from "assets/logo.jpg";
+import { toggleThemeActions } from "redux/slices/theme";
 import NavLinks from "./NavLinks";
 import NavUserMenu from "./NavUserMenu";
 

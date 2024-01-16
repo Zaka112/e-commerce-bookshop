@@ -1,8 +1,8 @@
 import React from "react";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-import UserList from "../../../components/users/userRoleList/UserList";
+import { RootState } from "redux/store";
+import UserList from "components/users/userRoleList/UserList";
 
 export default function UserListPage() {
   const userInformation = useSelector(

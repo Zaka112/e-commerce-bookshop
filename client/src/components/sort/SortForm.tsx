@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 
-import { bookActions } from "../../redux/slices/books";
+import { bookActions } from "redux/slices/books";
 
 export default function SortForm() {
   const [sorting, setSorting] = useState("");

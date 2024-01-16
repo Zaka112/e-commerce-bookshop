@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Book } from "../../types/types";
+import { Book } from "types/types";
 
 export type bookDetail = { book: null | Book; isLoading: boolean };
 

@@ -10,9 +10,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { store } from "../src/redux/store";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

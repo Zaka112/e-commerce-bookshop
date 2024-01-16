@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Paper, TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 
-import { searchActions } from "../../redux/slices/search";
+import { searchActions } from "redux/slices/search";
 
 export default function SearchForm() {
   const [userInput, setUserInput] = useState("");

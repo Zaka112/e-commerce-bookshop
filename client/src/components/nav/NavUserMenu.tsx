@@ -4,8 +4,8 @@ import { MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { RootState } from "../../redux/store";
-import { userActions } from "../../redux/slices/user";
+import { RootState } from "redux/store";
+import { userActions } from "redux/slices/user";
 
 export default function NavUserMenu() {
   const navigate = useNavigate();

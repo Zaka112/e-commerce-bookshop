@@ -11,7 +11,7 @@ import {  useSelector } from "react-redux";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import FavoriteList from "../pages/favorite/FavoriteList";
-import { RootState } from "../../redux/store";
+import { RootState } from "redux/store";
 
 type Anchor = "right"; // slider
 export default function NavFavorite() {

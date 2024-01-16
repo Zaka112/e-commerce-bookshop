@@ -19,11 +19,11 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 
-import { AppDispatch, RootState } from "../../redux/store";
-import { userActions } from "../../redux/slices/user";
-import { getSingleUser } from "../../redux/thunk/users";
+import { AppDispatch, RootState } from "redux/store";
+import { userActions } from "redux/slices/user";
+import { getSingleUser } from "redux/thunk/users";
 import NotFound from "../Error";
-import { BASE_URL } from "../../api";
+import { BASE_URL } from "api";
 
 
 export default function UserInformation() {

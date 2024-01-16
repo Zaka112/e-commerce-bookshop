@@ -1,8 +1,8 @@
 import { usersActions } from "../slices/users";
 import { AppDispatch } from "../store";
 
-import { User } from "../../types/types";
-import { BASE_URL } from "../../api";
+import { User } from "types/types";
+import { BASE_URL } from "api";
 import { userActions } from "../slices/user";
 
 const userListURL = `${BASE_URL}/users`;

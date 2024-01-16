@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { BookOrder, Book } from "../../types/types";
+import { BookOrder, Book } from "types/types";
 
 type CartList = {
   cartItems: BookOrder[];

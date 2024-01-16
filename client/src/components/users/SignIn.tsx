@@ -20,8 +20,8 @@ import { useState } from "react";
 import { Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
 
-import { userActions } from "../../redux/slices/user";
-import { BASE_URL } from "../../api";
+import { userActions } from "redux/slices/user";
+import { BASE_URL } from "api";
 import GoogleLogIn from "./google/GoogleLogin";
 
 export default function SignIn() {

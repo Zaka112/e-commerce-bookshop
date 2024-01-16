@@ -21,7 +21,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 
-import { BASE_URL } from "../../api";
+import { BASE_URL } from "api";
 
 export default function SignUp() {
   const navigate = useNavigate();

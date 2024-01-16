@@ -5,9 +5,9 @@ import { Col, Row } from "reactstrap";
 import { Carousel } from "react-responsive-carousel";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AppDispatch, RootState } from "../../../redux/store";
-import { getBookList } from "../../../redux/thunk/books";
-import loadingBook from "../../../assets/book-loading.gif"
+import { AppDispatch, RootState } from "redux/store";
+import { getBookList } from "redux/thunk/books";
+import loadingBook from "assets/book-loading.gif"
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();

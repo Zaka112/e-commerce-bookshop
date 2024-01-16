@@ -4,7 +4,7 @@ import { Badge, Box, IconButton, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { RootState } from "../../redux/store";
+import { RootState } from "redux/store";
 import { useSelector } from "react-redux";
 
 import NavFavorite from "./NavFavorite";

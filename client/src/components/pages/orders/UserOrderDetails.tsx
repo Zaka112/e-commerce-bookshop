@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../redux/store";
-import { getOrderDetails } from "../../../redux/thunk/orders";
 import {
   Button,
   Table,
@@ -11,6 +9,9 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+
+import { AppDispatch, RootState } from "redux/store";
+import { getOrderDetails } from "redux/thunk/orders";
 import NotFound from "../../Error";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -85,7 +86,7 @@ export default function UserOrderDetails() {
               <TableBody>
                 <TableRow>
                   <TableCell>
-                  Item no.  {orderDetails.bookList.indexOf(book, 0) + 1}
+                    Item no. {orderDetails.bookList.indexOf(book, 0) + 1}
                   </TableCell>
                   <TableCell>{book.title}</TableCell>
                   <TableCell>{book.counter}</TableCell>

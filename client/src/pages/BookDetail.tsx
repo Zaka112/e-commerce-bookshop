@@ -1,6 +1,6 @@
 import React from "react";
 
-import BookDetails from "../components/pages/books/BookDetails";
+import BookDetails from "components/pages/books/BookDetails";
 
 export default function BookDetail() {
   return (

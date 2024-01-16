@@ -3,8 +3,8 @@ import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {  CircularProgress, Grid, Paper, Typography } from "@mui/material";
 
-import { AppDispatch, RootState } from "../../../redux/store";
-import { getUserList } from "../../../redux/thunk/users";
+import { AppDispatch, RootState } from "redux/store";
+import { getUserList } from "redux/thunk/users";
 import UserItems from "./UserItems";
 
 export default function UserList() {

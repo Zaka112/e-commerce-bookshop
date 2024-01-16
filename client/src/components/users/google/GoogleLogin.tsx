@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
-
-import user from "../../../assets/user.jpg";
-import { BASE_URL } from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { userActions } from "../../../redux/slices/user";
 import { Paper } from "@mui/material";
+
+import user from "assets/user.jpg";
+import { BASE_URL } from "api";
+import { userActions } from "redux/slices/user";
 
 export type UserGoogle = {
   _id: string;

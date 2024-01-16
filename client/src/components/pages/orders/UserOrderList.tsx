@@ -16,11 +16,11 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
-import { AppDispatch, RootState } from "../../../redux/store";
-import { getUserOrderList } from "../../../redux/thunk/orders";
+import { AppDispatch, RootState } from "redux/store";
+import { getUserOrderList } from "redux/thunk/orders";
 import UserOrderItems from "./UserOrderItems";
 import NotFound from "../../Error";
-import { orderActions } from "../../../redux/slices/orders";
+import { orderActions } from "redux/slices/orders";
 
 export default function UserOrdersList() {
   const [page, setPage] = useState<number>(0);

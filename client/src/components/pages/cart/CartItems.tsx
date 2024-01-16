@@ -14,8 +14,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { cartListActions } from "../../../redux/slices/cart";
-import { BookOrder } from "../../../types/types";
+import { cartListActions } from "redux/slices/cart";
+import { BookOrder } from "types/types";
 
 type Prop = { cartItem: BookOrder };
 

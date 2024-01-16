@@ -2,23 +2,21 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Box,
   CircularProgress,
-  CircularProgressProps,
   Grid,
   Pagination,
   Paper,
   Typography,
 } from "@mui/material";
 
-import { AppDispatch, RootState } from "../../../redux/store";
-import { getBookList } from "../../../redux/thunk/books";
+import { AppDispatch, RootState } from "redux/store";
+import { getBookList } from "redux/thunk/books";
 import BookItems from "./BookItems";
 import SearchForm from "../../search/SerachForm";
 import SortForm from "../../sort/SortForm";
 
 export default function BookList() {
-  const [progress, setProgress] = React.useState(10);
+ // const [progress, setProgress] = React.useState(10);
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +52,7 @@ export default function BookList() {
   //     const timer = setInterval(() => {
   //       setProgress((prevProgress) =>
   //         prevProgress >= 100 ? 10 : prevProgress + 10
-          
+
   //       );
   //     }, 600);
 
@@ -93,8 +91,8 @@ export default function BookList() {
   // }
   if (isLoading) {
     return (
-      <Paper sx={{ minHeight: 600}}>
-        <CircularProgress size="10rem" color="inherit" /> 
+      <Paper sx={{ minHeight: 600 }}>
+        <CircularProgress size="10rem" color="inherit" />
         {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
       </Paper>
     );

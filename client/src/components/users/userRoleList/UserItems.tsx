@@ -1,12 +1,13 @@
 import React from "react";
 
-import { Typography, Paper, Grid, styled, Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-
-import { RootState } from "../../../redux/store";
-import { User } from "../../../types/types";
-import { BASE_URL } from "../../../api";
+import { Typography, Paper, Grid, Button } from "@mui/material";
+import { useSelector } from "react-redux";
 import axios from "axios";
+
+import { RootState } from "redux/store";
+import { User } from "types/types";
+import { BASE_URL } from "api";
+
 
 // const Img = styled("img")({
 //   margin: "auto",

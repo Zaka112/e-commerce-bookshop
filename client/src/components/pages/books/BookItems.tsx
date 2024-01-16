@@ -6,10 +6,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-import { Book } from "../../../types/types";
-import { RootState } from "../../../redux/store";
-import { bookActions } from "../../../redux/slices/books";
-import { toggleThemeActions } from "../../../redux/slices/theme";
+import { Book } from "types/types";
+import { RootState } from "redux/store";
+import { bookActions } from "redux/slices/books";
+import { toggleThemeActions } from "redux/slices/theme";
 import { Button } from "reactstrap";
 
 const Img = styled("img")({

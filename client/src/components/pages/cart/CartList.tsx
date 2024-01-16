@@ -8,9 +8,9 @@ import { confirmAlert } from "react-confirm-alert";
 import axios from "axios";
 
 import CartItems from "./CartItems";
-import { RootState } from "../../../redux/store";
-import { cartListActions } from "../../../redux/slices/cart";
-import { BASE_URL } from "../../../api";
+import { RootState } from "redux/store";
+import { cartListActions } from "redux/slices/cart";
+import { BASE_URL } from "api";
 
 export default function CartList() {
   const cartList = useSelector((state: RootState) => state.cartList.cartItems);

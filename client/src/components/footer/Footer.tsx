@@ -62,7 +62,7 @@ export default function Footer() {
         <Box mt={5}>
           <Typography variant="body2" color="text.secondary" align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://#.com/">
+            <Link color="inherit" href="https://bookshop-frontend-dos8.onrender.com/">
               Book Shop
             </Link>{" "}
             {new Date().getFullYear()}

@@ -30,32 +30,23 @@ export default function GoogleLogIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <Paper >
-     
+    <Paper>
       <GoogleLogin
-    
         type="standard"
         size="large"
         shape="rectangular"
-      
         onSuccess={async (credentialResponse) => {
           const url = `${BASE_URL}/users/google-login`;
           const credential = credentialResponse.credential;
           let res = await axios.post(url, { id_token: credential });
           if (res.status === 200) {
             setUserGoogle(res.data.userData);
-          //  const user = res.data.userData;
+            //  const user = res.data.userData;
 
             const userToken = res.data.token; // from data object. get and assign the token
-             const userId = res.data.userData._id
-             localStorage.setItem("userId", userId);
+            const userId = res.data.userData._id;
+            localStorage.setItem("userId", userId);
             localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
-            
-            // const currentUserInformation: User = {
-            //   ...user,
-            //   token: userToken,
-            // };
-          //  const id = user._id;
             dispatch(userActions.setUserData(res.data.userData)); // store userinformation to the redux
 
             dispatch(userActions.userLogin(true));
@@ -68,7 +59,6 @@ export default function GoogleLogIn() {
           console.log("Login Failed");
         }}
       />
-   
     </Paper>
   );
 }

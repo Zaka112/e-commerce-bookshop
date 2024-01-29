@@ -98,6 +98,7 @@ export default function BookList() {
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600 }}>
+        Loading...
         <CircularProgress size="10rem" color="inherit" />
         {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
       </Paper>

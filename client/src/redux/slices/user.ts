@@ -8,12 +8,6 @@ type SingleUser = {
   isLoading: boolean;
 };
 
-// const initialState: SingleUser = {
-//   userInformation: null,
-//   isLoading: true,
-//  isLogin:false,
-// };
-
 const storedUserState = localStorage.getItem("userState");
 const initialState: SingleUser = storedUserState
   ? JSON.parse(storedUserState)

@@ -47,6 +47,7 @@ export default function GoogleLogIn() {
             const userId = res.data.userData._id;
             localStorage.setItem("userId", userId);
             localStorage.setItem("userToken", userToken); // save it (token) to the localStorage
+          
             dispatch(userActions.setUserData(res.data.userData)); // store userinformation to the redux
 
             dispatch(userActions.userLogin(true));

@@ -1,13 +1,14 @@
 import React from "react";
 import "./App.css";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Paper, ThemeProvider, createTheme } from "@mui/material";
 
 import AppRoutes from "AppRoutes";
 import Navbar from "pages/Navbar";
 import { RootState } from "redux/store";
 import Footer from "components/footer/Footer";
+import { userActions } from "redux/slices/user";
 
 function App() {
   const themeMode = useSelector((state: RootState) => state.theme.theme);
@@ -19,6 +20,9 @@ function App() {
       mode: themeMode === "dark" ? "light" : "dark",
     },
   });
+
+  const dispatch = useDispatch();
+  dispatch(userActions.checkTimeStamp());
 
   return (
     <ThemeProvider theme={theme}>

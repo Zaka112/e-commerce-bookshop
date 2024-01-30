@@ -21,8 +21,8 @@ function App() {
     },
   });
 
-  const dispatch = useDispatch();
-  dispatch(userActions.checkTimeStamp());
+  // const dispatch = useDispatch();
+  // dispatch(userActions.checkTimeStamp());
 
   return (
     <ThemeProvider theme={theme}>

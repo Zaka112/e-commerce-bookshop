@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
-import Typewriter from "typewriter-effect";
 
 import { AppDispatch, RootState } from "redux/store";
 import { getBookList } from "redux/thunk/books";
@@ -19,6 +18,7 @@ import SearchForm from "../../search/SerachForm";
 import SortForm from "../../sort/SortForm";
 import { Col, Row } from "reactstrap";
 import { CenterFocusStrong } from "@mui/icons-material";
+import Loading from "components/misc/Loading";
 
 export default function BookList() {
   // const [progress, setProgress] = React.useState(10);
@@ -99,20 +99,7 @@ export default function BookList() {
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600 }}>
-  
-        <CircularProgress size="10rem" color="inherit" />
-        <h2><Typewriter
-      options={{
-        strings: [
-          "Loading...",
-           
-        ],
-        autoStart: true,
-        loop: true,
-        deleteSpeed: 50,
-      }}
-    /></h2>     
-        {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
+        <Loading />
       </Paper>
     );
   } else
@@ -123,7 +110,7 @@ export default function BookList() {
         </Typography>
         <SearchForm />
         <SortForm />
-     {/* ##TODO oN SALE    */}
+        {/* ##TODO oN SALE    */}
         {/* <Row>
           {" "}
           <Col md="2">

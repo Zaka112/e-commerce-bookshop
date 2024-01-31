@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
+import Typewriter from "typewriter-effect";
 
 import { AppDispatch, RootState } from "redux/store";
 import { getBookList } from "redux/thunk/books";
@@ -98,8 +99,19 @@ export default function BookList() {
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600 }}>
-        Loading...
+  
         <CircularProgress size="10rem" color="inherit" />
+        <h2><Typewriter
+      options={{
+        strings: [
+          "Loading...",
+           
+        ],
+        autoStart: true,
+        loop: true,
+        deleteSpeed: 50,
+      }}
+    /></h2>     
         {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
       </Paper>
     );

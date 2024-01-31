@@ -10,6 +10,7 @@ type SingleUser = {
 };
 
 const storedUserState = localStorage.getItem("userState");
+
 const initialState: SingleUser = storedUserState
   ? JSON.parse(storedUserState)
   : {
@@ -30,12 +31,12 @@ const userSlice = createSlice({
     },
     userLogin: (state, action: PayloadAction<boolean>) => {
       state.isLogin = action.payload;
-      // const obj = {
-      //   value: "value",
-      //   expires: new Date().setDate(new Date().getDate() + 1).toString(),
-      // };
+      const obj = {
+        value: "value",
+        expires: new Date().setDate(new Date().getDate()).toString(),
+      };
+
       localStorage.setItem("userState", JSON.stringify(state));
-      //localStorage.setItem("expireState", JSON.stringify(obj));
     },
     removeUserData: (state) => {
       state.userInformation = initialState.userInformation;
@@ -45,18 +46,6 @@ const userSlice = createSlice({
       state.isLogin = false;
       state.isLoading = false;
     },
-    // checkTimeStamp: (state) => {
-    //   const item = localStorage.getItem("expireState");
-    //   const res =
-    //     new Date().getTime().toString() > JSON.parse(item as string).expires;
-    //   // Returns true if timestamp for now is greater than expiration (item has 'expired')
-
-    //   if (res) {
-    //     localStorage.removeItem("userState");
-    //     localStorage.removeItem("expireState")
-    //     // item is removed if the value of res is true
-    //   }
-    // },
   },
 });
 

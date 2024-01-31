@@ -10,7 +10,11 @@ export default function Loading() {
       <h2>
         <Typewriter
           options={{
-            strings: ["Loading...", "Free instance at Render", "Might take longer to load API"],
+            strings: [
+              "Loading...",
+              "Free instance at Render",
+              "Might take longer to load API",
+            ],
             autoStart: true,
             loop: true,
             deleteSpeed: 50,

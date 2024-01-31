@@ -1,15 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Pagination,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { Carousel } from "react-responsive-carousel";
+import { Grid, Pagination, Paper, Typography } from "@mui/material";
 
 import { AppDispatch, RootState } from "redux/store";
 import { getBookList } from "redux/thunk/books";
@@ -54,48 +46,6 @@ export default function BookList() {
     setCurrentPage(page);
   };
 
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     const timer = setInterval(() => {
-  //       setProgress((prevProgress) =>
-  //         prevProgress >= 100 ? 10 : prevProgress + 10
-
-  //       );
-  //     }, 600);
-
-  //     return () => {
-  //       clearInterval(timer);
-  //     };
-  //   }
-  // }, [isLoading]);
-
-  // function CircularProgressWithLabel(
-  //   props: CircularProgressProps & { value: number }
-  // ) {
-  //   return (
-  //     <Box sx={{ position: "relative", display: "inline-flex" }}>
-  //       <CircularProgress variant="determinate" {...props} />
-  //       <Box
-  //         sx={{
-  //           top: 0,
-  //           left: 0,
-  //           bottom: 0,
-  //           right: 0,
-  //           position: "absolute",
-  //           display: "flex",
-  //           alignItems: "center",
-  //           justifyContent: "center",
-  //         }}
-  //       >
-  //         <Typography
-  //           variant="caption"
-  //           component="div"
-  //           color="text.secondary"
-  //         >{`${Math.round(props.value)}%`}</Typography>
-  //       </Box>
-  //     </Box>
-  //   );
-  // }
   if (isLoading) {
     return (
       <Paper sx={{ minHeight: 600 }}>
@@ -110,31 +60,6 @@ export default function BookList() {
         </Typography>
         <SearchForm />
         <SortForm />
-        {/* ##TODO oN SALE    */}
-        {/* <Row>
-          {" "}
-          <Col md="2">
-            <Box sx={{ width: 300 }}>
-              <Carousel showThumbs={false} showStatus={false} autoPlay={true}>
-                {onSale.map((item) => {
-                  return (
-                    <img
-                      width={75}
-                      height={150}
-                      key={item._id}
-                      alt={item.title}
-                      src={
-                        item.images[
-                          Math.floor(Math.random() * item.images.length)
-                        ]
-                      }
-                    />
-                  );
-                })}
-              </Carousel>
-            </Box>
-          </Col>
-        </Row> */}
 
         <Grid
           container

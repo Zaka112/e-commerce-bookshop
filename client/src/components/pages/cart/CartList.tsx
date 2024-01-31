@@ -24,28 +24,43 @@ export default function CartList() {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("userToken");
-useEffect(()=> {
-  fetch ("/config").then (async(res:Response) => {
-    const {publishableKey} = await res.json()
-    console.log(publishableKey)
-  })
-}, [])
-  async function paymentProcess() {
-    const stripe = await loadStripe(
-      ""
-    );
-    checkOut();
-   
-  }
+  useEffect(() => {
+    fetch("/config").then(async (res: Response) => {
+      const { publishableKey } = await res.json();
+      console.log(publishableKey);
+    });
+  }, []);
 
-  function checkOut() {
+  async function checkOut() {
+    //   const stripe = await loadStripe(
+    //     "pk_test_51OeiOtDLyjvGkFVeye1X7FUXfErrTLRJhY4kspiWIoj1Z51LZWWU5RrGWBc2wgTjZXAk0EFwg1eBoQBBmsWXsf8U00o6DSO0Fw"
+    //   );
+
     const newOrder = {
       bookList: cartList,
       totalOrderPrice: totalOrderPrice,
       firstName: firstName,
     };
-    //const endPoint = `${BASE_URL}/orders/${userId}`;
-    const endPoint = `${BASE_URL}/secret`;
+    const endPoint = `${BASE_URL}/orders/${userId}`;
+    //   const endPoint = `${BASE_URL}/secret`;
+
+    //   const body = {
+    //     products:cartList
+    // }
+    // const headers = {
+    //     "Content-Type":"application/json"
+    // }
+    // const response = await fetch(endPoint,{
+    //     method:"POST",
+    //     headers:headers,
+    //     body:JSON.stringify(body)
+    // });
+
+    // const session = await response.json();
+
+    // const result = stripe?.redirectToCheckout({
+    //     sessionId:session.id
+    // });
 
     axios
       .post(endPoint, newOrder, {
@@ -54,18 +69,9 @@ useEffect(()=> {
           Authorization: `Bearer ${token}`,
         },
       })
+
       .then((response) => {
         if (response.status === 201) {
-
-          // const session = await response.json();
-
-          // const result = stripe.redirectToCheckout({
-          //     sessionId:session.id
-          // // });
-          
-          // if(result.error){
-          //     console.log(result.error);
-          // }
           toast.info(
             "Successfully completed. Thanks for shoping with us. Come back soon :)",
             {
@@ -130,8 +136,7 @@ useEffect(()=> {
           size="small"
           variant="contained"
           onClick={() => {
-            paymentProcess();
-            //  checkOut();
+            checkOut();
           }}
         >
           Check Out

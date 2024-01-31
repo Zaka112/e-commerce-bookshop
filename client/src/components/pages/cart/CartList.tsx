@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography } from "@mui/material";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 import CartItems from "./CartItems";
 import { RootState } from "redux/store";
@@ -18,15 +19,33 @@ export default function CartList() {
     (state: RootState) => state.user.userInformation
   );
   const userId = userInformation?._id;
-  const firstName= userInformation?.firstName
+  const firstName = userInformation?.firstName;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("userToken");
+useEffect(()=> {
+  fetch ("/config").then (async(res:Response) => {
+    const {publishableKey} = await res.json()
+    console.log(publishableKey)
+  })
+}, [])
+  async function paymentProcess() {
+    const stripe = await loadStripe(
+      ""
+    );
+    checkOut();
+   
+  }
 
   function checkOut() {
-    const newOrder = { bookList: cartList, totalOrderPrice: totalOrderPrice, firstName:firstName };
-    const endPoint = `${BASE_URL}/orders/${userId}`;
+    const newOrder = {
+      bookList: cartList,
+      totalOrderPrice: totalOrderPrice,
+      firstName: firstName,
+    };
+    //const endPoint = `${BASE_URL}/orders/${userId}`;
+    const endPoint = `${BASE_URL}/secret`;
 
     axios
       .post(endPoint, newOrder, {
@@ -37,6 +56,16 @@ export default function CartList() {
       })
       .then((response) => {
         if (response.status === 201) {
+
+          // const session = await response.json();
+
+          // const result = stripe.redirectToCheckout({
+          //     sessionId:session.id
+          // // });
+          
+          // if(result.error){
+          //     console.log(result.error);
+          // }
           toast.info(
             "Successfully completed. Thanks for shoping with us. Come back soon :)",
             {
@@ -75,7 +104,6 @@ export default function CartList() {
 
   return (
     <Paper sx={{ minHeight: 200 }}>
-      
       {cartList.length === 0 ? (
         <Typography variant="h5" component="div">
           Your cart is empty, return to the{" "}
@@ -98,12 +126,12 @@ export default function CartList() {
       </Typography>
 
       {cartList.length > 0 ? (
-        
         <Button
           size="small"
           variant="contained"
           onClick={() => {
-            checkOut();
+            paymentProcess();
+            //  checkOut();
           }}
         >
           Check Out

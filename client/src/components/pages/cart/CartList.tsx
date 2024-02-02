@@ -8,6 +8,7 @@ import { confirmAlert } from "react-confirm-alert";
 import axios from "axios";
 import { Stripe, loadStripe } from "@stripe/stripe-js";
 
+import { getPublishableKey } from "redux/thunk/books";
 import CartItems from "./CartItems";
 import { RootState } from "redux/store";
 import { cartListActions } from "redux/slices/cart";
@@ -25,9 +26,14 @@ export default function CartList() {
 
   const token = localStorage.getItem("userToken");
 
+useEffect(() => {
+  dispatch(getPublishableKey());
+  }, []);
+  const publishableKey = useSelector((state: RootState) => state.bookDetail.publishableKey);
+  console.log(publishableKey)
   const checkOut = async () => {
-    const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
-    const { publishableKey } = await getPublishableKey.json();
+    // const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
+    // const { publishableKey } = await getPublishableKey.json();
 
     const stripe = await loadStripe(publishableKey);
     const newOrder = {
@@ -37,11 +43,11 @@ export default function CartList() {
     };
     // const endPoint = `${BASE_URL}/orders/${userId}`;
     const endPoint = `${BASE_URL}/secret`;
-    const body = {
-      products: newOrder,
-    };
+    // const body = {
+    //   products: newOrder,
+    // };
 
-    const response = await axios.post(endPoint, body, {
+    const response = await axios.post(endPoint, newOrder, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -53,7 +59,37 @@ export default function CartList() {
       sessionId: session.id,
     });
 
-   
+    if (result?.error) {
+      alert("error");
+    }
+    // .then((response) => {
+    //   if (response.status === 201) {
+    //     toast.info(
+    //       "Successfully completed. Thanks for shoping with us. Come back soon :)",
+    //       {
+    //         position: "top-center",
+    //         progress: undefined,
+    //         theme: "light",
+    //       }
+    //     );
+    //     setTimeout(() => navigate("/books"), 6000);
+    //     dispatch(cartListActions.emptyCart()); // empty cart
+    //   }
+    // })
+    // .catch((error) => {
+    //   if (error.response.status === 401) {
+    //     toast.error(
+    //       `Error retrieving resource. Please make sure:
+    //     • the resource server is accessible
+    //     • you're logged in`,
+    //       {
+    //         position: "top-center",
+    //         progress: undefined,
+    //         theme: "light",
+    //       }
+    //     );
+    //   }
+    // });
   };
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;

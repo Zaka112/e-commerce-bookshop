@@ -3,6 +3,7 @@ import { AppDispatch } from "../store";
 import { bookDetailActions } from "../slices/bookDetails";
 import { Book } from "types/types";
 import { BASE_URL } from "api";
+import { loadStripe } from "@stripe/stripe-js";
 
 const booksURL = `${BASE_URL}/books`;
 
@@ -21,3 +22,13 @@ export function getBookDetailData(bookDetailURL: string) {
     dispatch(bookDetailActions.getBookDetail(fetchedBookDetail));
   };
 }
+
+//////////test payment
+export function getPublishableKey(): any {
+  return async (dispatch: AppDispatch) => {
+    const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
+    const {publishableKey} = await getPublishableKey.json();
+    dispatch(bookDetailActions.getPayment(publishableKey ));
+    };
+  };
+

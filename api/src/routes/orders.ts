@@ -18,7 +18,6 @@ router.post(
 router.get(
   "/:userId",
   passport.authenticate("jwt", { session: false }),
-
   findOrderByUserIdController
 );
 

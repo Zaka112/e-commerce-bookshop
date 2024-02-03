@@ -7,7 +7,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY as string);
 
 export const createPaymentcontroller = async (req: Request, res: Response) => {
   const newOrder = req.body;
-console.log(newOrder)
+
   try {
     const lineItems = newOrder.bookList.map((orderedItem: any) => ({
       price_data: {

@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { createPaymentcontroller } from "../controllers/payments";
+import passport from "passport";
 
 const router = Router();
 
@@ -10,7 +11,7 @@ router.get("/config", (req, res) => {
   });
 });
 
-router.post("/", createPaymentcontroller);
-
+router.post("/:userId",  createPaymentcontroller);
+//passport.authenticate("jwt", { session: false }),
 export default router;
 

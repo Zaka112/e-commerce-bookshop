@@ -41,9 +41,13 @@ useEffect(() => {
       totalOrderPrice: totalOrderPrice,
       firstName: firstName,
     };
-    // const endPoint = `${BASE_URL}/orders/${userId}`;
+ //const endPoint = `${BASE_URL}/secret/${userId}`;
     const endPoint = `${BASE_URL}/secret`;
-  
+    //without login in test 
+    // const body = {
+    //   products: newOrder,
+    // };
+
     const response = await axios.post(endPoint, newOrder, {
       headers: {
         "Content-Type": "application/json",
@@ -56,10 +60,7 @@ useEffect(() => {
       sessionId: session.id,
     });
 
-    if (result?.error) {
-      alert("error");
-    }
-   
+    
   };
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;

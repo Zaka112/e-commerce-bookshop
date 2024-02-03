@@ -25,10 +25,10 @@ export const createPaymentcontroller = async (req: Request, res: Response) => {
       // automatic_payment_methods: { enabled: true },
       line_items: lineItems,
       mode: "payment",
-      success_url: `${BASE_URL}/success.tsx`,
-      cancel_url: `${BASE_URL}/cancel.tsx`,
+      success_url: `http://localhost:3000/success.tsx`,
+      cancel_url: `http://localhost:3000/cancel.tsx`,
     });
-    console.log(session.id);
+    
     res.json({ id: session.id });
   } catch (error) {
     console.log(error);

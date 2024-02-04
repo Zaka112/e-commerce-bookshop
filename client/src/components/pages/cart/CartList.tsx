@@ -30,10 +30,9 @@ useEffect(() => {
   dispatch(getPublishableKey());
   }, []);
   const publishableKey = useSelector((state: RootState) => state.bookDetail.publishableKey);
-  console.log(publishableKey)
+ 
   const checkOut = async () => {
-    // const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
-    // const { publishableKey } = await getPublishableKey.json();
+   
 
     const stripe = await loadStripe(publishableKey);
     const newOrder = {
@@ -43,10 +42,7 @@ useEffect(() => {
     };
  //const endPoint = `${BASE_URL}/secret/${userId}`;
     const endPoint = `${BASE_URL}/secret`;
-    //without login in test 
-    // const body = {
-    //   products: newOrder,
-    // };
+  
 
     const response = await axios.post(endPoint, newOrder, {
       headers: {
@@ -60,6 +56,8 @@ useEffect(() => {
       sessionId: session.id,
     });
 
+    
+   
     
   };
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {

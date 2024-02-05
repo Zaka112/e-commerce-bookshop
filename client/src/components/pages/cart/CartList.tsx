@@ -26,13 +26,16 @@ export default function CartList() {
 
   const token = localStorage.getItem("userToken");
 
-useEffect(() => {
-  dispatch(getPublishableKey());
-  }, []);
-  const publishableKey = useSelector((state: RootState) => state.bookDetail.publishableKey);
- 
+  useEffect(() => {
+    dispatch(getPublishableKey());
+  }, [dispatch]);
+  const publishableKey = useSelector(
+    (state: RootState) => state.bookDetail.publishableKey
+  );
+
   const checkOut = async () => {
-   
+    // const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
+    // const { publishableKey } = await getPublishableKey.json();
 
     const stripe = await loadStripe(publishableKey);
     const newOrder = {
@@ -40,9 +43,8 @@ useEffect(() => {
       totalOrderPrice: totalOrderPrice,
       firstName: firstName,
     };
- //const endPoint = `${BASE_URL}/secret/${userId}`;
-    const endPoint = `${BASE_URL}/secret`;
-  
+    const endPoint = `${BASE_URL}/orders/secret/${userId}`;
+    //   const endPoint = `${BASE_URL}/secret`;
 
     const response = await axios.post(endPoint, newOrder, {
       headers: {
@@ -56,9 +58,36 @@ useEffect(() => {
       sessionId: session.id,
     });
 
-    
-   
-    
+    // .then((response) => {
+    //   if (response.status === 201) {
+    //     toast.info(
+    //       "Successfully completed. Thanks for shoping with us. Come back soon :)",
+    //       {
+    //         position: "top-center",
+    //         progress: undefined,
+    //         theme: "light",
+    //       }
+    //     );
+
+    //     setTimeout(() => navigate("/books"), 6000);
+    //     dispatch(cartListActions.emptyCart()); // empty cart
+    //   }
+    // })
+    // .catch((error) => {
+    //   if (error.response.status === 401) {
+    //     toast.error(
+    //       `Error retrieving resource. Please make sure:
+    //     • the resource server is accessible
+    //     • you're logged in--------- Redirecting`,
+    //       {
+    //         position: "top-center",
+    //         progress: undefined,
+    //         theme: "light",
+    //       }
+    //     );
+    //     setTimeout(() => navigate("/users/signin"), 6000);
+    //   }
+    // });
   };
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;

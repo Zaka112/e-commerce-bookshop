@@ -8,8 +8,6 @@ import { getBookList } from "redux/thunk/books";
 import BookItems from "./BookItems";
 import SearchForm from "../../search/SerachForm";
 import SortForm from "../../sort/SortForm";
-import { Col, Row } from "reactstrap";
-import { CenterFocusStrong } from "@mui/icons-material";
 import Loading from "components/misc/Loading";
 
 export default function BookList() {

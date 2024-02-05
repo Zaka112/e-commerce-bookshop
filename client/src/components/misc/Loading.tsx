@@ -13,7 +13,7 @@ export default function Loading() {
             strings: [
               "Loading...",
               "Free instance at Render",
-              "Might take longer to load API",
+              "It may take several seconds to load API",
             ],
             autoStart: true,
             loop: true,
@@ -21,7 +21,6 @@ export default function Loading() {
           }}
         />
       </h2>
-      {/* <CircularProgressWithLabel size="10rem" value={progress} /> */}
     </React.Fragment>
   );
 }

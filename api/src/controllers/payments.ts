@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import dotenv from "dotenv";
-import { BASE_URL } from "../api";
+
 
 dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY as string);

@@ -11,7 +11,7 @@ router.get("/config", (req, res) => {
   });
 });
 
-router.post("/:userId",  createPaymentcontroller);
+//router.post("/",  createPaymentcontroller);
 //passport.authenticate("jwt", { session: false }),
 export default router;
 

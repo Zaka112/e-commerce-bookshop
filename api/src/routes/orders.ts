@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.post(
-  "/:userId",
+  "/secret/:userId",
   passport.authenticate("jwt", { session: false }),
   createNewOrderController
 );
@@ -26,4 +26,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   findOrderByOrderIdController
 );
+//// for payment 
+router.get("/config", (req, res) => {
+  res.send({
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  });
+});
+
 export default router;

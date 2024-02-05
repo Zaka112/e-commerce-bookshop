@@ -21,7 +21,7 @@ export const jwtStrategy = new JwtStrategy( //1. option 2. call back
 );
 
 const clientId = process.env.GOOGLE_CLIENT_ID as string
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET as string
+//const clientSecret = process.env.GOOGLE_CLIENT_SECRET as string
 export const googleStrategy = new GoogleTokenStrategy(
   {
     clientID: clientId,

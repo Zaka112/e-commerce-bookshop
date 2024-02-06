@@ -26,44 +26,41 @@ export default function CartList() {
 
   const token = localStorage.getItem("userToken");
 
-  // useEffect(() => {
-  //   dispatch(getPublishableKey());
-  // }, []);
-  // const publishableKey = useSelector(
-  //   (state: RootState) => state.bookDetail.publishableKey
-  // );
+  useEffect(() => {
+    dispatch(getPublishableKey());
+  }, []);
+  const publishableKey = useSelector(
+    (state: RootState) => state.bookDetail.publishableKey
+  );
 
   const checkOut = async () => {
-    // const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
-    //const { publishableKey } = await getPublishableKey.json();
+    const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
+    const { publishableKey } = await getPublishableKey.json();
 
-    const stripe = await loadStripe(
-      "pk_test_51OeiOtDLyjvGkFVeye1X7FUXfErrTLRJhY4kspiWIoj1Z51LZWWU5RrGWBc2wgTjZXAk0EFwg1eBoQBBmsWXsf8U00o6DSO0Fw"
-    );
+    const stripe = await loadStripe(publishableKey);
     const newOrder = {
       bookList: cartList,
       totalOrderPrice: totalOrderPrice,
       firstName: firstName,
     };
     const endPoint = `${BASE_URL}/orders/secret/${userId}`;
-      // const endPoint = `${BASE_URL}/secret`;
-   const response = await axios
+    // const endPoint = `${BASE_URL}/secret`;
+    await axios
       .post(endPoint, newOrder, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }) 
-       
-      .then( (response) => {
-          const session =   response.data;
+      })
+
+      .then((response) => {
+        const session = response.data;
 
         stripe?.redirectToCheckout({
-        sessionId: session.id,
-    });
-        console.log(response.status, "status")
+          sessionId: session.id,
+        });
+        
         if (response.status === 201) {
-    
           toast.info(
             "Successfully completed. Thanks for shoping with us. Come back soon :)",
             {
@@ -92,7 +89,6 @@ export default function CartList() {
           setTimeout(() => navigate("/users/signin"), 2000);
         }
       });
-  
   };
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;

@@ -26,7 +26,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   findOrderByOrderIdController
 );
-//// for payment 
+//// for payment
 router.get("/config", (req, res) => {
   res.send({
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,

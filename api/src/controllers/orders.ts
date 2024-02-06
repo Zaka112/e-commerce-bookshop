@@ -39,54 +39,18 @@ export const createNewOrderController = async (
 
     const session = await stripe.checkout.sessions.create({
       currency: "usd",
-      // automatic_payment_methods: { enabled: true },
+
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3000/cart`,
+      success_url: `http://localhost:3000/orders/success`,
       cancel_url: `http://localhost:3000/cancel.tsx`,
     });
 
     response.json({ id: session.id });
     
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const handleStripeWebhook = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  try {
-    const { bookList, totalOrderPrice, firstName } = request.body;
-    const order = new Order({
-      userId: request.params.userId,
-      firstName,
-      bookList,
-      totalOrderPrice,
-    });
-    const event = request.body;
-    
-    switch (event.type) {
-      case 'checkout.session.completed':
-        const session = event.data.object;
-        const paymentIntentId = session.payment_intent;
-
-        
-        const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-
-        
-  
-        const newCreatedOrder = await createNewOrderService(order);
-
-       // response.status(201).json(newCreatedOrder);
-        response.json({ received: true });
-        break;
-      default:
-        // Unexpected event type
-        console.log('Unhandled event type:', event.type);
-    }
+    // const newCreatedOrder = await createNewOrderService(order);
+    //should not send again
+    // response.status(201).json(newCreatedOrder);
   } catch (error) {
     next(error);
   }

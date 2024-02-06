@@ -59,6 +59,13 @@ export const handleStripeWebhook = async (
   next: NextFunction
 ) => {
   try {
+    const { bookList, totalOrderPrice, firstName } = request.body;
+    const order = new Order({
+      userId: request.params.userId,
+      firstName,
+      bookList,
+      totalOrderPrice,
+    });
     const event = request.body;
     
     switch (event.type) {
@@ -70,16 +77,10 @@ export const handleStripeWebhook = async (
         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
         
-        const { bookList, totalOrderPrice, firstName } = request.body;
-        const order = new Order({
-          userId: request.params.userId,
-          firstName,
-          bookList,
-          totalOrderPrice,
-        });
+  
         const newCreatedOrder = await createNewOrderService(order);
 
-        response.status(201).json(newCreatedOrder);
+       // response.status(201).json(newCreatedOrder);
         response.json({ received: true });
         break;
       default:

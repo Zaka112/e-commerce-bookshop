@@ -26,68 +26,73 @@ export default function CartList() {
 
   const token = localStorage.getItem("userToken");
 
-  useEffect(() => {
-    dispatch(getPublishableKey());
-  }, [dispatch]);
-  const publishableKey = useSelector(
-    (state: RootState) => state.bookDetail.publishableKey
-  );
+  // useEffect(() => {
+  //   dispatch(getPublishableKey());
+  // }, []);
+  // const publishableKey = useSelector(
+  //   (state: RootState) => state.bookDetail.publishableKey
+  // );
 
   const checkOut = async () => {
     // const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
-    // const { publishableKey } = await getPublishableKey.json();
+    //const { publishableKey } = await getPublishableKey.json();
 
-    const stripe = await loadStripe(publishableKey);
+    const stripe = await loadStripe(
+      "pk_test_51OeiOtDLyjvGkFVeye1X7FUXfErrTLRJhY4kspiWIoj1Z51LZWWU5RrGWBc2wgTjZXAk0EFwg1eBoQBBmsWXsf8U00o6DSO0Fw"
+    );
     const newOrder = {
       bookList: cartList,
       totalOrderPrice: totalOrderPrice,
       firstName: firstName,
     };
     const endPoint = `${BASE_URL}/orders/secret/${userId}`;
-    //   const endPoint = `${BASE_URL}/secret`;
+      // const endPoint = `${BASE_URL}/secret`;
+   const response = await axios
+      .post(endPoint, newOrder, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }) 
+       
+      .then( (response) => {
+          const session =   response.data;
 
-    const response = await axios.post(endPoint, newOrder, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        stripe?.redirectToCheckout({
+        sessionId: session.id,
     });
-    const session = await response.data;
+        console.log(response.status, "status")
+        if (response.status === 201) {
+    
+          toast.info(
+            "Successfully completed. Thanks for shoping with us. Come back soon :)",
+            {
+              position: "top-center",
+              progress: undefined,
+              theme: "light",
+            }
+          );
 
-    const result = await stripe?.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    // .then((response) => {
-    //   if (response.status === 201) {
-    //     toast.info(
-    //       "Successfully completed. Thanks for shoping with us. Come back soon :)",
-    //       {
-    //         position: "top-center",
-    //         progress: undefined,
-    //         theme: "light",
-    //       }
-    //     );
-
-    //     setTimeout(() => navigate("/books"), 6000);
-    //     dispatch(cartListActions.emptyCart()); // empty cart
-    //   }
-    // })
-    // .catch((error) => {
-    //   if (error.response.status === 401) {
-    //     toast.error(
-    //       `Error retrieving resource. Please make sure:
-    //     • the resource server is accessible
-    //     • you're logged in--------- Redirecting`,
-    //       {
-    //         position: "top-center",
-    //         progress: undefined,
-    //         theme: "light",
-    //       }
-    //     );
-    //     setTimeout(() => navigate("/users/signin"), 6000);
-    //   }
-    // });
+          setTimeout(() => navigate("/books"), 6000);
+          dispatch(cartListActions.emptyCart()); // empty cart
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          toast.error(
+            `Error retrieving resource. Please make sure:
+        • the resource server is accessible
+        • you're logged in--------- Redirecting`,
+            {
+              position: "top-center",
+              progress: undefined,
+              theme: "light",
+            }
+          );
+          setTimeout(() => navigate("/users/signin"), 2000);
+        }
+      });
+  
   };
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;

@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import passport from "passport";
 
@@ -8,7 +8,8 @@ import ordersRouter from "./routes/orders";
 import apiErrorHandler from "./middlewares/apiErrorHandler";
 import { googleStrategy, jwtStrategy } from "./config/passport";
 import paymentsRouter from "./routes/payments";
-
+ 
+    import { handleStripeWebhook } from "./controllers/orders";
 
 const app = express();
 
@@ -22,7 +23,15 @@ passport.use(googleStrategy);
 app.use("/books", booksRouter);
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
-app.use("/secret", paymentsRouter)
+
+app.post('/webhook', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await handleStripeWebhook(req, res, next); // Call the webhook handler function
+    } catch (error) {
+      next(error);
+    }
+  });
+//app.use("/secret", paymentsRouter)
 
 app.use(apiErrorHandler);
 

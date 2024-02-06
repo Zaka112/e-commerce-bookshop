@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import dotenv from "dotenv";
+import { createNewOrderController } from "./orders";
 
 
 dotenv.config();
@@ -29,7 +30,9 @@ export const createPaymentcontroller = async (req: Request, res: Response) => {
       cancel_url: `http://localhost:3000/cancel.tsx`,
     });
     
-    res.json({ id: session.id });
+
+res.redirect(303, session.url);  
+res.json({ id: session.id });
   } catch (error) {
     console.log(error);
   }

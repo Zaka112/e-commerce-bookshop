@@ -16,8 +16,8 @@ export const createNewOrderController = async (
   response: Response,
   next: NextFunction
 ) => {
-  const newOrder = request.body;
   try {
+    const newOrder = request.body;
     const { bookList, totalOrderPrice, firstName } = request.body;
     const order = new Order({
       userId: request.params.userId,
@@ -36,18 +36,56 @@ export const createNewOrderController = async (
       },
       quantity: orderedItem.counter,
     }));
+
     const session = await stripe.checkout.sessions.create({
       currency: "usd",
       // automatic_payment_methods: { enabled: true },
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3000/success.tsx`,
+      success_url: `http://localhost:3000/cart`,
       cancel_url: `http://localhost:3000/cancel.tsx`,
     });
 
     response.json({ id: session.id });
-    const newCreatedOrder = await createNewOrderService(order);
-    response.status(201).json(newCreatedOrder);
+    
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const handleStripeWebhook = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const event = request.body;
+    
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+        const paymentIntentId = session.payment_intent;
+
+        
+        const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+        
+        const { bookList, totalOrderPrice, firstName } = request.body;
+        const order = new Order({
+          userId: request.params.userId,
+          firstName,
+          bookList,
+          totalOrderPrice,
+        });
+        const newCreatedOrder = await createNewOrderService(order);
+
+        response.status(201).json(newCreatedOrder);
+        response.json({ received: true });
+        break;
+      default:
+        // Unexpected event type
+        console.log('Unhandled event type:', event.type);
+    }
   } catch (error) {
     next(error);
   }
@@ -63,8 +101,7 @@ export const findOrderByUserIdController = async (
     const orderList = await findOrderByUserIdService(userId);
     response.status(200).json(orderList);
   } catch (error) {
-    //next(error);
-    console.log("not logged");
+    next(error);
   }
 };
 

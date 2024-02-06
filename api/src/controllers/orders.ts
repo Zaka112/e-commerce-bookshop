@@ -32,7 +32,7 @@ export const createNewOrderController = async (
         product_data: {
           name: orderedItem.title,
         },
-        unit_amount: Math.round(newOrder.totalOrderPrice * 100),
+        unit_amount: orderedItem.price * 100,
       },
       quantity: orderedItem.counter,
     }));
@@ -42,12 +42,12 @@ export const createNewOrderController = async (
 
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3000/orders/success`,
-      cancel_url: `http://localhost:3000/cancel.tsx`,
+      success_url: `http://localhost:3000/cart`,
+      cancel_url: `http://localhost:3000/error`,
     });
 
     response.json({ id: session.id });
-    
+
     // const newCreatedOrder = await createNewOrderService(order);
     //should not send again
     // response.status(201).json(newCreatedOrder);

@@ -28,7 +28,7 @@ export default function CartList() {
 
   useEffect(() => {
     dispatch(getPublishableKey());
-  }, []);
+  }, [dispatch]);
   const publishableKey = useSelector(
     (state: RootState) => state.bookDetail.publishableKey
   );
@@ -59,7 +59,7 @@ export default function CartList() {
         stripe?.redirectToCheckout({
           sessionId: session.id,
         });
-        
+
         if (response.status === 201) {
           toast.info(
             "Successfully completed. Thanks for shoping with us. Come back soon :)",

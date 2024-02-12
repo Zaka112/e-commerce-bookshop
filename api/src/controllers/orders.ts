@@ -53,7 +53,7 @@ export const createNewOrderController = async (
 
      //const newCreatedOrder = await createNewOrderService(order);
     //should not send again
-    response.status(201).json(newCreatedOrder);
+   // response.status(201).json(newCreatedOrder);
   } catch (error) {
     next(error);
   }

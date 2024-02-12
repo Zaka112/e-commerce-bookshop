@@ -22,12 +22,16 @@ const BookOrderSchema = new mongoose.Schema({
     reqired: true,
   },
 });
-
+export enum Status {
+  pending = "pending",
+  paid = "paid",
+}
 export type OrderDocument = Document & {
   userId: string;
   firstName:string;
   bookList: BookDocument[];
   orderedAt: Date;
+  status: Status;
 };
 
 const OrderSchema = new mongoose.Schema({
@@ -38,6 +42,10 @@ const OrderSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now,
+  },
+  status: {
+    type: String,
+   
   },
   totalOrderPrice: {
     type: Number,

@@ -43,4 +43,5 @@ export type Order = {
   orderedAt: string;
   totalOrderPrice: number;
   firstName: string;
+  status: string;
 };

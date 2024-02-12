@@ -22,16 +22,13 @@ const BookOrderSchema = new mongoose.Schema({
     reqired: true,
   },
 });
-export enum Status {
-  pending = "pending",
-  paid = "paid",
-}
+
 export type OrderDocument = Document & {
   userId: string;
   firstName:string;
   bookList: BookDocument[];
   orderedAt: Date;
-  status: Status;
+  status: string;
 };
 
 const OrderSchema = new mongoose.Schema({

@@ -8,6 +8,7 @@ import ordersRouter from "./routes/orders";
 import apiErrorHandler from "./middlewares/apiErrorHandler";
 import { googleStrategy, jwtStrategy } from "./config/passport";
 import paymentsRouter from "./routes/payments";
+import { handleStripeWebhook } from "./controllers/orders";
 
 
 const app = express();
@@ -23,6 +24,8 @@ app.use("/books", booksRouter);
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/secret", paymentsRouter)
+
+app.post('/webhook', handleStripeWebhook);
 
 app.use(apiErrorHandler);
 

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
+import { Stripe } from 'stripe';
 
 import Order from "../models/Order";
 import {
@@ -10,6 +11,7 @@ import {
 
 dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY as string);
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export const createNewOrderController = async (
   request: Request,
@@ -24,8 +26,9 @@ export const createNewOrderController = async (
       firstName,
       bookList,
       totalOrderPrice,
+      status:'pending'
     });
-
+    const newCreatedOrder = await createNewOrderService(order);
     const lineItems = newOrder.bookList.map((orderedItem: any) => ({
       price_data: {
         currency: "usd",
@@ -48,13 +51,47 @@ export const createNewOrderController = async (
 
     response.json({ id: session.id });
 
-    // const newCreatedOrder = await createNewOrderService(order);
+     //const newCreatedOrder = await createNewOrderService(order);
     //should not send again
-    // response.status(201).json(newCreatedOrder);
+    response.status(201).json(newCreatedOrder);
   } catch (error) {
     next(error);
   }
 };
+///////////////
+export const handleStripeWebhook = async (request: Request, response: Response) => {
+  const sig = request.headers['stripe-signature'];
+  type StripeEvent = Stripe.Event;
+  let event: StripeEvent;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, webhookSecret);
+  } catch (err) {
+    console.error('Error verifying webhook signature:', );
+    return response.status(400).send(`Webhook Error: `);
+  }
+
+  // Handle the event type
+  switch (event.type) {
+    case 'checkout.session.completed':
+      const session = event.data.object;
+      const orderId = session.metadata?.orderId;
+
+      // Update order status to 'paid' in your database
+      await Order.findByIdAndUpdate(orderId, { status: 'paid' });
+
+      console.log(`Order ${orderId} has been paid.`);
+      break;
+    // Handle other event types if needed
+    default:
+      console.log(`Unhandled event type: ${event.type}`);
+  }
+
+  response.status(200).send('Webhook Received');
+};
+//////////
+
+
 
 export const findOrderByUserIdController = async (
   request: Request,

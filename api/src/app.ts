@@ -25,7 +25,8 @@ app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/secret", paymentsRouter)
 
-app.post('/webhook', handleStripeWebhook);
+app.post('/webhook', ()=>{console.log("Webhook called")} );
+//handleStripeWebhook
 
 app.use(apiErrorHandler);
 

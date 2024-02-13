@@ -8,6 +8,7 @@ import {
   findOrderByOrderIdService,
   findOrderByUserIdService,
 } from "../services/orders";
+import { BASE_URL } from "../api";
 
 dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY as string);
@@ -45,10 +46,11 @@ export const createNewOrderController = async (
 
       line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:3000/cart`,
-      cancel_url: `http://localhost:3000/error`,
+      success_url: `${BASE_URL}/cart`,
+      cancel_url: `${BASE_URL}/error`,
     });
-
+    const orderId = session.metadata?.orderId;
+    console.log(orderId)
     response.json({ id: session.id });
 
      //const newCreatedOrder = await createNewOrderService(order);

@@ -50,7 +50,7 @@ export const createNewOrderController = async (
       cancel_url: `${BASE_URL}/error`,
     });
     const orderId = session.metadata?.orderId;
-    console.log(orderId)
+    
     response.json({ id: session.id });
 
      //const newCreatedOrder = await createNewOrderService(order);
@@ -78,8 +78,8 @@ export const handleStripeWebhook = async (request: Request, response: Response) 
     case 'checkout.session.completed':
       const session = event.data.object;
       const orderId = session.metadata?.orderId;
-
-      // Update order status to 'paid' in your database
+      console.log(orderId)
+      // Update order status to 'paid' in  database
       await Order.findByIdAndUpdate(orderId, { status: 'paid' });
 
       console.log(`Order ${orderId} has been paid.`);

@@ -24,8 +24,8 @@ app.use("/books", booksRouter);
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/secret", paymentsRouter)
-
-app.post('/webhook', ()=>{console.log("Webhook called")} );
+app.use("/webhook", paymentsRouter)
+//app.post('/webhook', ()=>{console.log("Webhook called")} );
 //handleStripeWebhook
 
 app.use(apiErrorHandler);

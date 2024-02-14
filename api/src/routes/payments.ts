@@ -1,17 +1,24 @@
 import { Router } from "express";
 
-import { createPaymentcontroller } from "../controllers/payments";
+import {
+ // createPaymentcontroller,
+  getPublishableKey,
+} from "../controllers/payments";
 import passport from "passport";
+import { handleStripeWebhook } from "../controllers/orders";
 
 const router = Router();
 
-router.get("/config", (req, res) => {
-  res.send({
-    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-  });
-});
-
+router.get(
+  "/config",
+  passport.authenticate("jwt", { session: false }),
+  getPublishableKey
+);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  handleStripeWebhook
+);
 //router.post("/",  createPaymentcontroller);
-//passport.authenticate("jwt", { session: false }),
-export default router;
 
+export default router;

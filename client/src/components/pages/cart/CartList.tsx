@@ -8,7 +8,7 @@ import { confirmAlert } from "react-confirm-alert";
 import axios from "axios";
 import { Stripe, loadStripe } from "@stripe/stripe-js";
 
-import { getPublishableKey } from "redux/thunk/books";
+//import { getPublishableKey } from "redux/thunk/users";
 import CartItems from "./CartItems";
 import { RootState } from "redux/store";
 import { cartListActions } from "redux/slices/cart";
@@ -25,71 +25,93 @@ export default function CartList() {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("userToken");
-
-  useEffect(() => {
-    dispatch(getPublishableKey());
-  }, [dispatch]);
-  const publishableKey = useSelector(
-    (state: RootState) => state.bookDetail.publishableKey
-  );
+  // if you want to get publisable key throught redux/thunk
+  // useEffect(() => {
+  //   dispatch(getPublishableKey());
+  // }, [dispatch]);
+  // const publishableKey= useSelector(
+  //   (state: RootState) => state.user.publishableKey
+  // );
+  // const isLogin = useSelector(
+  //   (state: RootState) => state.user.isLogin)
 
   const checkOut = async () => {
-    const getPublishableKey = await fetch(`${BASE_URL}/secret/config`);
-    const { publishableKey } = await getPublishableKey.json();
+    const getPublishableKey = await fetch(`${BASE_URL}/secret/config`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (getPublishableKey.status === 401) {
+      toast.error(
+        `Error retrieving resource. Please make sure:
+    • the resource server is accessible
+    • you're logged in--------- Redirecting`,
+        {
+          position: "top-center",
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      setTimeout(() => navigate("/users/signin"), 2000);
+    } else {
+      const { publishableKey } = await getPublishableKey.json();
 
-    const stripe = await loadStripe(publishableKey);
-    const newOrder = {
-      bookList: cartList,
-      totalOrderPrice: totalOrderPrice,
-      firstName: firstName,
-    };
-    const endPoint = `${BASE_URL}/orders/secret/${userId}`;
-    // const endPoint = `${BASE_URL}/secret`;
-    await axios
-      .post(endPoint, newOrder, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const stripe = await loadStripe(publishableKey);
+      const newOrder = {
+        bookList: cartList,
+        totalOrderPrice: totalOrderPrice,
+        firstName: firstName,
+      };
+      const endPoint = `${BASE_URL}/orders/secret/${userId}`;
+      // const endPoint = `${BASE_URL}/secret`;
+      await axios
+        .post(endPoint, newOrder, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-      .then((response) => {
-        const session = response.data;
+        .then((response) => {
+          const session = response.data;
 
-        stripe?.redirectToCheckout({
-          sessionId: session.id,
+          stripe?.redirectToCheckout({
+            sessionId: session.id,
+          });
+
+          if (response.status === 201) {
+            toast.info(
+              "Successfully completed. Thanks for shoping with us. Come back soon :)",
+              {
+                position: "top-center",
+                progress: undefined,
+                theme: "light",
+              }
+            );
+
+            setTimeout(() => navigate("/books"), 6000);
+            dispatch(cartListActions.emptyCart()); // empty cart
+          }
+        })
+        .catch((error) => {
+          // if (error.response.status === 401) {
+          //   toast.error(
+          //     `Error retrieving resource. Please make sure:
+          // • the resource server is accessible
+          // • you're logged in--------- Redirecting`,
+          //     {
+          //       position: "top-center",
+          //       progress: undefined,
+          //       theme: "light",
+          //     }
+          //   );
+          //   setTimeout(() => navigate("/users/signin"), 2000);
+          // }
         });
-
-        if (response.status === 201) {
-          toast.info(
-            "Successfully completed. Thanks for shoping with us. Come back soon :)",
-            {
-              position: "top-center",
-              progress: undefined,
-              theme: "light",
-            }
-          );
-
-          setTimeout(() => navigate("/books"), 6000);
-          dispatch(cartListActions.emptyCart()); // empty cart
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          toast.error(
-            `Error retrieving resource. Please make sure:
-        • the resource server is accessible
-        • you're logged in--------- Redirecting`,
-            {
-              position: "top-center",
-              progress: undefined,
-              theme: "light",
-            }
-          );
-          setTimeout(() => navigate("/users/signin"), 2000);
-        }
-      });
+    }
   };
+
   const totalOrderPrice = cartList.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.price * currentValue.counter;
   }, 0);

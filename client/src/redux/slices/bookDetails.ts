@@ -2,12 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Book } from "types/types";
 
-export type bookDetail = { book: null | Book; isLoading: boolean; publishableKey: string };
+export type bookDetail = { book: null | Book; isLoading: boolean };
 
 export const initialState: bookDetail = {
   book: null,
   isLoading: true,
-  publishableKey: ""
 };
 
 const bookDetailSlice = createSlice({
@@ -17,10 +16,6 @@ const bookDetailSlice = createSlice({
     getBookDetail: (state, action: PayloadAction<Book>) => {
       state.book = action.payload;
       state.isLoading = false;
-    },
-    getPayment: (state, action: PayloadAction<string>) => {
-      state.publishableKey = action.payload;
-      
     },
   },
 });

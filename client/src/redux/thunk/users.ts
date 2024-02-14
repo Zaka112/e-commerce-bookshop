@@ -4,6 +4,8 @@ import { AppDispatch } from "../store";
 import { User } from "types/types";
 import { BASE_URL } from "api";
 import { userActions } from "../slices/user";
+import { bookDetailActions } from "redux/slices/bookDetails";
+
 
 const userListURL = `${BASE_URL}/users`;
 
@@ -36,3 +38,18 @@ export function getSingleUser(singleUserURL: string) {
     dispatch(userActions.setUserData(fetchedSingleUser));
   };
 }
+
+//////////test payment publisable key thunk
+// const token = localStorage.getItem("userToken");
+// export function getPublishableKey(): any {
+//   return async (dispatch: AppDispatch) => {
+//     const getPublishableKey = await fetch(`${BASE_URL}/secret/config`, {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     const {publishableKey} = await getPublishableKey.json();
+//     dispatch(userActions.getPayment(publishableKey ));
+//     };
+//   };

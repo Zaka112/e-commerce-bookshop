@@ -7,6 +7,7 @@ type SingleUser = {
   isLogin: boolean;
   isLoading: boolean;
   item: string;
+ // publishableKey: string ;
 };
 
 const storedUserState = localStorage.getItem("userState");
@@ -18,6 +19,7 @@ const initialState: SingleUser = storedUserState
       isLogin: false,
       isLoading: true,
       item: "",
+      //publishableKey: "",
     };
 
 const userSlice = createSlice({
@@ -46,6 +48,10 @@ const userSlice = createSlice({
       state.isLogin = false;
       state.isLoading = false;
     },
+    // publishable key thunk
+    // getPayment: (state, action: PayloadAction<string>) => {
+    //   state.publishableKey = action.payload;
+    // },
   },
 });
 

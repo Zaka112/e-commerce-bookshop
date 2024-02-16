@@ -25,7 +25,7 @@ export default function CartList() {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("userToken");
-  // if you want to get publisable key throught redux/thunk
+  // if you want to get publishable key throught redux/thunk
   // useEffect(() => {
   //   dispatch(getPublishableKey());
   // }, [dispatch]);

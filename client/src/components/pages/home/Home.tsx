@@ -4,6 +4,7 @@ import { Paper } from "@mui/material";
 import { Col, Row } from "reactstrap";
 import { Carousel } from "react-responsive-carousel";
 import { useDispatch, useSelector } from "react-redux";
+import Typewriter from "typewriter-effect";
 
 import { AppDispatch, RootState } from "redux/store";
 import { getBookList } from "redux/thunk/books";
@@ -24,6 +25,19 @@ export default function Home() {
       <Paper >
         {/* <CircularProgress size="15rem" color="inherit" /> */}
         <img src={loadingBook} alt="Loading..." />
+        <h2>
+        <Typewriter
+          options={{
+            strings: [
+              "Loading API ...",
+              "It may take several seconds to load",
+            ],
+            autoStart: true,
+            loop: true,
+            deleteSpeed: 50,
+          }}
+        />
+      </h2>
       </Paper>
     );
   } else
